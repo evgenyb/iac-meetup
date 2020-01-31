@@ -161,6 +161,7 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\iac-dev-api-appservice - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\iac-initial-api-appservice - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>

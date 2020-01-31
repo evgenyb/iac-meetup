@@ -21,7 +21,7 @@ echo -e "Deploying cosmosdb to ${resourceGroupName}"
 az group deployment create -g ${resourceGroupName} --template-file ../arm/04-cosmosdb/template.json --parameters ../arm/04-cosmosdb/${parametersFile} -n "cosmos-$environment-${timestamp}"
 
 echo -e "Deploying Service Plan to ${resourceGroupName}"
-az group deployment create -g ${resourceGroupName} --template-file ../arm/05-splan/template.json --parameters ../arm/05-splan/${parametersFile} -n "service-plan-$environment-${timestamp}"
+az group deployment create -g ${resourceGroupName} --template-file ../arm/05-service-plan/template.json --parameters ../arm/05-service-plan/${parametersFile} -n "service-plan-$environment-${timestamp}"
 
 echo -e "Deploying webapp app to ${resourceGroupName}"
 az group deployment create -g ${resourceGroupName} --template-file ../arm/06-appservice-app/template.json --parameters ../arm/06-appservice-app/${parametersFile} -n "appservice-app-$environment-${timestamp}"
@@ -40,4 +40,4 @@ echo -e "Get connection string for cosmosdb ${cosmosDbName}"
 connectionString=$(az cosmosdb keys list --name ${cosmosDbName} --resource-group ${resourceGroupName} --type connection-strings --query "connectionStrings[0].connectionString" | jq . -r)
 
 echo -e "Add  cosmosdb connection string to ${apiAppserviceName}"
-az webapp config connection-string set -g ${resourceGroupName} -n ${apiAppserviceName} -t DocDb --settings DocDb=${connectionString}
+az webapp config connection-string set -g ${resourceGroupName} -n ${apiAppserviceName} -t DocDb --settings DocDb=${connectionString} 1> /dev/null

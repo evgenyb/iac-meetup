@@ -1,0 +1,137 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environment": {
+      "type": "String"
+    },
+    "location": {
+      "type": "String"
+    }
+  },
+  "variables": {
+    "cosmosdbName": "[concat('iac-' , parameters('environment'), '-cosmosdb')]",
+    "vnetName": "[concat('iac-' , parameters('environment'), '-vnet')]",
+    "subnetName": "integration-net",
+    "vnetSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetName'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts",
+      "apiVersion": "2019-12-12",
+      "name": "[variables('cosmosdbName')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "defaultExperience": "Core (SQL)",
+        "Owner": "iac-team"
+      },
+      "kind": "GlobalDocumentDB",
+      "properties": {
+        "ipRangeFilter": "84.213.113.16,104.42.195.92,40.76.54.131,52.176.6.30,52.169.50.45,52.187.184.26",
+        "enableAutomaticFailover": false,
+        "enableMultipleWriteLocations": false,
+        "isVirtualNetworkFilterEnabled": true,
+        "virtualNetworkRules": [
+          {
+            "id": "[variables('vnetSubnetId')]",
+            "ignoreMissingVNetServiceEndpoint": false
+          }
+        ],
+        "disableKeyBasedMetadataWriteAccess": false,
+        "databaseAccountOfferType": "Standard",
+        "consistencyPolicy": {
+          "defaultConsistencyLevel": "Session",
+          "maxIntervalInSeconds": 5,
+          "maxStalenessPrefix": 100
+        },
+        "locations": [
+          {
+            "locationName": "West Europe",
+            "provisioningState": "Succeeded",
+            "failoverPriority": 0,
+            "isZoneRedundant": false
+          }
+        ],
+        "capabilities": []
+      }
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
+      "apiVersion": "2019-12-12",
+      "name": "[concat(variables('cosmosdbName'), '/ToDoList')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('cosmosdbName'))]"
+      ],
+      "properties": {
+        "resource": {
+          "id": "ToDoList"
+        },
+        "options": {}
+      }
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2019-12-12",
+      "name": "[concat(variables('cosmosdbName'), '/ToDoList/Items')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', variables('cosmosdbName'), 'ToDoList')]",
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('cosmosdbName'))]"
+      ],
+      "properties": {
+        "resource": {
+          "id": "Items",
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "automatic": true,
+            "includedPaths": [
+              {
+                "path": "/*",
+                "indexes": [
+                  {
+                    "kind": "Range",
+                    "dataType": "Number",
+                    "precision": -1
+                  },
+                  {
+                    "kind": "Range",
+                    "dataType": "String",
+                    "precision": -1
+                  },
+                  {
+                    "kind": "Spatial",
+                    "dataType": "Point"
+                  }
+                ]
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/\"_etag\"/?"
+              }
+            ]
+          },
+          "conflictResolutionPolicy": {
+            "mode": "LastWriterWins",
+            "conflictResolutionPath": "/_ts"
+          }
+        },
+        "options": {}
+      }
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/throughputSettings",
+      "apiVersion": "2019-12-12",
+      "name": "[concat(variables('cosmosdbName'), '/ToDoList/Items/default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers', variables('cosmosdbName'), 'ToDoList', 'Items')]",
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', variables('cosmosdbName'), 'ToDoList')]",
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('cosmosdbName'))]"
+      ],
+      "properties": {
+        "resource": {
+          "throughput": 400
+        }
+      }
+    }
+  ]
+}
