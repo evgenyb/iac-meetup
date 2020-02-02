@@ -19,7 +19,6 @@
       "name": "[variables('omsName')]",
       "location": "[parameters('location')]",
       "properties": {
-        "provisioningState": "Succeeded",
         "sku": {
           "name": "pergb2018"
         },

@@ -47,7 +47,6 @@
         "locations": [
           {
             "locationName": "West Europe",
-            "provisioningState": "Succeeded",
             "failoverPriority": 0,
             "isZoneRedundant": false
           }
