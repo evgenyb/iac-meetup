@@ -1,0 +1,264 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environment": {
+      "type": "String"
+    },
+    "location": {
+      "type": "String"
+    },
+    "pipId": {
+      "defaultValue": "/subscriptions/5eac8bf7-f3e6-4f5b-9030-6aad1a62a0db/resourceGroups/iac-initial-rg/providers/Microsoft.Network/publicIPAddresses/iac-initial-agw-pip",
+      "type": "String"
+    }
+  },
+  "variables": {
+    "appgwName": "[concat('iac-' , parameters('environment'), '-agw')]",
+    "vnetName": "[concat('iac-' , parameters('environment'), '-vnet')]",
+    "publicIPAddressName": "[concat('iac-' , parameters('environment'), '-agw-pip')]",
+    "appserviceAppDns": "[concat('iac-' , parameters('environment'), '-app-appservice.azurewebsites.net')]",
+    "appserviceApiDns": "[concat('iac-' , parameters('environment'), '-api-appservice.azurewebsites.net')]",
+    "subnetName": "agw-net",
+    "owner": "team-iac",
+    "vnetSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetName'))]",
+    "publicIpResourceId": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2019-04-01",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIPAddressName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Basic"
+      },
+      "tags": {
+        "Environment": "[parameters('environment')]",
+        "Owner": "[variables('owner')]",
+        "Description": "Public IP address for AGW"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic"
+      }
+    },
+    {
+      "type": "Microsoft.Network/applicationGateways",
+      "apiVersion": "2019-11-01",
+      "name": "[variables('appgwName')]",
+      "location": "westeurope",
+      "tags": {
+        "Owner": "team-iac"
+      },
+      "properties": {
+        "sku": {
+          "name": "Standard_Small",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "gatewayIPConfigurations": [
+          {
+            "name": "appGatewayIpConfig",
+            "properties": {
+              "subnet": {
+                "id": "[variables('vnetSubnetId')]"
+              }
+            }
+          }
+        ],
+        "sslCertificates": [],
+        "authenticationCertificates": [],
+        "frontendIPConfigurations": [
+          {
+            "name": "appGwPublicFrontendIp",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[variables('publicIpResourceId')]"
+              }
+            }
+          }
+        ],
+        "frontendPorts": [
+          {
+            "name": "port_80",
+            "properties": {
+              "port": 80
+            }
+          },
+          {
+            "name": "port_81",
+            "properties": {
+              "port": 81
+            }
+          }
+        ],
+        "backendAddressPools": [
+          {
+            "name": "api",
+            "properties": {
+              "backendAddresses": [
+                {
+                  "fqdn": "[variables('appserviceApiDns')]"
+                }
+              ]
+            }
+          },
+          {
+            "name": "app",
+            "properties": {
+              "backendAddresses": [
+                {
+                  "fqdn": "[variables('appserviceAppDns')]"
+                }
+              ]
+            }
+          }
+        ],
+        "backendHttpSettingsCollection": [
+          {
+            "name": "api",
+            "properties": {
+              "port": 80,
+              "protocol": "Http",
+              "cookieBasedAffinity": "Disabled",
+              "pickHostNameFromBackendAddress": true,
+              "affinityCookieName": "ApplicationGatewayAffinity",
+              "path": "/api/",
+              "requestTimeout": 20,
+              "probe": {
+                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/probes/api')]"
+              }
+            }
+          },
+          {
+            "name": "app",
+            "properties": {
+              "port": 80,
+              "protocol": "Http",
+              "cookieBasedAffinity": "Disabled",
+              "pickHostNameFromBackendAddress": true,
+              "requestTimeout": 20,
+              "probe": {
+                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/probes/app')]"
+              }
+            }
+          }
+        ],
+        "httpListeners": [
+          {
+            "name": "api",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/frontendIPConfigurations/appGwPublicFrontendIp')]"
+              },
+              "frontendPort": {
+                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/frontendPorts/port_80')]"
+              },
+              "protocol": "Http",
+              "hostNames": [],
+              "requireServerNameIndication": false
+            }
+          }
+        ],
+        "urlPathMaps": [
+          {
+            "name": "path",
+            "properties": {
+              "defaultBackendAddressPool": {
+                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/backendAddressPools/app')]"
+              },
+              "defaultBackendHttpSettings": {
+                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/backendHttpSettingsCollection/app')]"
+              },
+              "pathRules": [
+                {
+                  "name": "api",
+                  "properties": {
+                    "paths": [
+                      "/api/*"
+                    ],
+                    "backendAddressPool": {
+                      "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/backendAddressPools/api')]"
+                    },
+                    "backendHttpSettings": {
+                      "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/backendHttpSettingsCollection/api')]"
+                    }
+                  }
+                },
+                {
+                  "name": "app",
+                  "properties": {
+                    "paths": [
+                      "/bundles/*",
+                      "/Content/*"
+                    ],
+                    "backendAddressPool": {
+                      "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/backendAddressPools/app')]"
+                    },
+                    "backendHttpSettings": {
+                      "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/backendHttpSettingsCollection/app')]"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "requestRoutingRules": [
+          {
+            "name": "path",
+            "properties": {
+              "ruleType": "PathBasedRouting",
+              "httpListener": {
+                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/httpListeners/api')]"
+              },
+              "urlPathMap": {
+                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/urlPathMaps/path')]"
+              }
+            }
+          }
+        ],
+        "probes": [
+          {
+            "name": "api",
+            "properties": {
+              "protocol": "Http",
+              "path": "/",
+              "interval": 30,
+              "timeout": 30,
+              "unhealthyThreshold": 3,
+              "pickHostNameFromBackendHttpSettings": true,
+              "minServers": 0,
+              "match": {
+                "statusCodes": [
+                  "200-399"
+                ]
+              }
+            }
+          },
+          {
+            "name": "app",
+            "properties": {
+              "protocol": "Http",
+              "path": "/",
+              "interval": 30,
+              "timeout": 30,
+              "unhealthyThreshold": 3,
+              "pickHostNameFromBackendHttpSettings": true,
+              "minServers": 0,
+              "match": {
+                "statusCodes": [
+                  "200-399"
+                ]
+              }
+            }
+          }
+        ],
+        "rewriteRuleSets": [],
+        "redirectConfigurations": [],
+        "enableHttp2": true
+      }
+    }
+  ]
+}

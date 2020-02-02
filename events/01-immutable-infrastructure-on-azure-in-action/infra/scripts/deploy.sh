@@ -41,3 +41,6 @@ connectionString=$(az cosmosdb keys list --name ${cosmosDbName} --resource-group
 
 echo -e "Add  cosmosdb connection string to ${apiAppserviceName}"
 az webapp config connection-string set -g ${resourceGroupName} -n ${apiAppserviceName} -t DocDb --settings DocDb=${connectionString} 1> /dev/null
+
+echo -e "Deploying AGW  ${resourceGroupName}"
+az group deployment create -g ${resourceGroupName} --template-file ../arm/08-agw/template.json --parameters ../arm/08-agw/${parametersFile} -n "agw-$environment-${timestamp}"

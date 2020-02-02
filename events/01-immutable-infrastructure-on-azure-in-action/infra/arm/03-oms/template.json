@@ -10,7 +10,7 @@
     }
   },
   "variables": {
-    "omsName": "[concat('iac-' , parameters('environment'), '-la')]"
+    "omsName": "[concat('iac-' , parameters('environment'), '-oms')]"
   },
   "resources": [
     {
