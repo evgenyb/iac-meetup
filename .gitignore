@@ -353,3 +353,4 @@ MigrationBackup/
 .idea
 *.iml
 .vs
+*.zip

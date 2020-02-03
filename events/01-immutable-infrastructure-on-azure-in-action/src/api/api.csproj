@@ -162,6 +162,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\iac-dev-api-appservice - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\publish-local.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
