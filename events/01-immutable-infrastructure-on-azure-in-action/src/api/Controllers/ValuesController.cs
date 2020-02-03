@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web.Http;
 using api.CosmosClients;
+using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
-    public class ValuesController : ApiController
+    [ApiController]
+    [Route("[controller]")]
+    
+    public class ValuesController : Controller
     {
         private readonly CosmosDbClient _cosmosClient;
 
-        public ValuesController()
+        public ValuesController(CosmosDbClient cosmosClient)
         {
-            var connectionString = Environment.GetEnvironmentVariable("DOCDBCONNSTR_DocDb");
-            var cosmosDBConnectionString = new CosmosDBConnectionString(connectionString);
-            _cosmosClient = new CosmosDbClient(
-                cosmosDBConnectionString.ServiceEndpoint,
-                cosmosDBConnectionString.AuthKey);
+            _cosmosClient = cosmosClient;
         }
 
         // GET api/values
+        [HttpGet]
         public async Task<IEnumerable<Sample>> Get()
         {
             var samples = await _cosmosClient.GetSamplesAsync();
@@ -27,7 +27,7 @@ namespace api.Controllers
         } 
         
         [HttpPost]
-        public async Task<IHttpActionResult> Post()
+        public async Task<IActionResult> Post()
         {
             var guid = Guid.NewGuid();
             var sample = new Sample()

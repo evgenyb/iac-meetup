@@ -354,3 +354,4 @@ MigrationBackup/
 *.iml
 .vs
 *.zip
+publish
