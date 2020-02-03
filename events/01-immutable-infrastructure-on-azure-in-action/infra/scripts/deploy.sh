@@ -44,3 +44,5 @@ az webapp config connection-string set -g ${resourceGroupName} -n ${apiAppservic
 
 echo -e "Deploying AGW  ${resourceGroupName}"
 az group deployment create -g ${resourceGroupName} --template-file ../arm/08-agw/template.json --parameters ../arm/08-agw/${parametersFile} -n "agw-$environment-${timestamp}"
+
+az network dns record-set cname create -g domains-and-certificates -z www.mysite.com -n MyRecordSet
