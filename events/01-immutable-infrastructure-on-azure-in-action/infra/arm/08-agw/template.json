@@ -124,7 +124,7 @@
               "cookieBasedAffinity": "Disabled",
               "pickHostNameFromBackendAddress": true,
               "affinityCookieName": "ApplicationGatewayAffinity",
-              "path": "/api/",
+              "path": "/",
               "requestTimeout": 20,
               "probe": {
                 "id": "[concat(resourceId('Microsoft.Network/applicationGateways', variables('appgwName')), '/probes/api')]"
@@ -224,7 +224,7 @@
             "name": "api",
             "properties": {
               "protocol": "Http",
-              "path": "/",
+              "path": "/health",
               "interval": 30,
               "timeout": 30,
               "unhealthyThreshold": 3,
