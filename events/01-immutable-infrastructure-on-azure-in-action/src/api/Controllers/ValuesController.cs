@@ -39,11 +39,5 @@ namespace api.Controllers
             
             return Ok();
         }
-
-        // GET api/values/5
-        public string Get(int id)
-        {
-            return "value";
-        }
     }
 }
