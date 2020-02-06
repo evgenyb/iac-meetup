@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environment": {
+      "value": "dev-blue"
+    },
+    "location": {
+      "value": "westeurope"
+    },
+    "vnetAddressPrefixes": {
+      "value": "10.201.0.0/26"
+    },
+    "agwSubnetAddressPrefixes": {
+      "value": "10.201.0.0/27"
+    },
+    "integrationSubnetAddressPrefixes": {
+      "value": "10.201.0.32/27"
+    }
+  }
+}

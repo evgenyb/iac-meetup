@@ -29,3 +29,9 @@ Let's introduce Traffic Manager
 ./infra/scripts/misc/05-traffic-manager.sh dev
 ```
 Now let's re-point DNS record towards 
+```
+./infra/scripts/misc/06-traffic-manager.sh dev
+```
+
+### iac-dev-blue-rg
+

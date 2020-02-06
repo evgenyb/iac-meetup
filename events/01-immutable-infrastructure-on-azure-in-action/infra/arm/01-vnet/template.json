@@ -7,6 +7,15 @@
     },
     "location": {
       "type": "String"
+    },
+    "vnetAddressPrefixes": {
+      "type": "String"
+    },
+    "agwSubnetAddressPrefixes": {
+      "type": "String"
+    },
+    "integrationSubnetAddressPrefixes": {
+      "type": "String"
     }
   },
   "variables": {
@@ -21,7 +30,7 @@
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "10.200.0.0/26"
+            "[parameters('vnetAddressPrefixes')]"
           ]
         },
         "dhcpOptions": {
@@ -31,7 +40,7 @@
           {
             "name": "agw-net",
             "properties": {
-              "addressPrefix": "10.200.0.0/27",
+              "addressPrefix": "[parameters('agwSubnetAddressPrefixes')]",
               "serviceEndpoints": [],
               "delegations": [],
               "privateEndpointNetworkPolicies": "Enabled",
@@ -41,7 +50,7 @@
           {
             "name": "integration-net",
             "properties": {
-              "addressPrefix": "10.200.0.32/27",
+              "addressPrefix": "[parameters('integrationSubnetAddressPrefixes')]",
               "serviceEndpoints": [
                 {
                   "service": "Microsoft.AzureCosmosDB",
