@@ -17,7 +17,7 @@
     "appgwName": "[concat('iac-' , parameters('environment'), '-agw')]",
     "vnetName": "[concat('iac-' , parameters('environment'), '-vnet')]",
     "publicIPAddressName": "[concat('iac-' , parameters('environment'), '-agw-pip')]",
-    "publicIPDnsName": "[concat(variables('publicIPAddressName') , '.', parameters('location'), '.westeurope.cloudapp.azure.com')]",
+    "publicIPDnsName": "[concat(variables('publicIPAddressName') , '.', parameters('location'), '.', parameters('location'), '.cloudapp.azure.com')]",
     "appserviceAppDns": "[concat('iac-' , parameters('environment'), '-app-appservice.azurewebsites.net')]",
     "appserviceApiDns": "[concat('iac-' , parameters('environment'), '-api-appservice.azurewebsites.net')]",
     "subnetName": "agw-net",
@@ -232,7 +232,7 @@
             "name": "api",
             "properties": {
               "protocol": "Http",
-              "path": "/health",
+              "path": "/health/ready",
               "interval": 30,
               "timeout": 30,
               "unhealthyThreshold": 3,
