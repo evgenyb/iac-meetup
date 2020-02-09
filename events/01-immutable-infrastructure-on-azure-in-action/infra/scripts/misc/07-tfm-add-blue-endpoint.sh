@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
+#
+# Usage:
+# ./07-tfm-add-blue-endpoint.sh dev 50
+
 environment=$1
-slot=$2
-baseResourceGroupName="iac-$environment-rg"
-resourceGroupName="iac-$environment-$slot-rg"
+weight=$2
+
+resourceGroupName="iac-$environment-rg"
 tfmProfileName="iac-$environment-tfm"
-pipName="iac-$environment-$slot-agw-pip"
+pipName="iac-$environment-agw-pip"
 
 pipid=$(az network public-ip show -g ${resourceGroupName} -n ${pipName} --query id | jq . -r)
 echo -e "Create Traffic Manage endpoint"
-az network traffic-manager endpoint create -g ${baseResourceGroupName} --profile-name ${tfmProfileName} -n iac-app-blue --type azureEndpoints --target-resource-id ${pipid} --endpoint-status enabled --weight 5
+az network traffic-manager endpoint create -g ${resourceGroupName} --profile-name ${tfmProfileName} -n iac-app --type azureEndpoints --target-resource-id ${pipid} --endpoint-status enabled --weight ${weight}

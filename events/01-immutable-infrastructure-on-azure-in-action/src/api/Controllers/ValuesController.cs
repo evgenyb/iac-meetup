@@ -12,18 +12,22 @@ namespace api.Controllers
     public class ValuesController : Controller
     {
         private readonly CosmosDbClient _cosmosClient;
+       // private readonly ILogger<ValuesController> _logger;
 
+        //public ValuesController(CosmosDbClient cosmosClient, ILogger<ValuesController> logger)
         public ValuesController(CosmosDbClient cosmosClient)
         {
             _cosmosClient = cosmosClient;
+            //_logger = logger;
         }
 
         // GET api/values
         [HttpGet]
-        public async Task<IEnumerable<Sample>> Get()
+        public async Task<string> Get()
         {
             var samples = await _cosmosClient.GetSamplesAsync();
-            return samples;
+            var response = $"{Environment.MachineName}: fetched documents. OK.";
+            return response;
         } 
         
         [HttpPost]

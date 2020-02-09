@@ -51,7 +51,7 @@
       "type": "Microsoft.Network/applicationGateways",
       "apiVersion": "2019-11-01",
       "name": "[variables('appgwName')]",
-      "location": "westeurope",
+      "location": "[parameters('location')]",
       "tags": {
         "Owner": "team-iac"
       },

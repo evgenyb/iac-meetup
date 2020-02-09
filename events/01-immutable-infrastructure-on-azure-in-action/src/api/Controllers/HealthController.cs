@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
@@ -7,10 +6,18 @@ namespace api.Controllers
     [Route("[controller]")]
     public class HealthController : Controller
     {
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet(Name = "alive")]
+        [Route("[action]")]
+        public IActionResult Alive()
         {
-            return Ok("Ok");
+            return Ok("alive");
+        } 
+        
+        [HttpGet(Name = "ready")]
+        [Route("[action]")]
+        public IActionResult Ready()
+        {
+            return Ok("ready");
         }
     }
 }

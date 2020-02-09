@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #
 # Usage
-# ./deploy-blue.sh dev blue
+# ./deploy-slot.sh dev
 #
 
 environment=$1
-slot=$2
+slot=blue
 
 timestamp=`date "+%Y%m%d-%H%M%S"`
 baseResourceGroupName="iac-$environment-rg"
@@ -40,9 +40,9 @@ connectionString=$(az cosmosdb keys list --name ${cosmosDbName} --resource-group
 echo -e "Add  cosmosdb connection string to ${apiAppserviceName}"
 az webapp config connection-string set -g ${resourceGroupName} -n ${apiAppserviceName} -t DocDb --settings DocDb=${connectionString} 1> /dev/null
 
-echo -e "Add vnet to cosmosdb"
-subnetid=$(az network vnet subnet show --vnet-name iac-${environment}-${slot}-vnet -n integration-net -g ${resourceGroupName} --query id | jq . -r)
-az cosmosdb network-rule add --subnet $subnetid --name ${cosmosDbName} --resource-group ${baseResourceGroupName}
+echo -e "Add vnet $vnetName to cosmosdb ${cosmosDbName}"
+subnetid=$(az network vnet subnet show --vnet-name ${vnetName} -n integration-net -g ${resourceGroupName} --query id | jq . -r)
+az cosmosdb network-rule add --subnet ${subnetid} --name ${cosmosDbName} --resource-group ${baseResourceGroupName}
 
 echo -e "Deploying AGW  ${resourceGroupName}"
 az group deployment create -g ${resourceGroupName} --template-file ../arm/08-agw-v2/template.json --parameters ../arm/08-agw-v2/${parametersFile} -n "agw-$environment-${timestamp}"
