@@ -5,6 +5,12 @@
     "environment": {
       "value": "dev-blue"
     },
+    "appInsightsName": {
+      "value": "iac-dev-ai"
+    },
+    "appInsightsResourceGroupName": {
+      "value": "iac-dev-rg"
+    },
     "location": {
       "value": "westeurope"
     }

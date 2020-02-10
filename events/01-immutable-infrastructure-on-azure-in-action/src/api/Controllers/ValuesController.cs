@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using api.CosmosClients;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +11,9 @@ namespace api.Controllers
     public class ValuesController : Controller
     {
         private readonly CosmosDbClient _cosmosClient;
-       // private readonly ILogger<ValuesController> _logger;
-
-        //public ValuesController(CosmosDbClient cosmosClient, ILogger<ValuesController> logger)
         public ValuesController(CosmosDbClient cosmosClient)
         {
             _cosmosClient = cosmosClient;
-            //_logger = logger;
         }
 
         // GET api/values
@@ -26,7 +21,8 @@ namespace api.Controllers
         public async Task<string> Get()
         {
             var samples = await _cosmosClient.GetSamplesAsync();
-            var response = $"{Environment.MachineName}: fetched documents. OK.";
+            var environment = Environment.GetEnvironmentVariable("IAC_ENVIRONMENT");
+            var response = $"{environment} - {Environment.MachineName}";
             return response;
         } 
         

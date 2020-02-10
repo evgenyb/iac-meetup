@@ -8,7 +8,7 @@ namespace api.CosmosClients
         public CosmosDBConnectionString(string connectionString)
         {
             // Use this generic builder to parse the connection string
-            DbConnectionStringBuilder builder = new DbConnectionStringBuilder
+            var builder = new DbConnectionStringBuilder
             {
                 ConnectionString = connectionString
             };

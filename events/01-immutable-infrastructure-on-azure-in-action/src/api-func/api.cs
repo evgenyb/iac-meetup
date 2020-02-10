@@ -32,7 +32,9 @@ namespace api_func
                     log.LogInformation($"{document.Id} - {document.Content}");
                 }
             }
-            return new OkObjectResult($"{Environment.MachineName}");
+            var environment = Environment.GetEnvironmentVariable("IAC_ENVIRONMENT");
+            var response = $"{environment} - {Environment.MachineName}";
+            return new OkObjectResult(response);
         }
     }
 }
