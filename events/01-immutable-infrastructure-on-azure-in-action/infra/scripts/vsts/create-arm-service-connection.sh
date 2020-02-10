@@ -3,12 +3,13 @@
 # SPN details (clientid, secret, etc...) are retrieved from the metadata keyvault.
 #
 # usage:
-#  ./create-arm-service-connection.sh evgeny.borzenin@gmail.com <vsts_token> dev
+#  ./create-arm-service-connection.sh evgeny.borzenin@gmail.com <vsts_token> dev blue
 #
 
 username=$1                     # user@email
 vstsPersonalAccessToken=$2      # Generate it at vsts profile page https://dev.azure.com/ifoobar/_usersSettings/tokens
 environment=$3
+slot=$4
 
 keyVaultName="iac-$environment-infra-kv"
 vstsApiUrl="https://dev.azure.com/ifoobar/iac"
@@ -21,7 +22,7 @@ vsts_spn_subscriptionid=$(az keyvault secret show --name vsts-spn-subscriptionid
 vsts_spn_subscription_name=$(az keyvault secret show --name vsts-spn-subscription-name --vault-name ${keyVaultName} --query value | jq . -r)
 vsts_spn_tenantid=$(az keyvault secret show --name vsts-spn-tenantid --vault-name ${keyVaultName} --query value | jq . -r)
 
-serviceConnectionName="iac-$environment-arm"
+serviceConnectionName="iac-$environment-$slot-arm"
 
 echo -e "Transforming template templates/arm-service-connection-template.json -> arm-service-connection.json"
 cp ./templates/arm-service-connection-template.json arm-service-connection.json
