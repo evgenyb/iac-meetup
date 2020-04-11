@@ -27,16 +27,23 @@ Next (and this step is optional), you need to set your active subscription.
 To get list of available subscriptions, use this command
 
 ```bash
-$ az account list
+az account list -o table
 ```
+
+Note, The `-o table` or `--output table` parameter switches the output to a more concise human-readable format.
 
 To set subscription use this command. You can use both subscription id and subscription name as value for `--subscription` argument.
 
 ```bash
-$ az account set --subscription 5d541385-7526-4b12-bf15-69857e9b21c4
+az account set --subscription 5d541385-7526-4b12-bf15-69857e9b21c4
 or
-$ az account set --subscription evgeny.borzenin
+az account set --subscription evgeny.borzenin
+```
 
+To check what is the current active subscription, use this command
+
+```bash
+az account show
 ```
 
 
@@ -72,7 +79,26 @@ az group create -n iac-dev-rg -l westeurope --tags owner=team-platform env=dev d
 Create resource group for `prod` environment.
 
 ```bash
-az group create -n iac-prod-rg -l westeurope --tags owner=team-platform env=prod description="Workshop #1 resources for production environment"
+az group create -n iac-prod-rg -l westeurope --tags owner=team-platform env=prod description="Workshop #1 resources for production environment" -o table
+```
+
+## Checkpoint for task #2 and #3
+
+Make sure that your resource groups are created successfully:
+
+```bash
+az group exists -n iac-dev-rg
+true
+```
+
+or visually check that both resource groups were created
+
+```bash
+az group list -o table
+Name         Location    Status
+-----------  ----------  ---------
+iac-dev-rg   westeurope  Succeeded
+iac-prod-rg  westeurope  Succeeded
 ```
 
 ## Task #4
