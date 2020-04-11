@@ -1,6 +1,44 @@
-# Lab-01 - create resource groups
+# Lab-01 - initialize environment and create resource groups
 
-During this lab you will create 2 resource groups and new dashboard at the portal. Please check our [naming conventions](../../naming-conventions.md).
+The goals for this lab are:
+
+* initialize your `az cli` environment
+* create 2 resource groups for `dev` and `prod` environments
+* create Azure portal dashboard at the portal
+
+ Also, please check our [naming conventions](../../naming-conventions.md) before  you start.
+
+## Task #1 - initialize `az cli` environment
+
+Fist, you need to login to your azure account
+
+```bash
+$ az login
+```
+
+You will be redirected to the browser where you will need to login with your azure account. Sometimes, you need manually copy code and enter it at this page [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin). Just follow the instructions.
+
+```bash
+$ az login
+To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code DMBKTZBJL to authenticate.
+```
+
+Next (and this step is optional), you need to set your active subscription.
+To get list of available subscriptions, use this command
+
+```bash
+$ az account list
+```
+
+To set subscription use this command. You can use both subscription id and subscription name as value for `--subscription` argument.
+
+```bash
+$ az account set --subscription 5d541385-7526-4b12-bf15-69857e9b21c4
+or
+$ az account set --subscription evgeny.borzenin
+
+```
+
 
 ## Tips
 
@@ -21,7 +59,7 @@ az cli support auto completion, just start typing command and press `Tab` and if
 
 If you double `Tab`, az cli will show you list of commands or arguments available at the current context, sort of light version of `--help` flag.
 
-## Task #1
+## Task #2
 
 Create resource group for `dev` environment.
 
@@ -29,7 +67,7 @@ Create resource group for `dev` environment.
 az group create -n iac-dev-rg -l westeurope --tags owner=team-platform env=dev description="Workshop #1 resources for dev environment"
 ```
 
-## Task #2
+## Task #3
 
 Create resource group for `prod` environment.
 
@@ -37,7 +75,7 @@ Create resource group for `prod` environment.
 az group create -n iac-prod-rg -l westeurope --tags owner=team-platform env=prod description="Workshop #1 resources for production environment"
 ```
 
-## Task #3
+## Task #4
 
 Create Azure portal dashboard for newly created resource groups.
 
@@ -49,4 +87,4 @@ Find resource group `iac-prod-rg` and pin it to the dashboard by clicking pin ic
 
 After you successfully done this, your dashboard should like this:
 
-![close](img/dashboard.png)
+![dashboard](img/dashboard.png)
