@@ -46,7 +46,6 @@ To check what is the current active subscription, use this command
 az account show
 ```
 
-
 ## Tips
 
 Every time you don't remember what `az` commands available or what are the arguments for the selected command, you can add `--help` attribute to get help. Here are some examples:
