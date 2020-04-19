@@ -124,23 +124,7 @@ Deploy ARM template
 az group deployment create -g iac-dev-rg --template-file template.json
 ```
 
-## Task 4 (optional) - cerate `validate.sh` and  `deploy.sh` files (if you prefer PowerShell, feel free to create 2 PowerShell files `validate.ps1` and `deploy.ps1`)
-
-As you probably already noticed, it's time consuming to typ validate and deploy commands. Therefore I recommend to always create 2 files called `validate.sh` and `deploy.sh` and they will contain validation and deployment scripts.  
-
-Use validate command for `validate.[sh|ps1]` file
-
-```bash
-az group deployment validate --template-file template.json -g iac-dev-rg
-```
-
-Use deploy command for `deploy.[sh|ps1]` file
-
-```bash
-az group deployment create --template-file template.json -g iac-dev-rg
-```
-
-## Task #5 (optional) - find an error in AKS-T443-OUT-ALLOW and AGW-T443-IN-ALLOW rules, fix it and deploy templates
+## Task #4 (optional) - find an error in AKS-T443-OUT-ALLOW and AGW-T443-IN-ALLOW rules, fix it and deploy templates
 
 ## Checkpoint
 
@@ -152,7 +136,6 @@ az group deployment create --template-file template.json -g iac-dev-rg
 * [ARM 101: Create a Network Security Group](https://github.com/Azure/azure-quickstart-templates/tree/master/101-security-group-create)
 
 * [ARM 101: Virtual Network with two Subnets](https://github.com/Azure/azure-quickstart-templates/tree/master/101-vnet-two-subnets)
-
 
 ## Next
 
