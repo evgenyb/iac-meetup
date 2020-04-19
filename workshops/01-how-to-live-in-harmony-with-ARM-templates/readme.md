@@ -17,7 +17,7 @@ If you stack with implementing ARM template either because you are not familiar 
 
 This is in fact the fastest way to learn how to implement ARM template, especially for complex resources cush as VM, ApplicationGateways, APIM etc...
 
-## Hint 2 for the workshop
+## Hint #2 for the workshop
 
 Alternative option to learn ARM templates is to check the [Azure Quickstart Templates ](https://github.com/Azure/azure-quickstart-templates). Just search for the resource you want to implement and most likely you will find it there.
 
