@@ -21,7 +21,7 @@ This is in fact the fastest way to learn how to implement ARM template, especial
 
 Alternative option to learn ARM templates is to check the [Azure Quickstart Templates ](https://github.com/Azure/azure-quickstart-templates). Just search for the resource you want to implement and most likely you will find it there.
 
-For our workshop these 2 can be relevant:
+For our workshop these 2 are very much relevant:
 * [Create a Network Security Group](https://github.com/Azure/azure-quickstart-templates/tree/master/101-security-group-create)
 
 * [Virtual Network with two Subnets](https://github.com/Azure/azure-quickstart-templates/tree/master/101-vnet-two-subnets)
