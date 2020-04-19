@@ -13,7 +13,7 @@ The goals for this lab are:
 Fist, you need to login to your azure account
 
 ```bash
-$ az login
+az login
 ```
 
 You will be redirected to the browser where you will need to login with your azure account. Sometimes, you need manually copy code and enter it at this page [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin). Just follow the instructions.
@@ -35,9 +35,9 @@ Note, The `-o table` or `--output table` parameter switches the output to a more
 To set subscription use this command. You can use both subscription id and subscription name as value for `--subscription` argument.
 
 ```bash
-az account set --subscription 5d541385-7526-4b12-bf15-69857e9b21c4
+az account set --subscription       xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 or
-az account set --subscription evgeny.borzenin
+az account set --subscription subscription_name
 ```
 
 To check what is the current active subscription, use this command
@@ -113,3 +113,7 @@ Find resource group `iac-prod-rg` and pin it to the dashboard by clicking pin ic
 After you successfully done this, your dashboard should like this:
 
 ![dashboard](img/dashboard.png)
+
+## Next
+
+[Go to lab-02](../lab-02/readme.md)
