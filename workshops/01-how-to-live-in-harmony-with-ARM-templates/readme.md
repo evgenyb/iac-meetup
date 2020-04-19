@@ -1,10 +1,40 @@
 # This is the first workshop in the serious of hands-on workshops
 
+At this workshop I will share some of my experience and tips & tricks on how I use ARM templates to implement complex infrastructure. You will learn how to use template functions to simplify multi-environment configuration, how to structure your ARM templates so it’s easy to work with them.
+
+ARM template is not 100% user friendly, especially at the begging. I hope that after that workshop you will learn some of the tips and tricks that will help you to be calm and cool when working with ARM.
+
+## Workshop structure
+
+Workshop will consists of some theoretical part (very little) and labs. We will start with creating resource groups and azure portal dashboard.
+Then we will implement simple infrastructure component that consists of 2 network security groups and one private virtual network with 2 subnets.
+And all remaining labs will be a set of refactoring tasks that will help us to improve out ARM templates and make them easy to maintain, update and introduce new environments.
+The reason I choose nsg and vnet as resources for the labs is because it takes very little time to provision them and since we will do a lot of refactoring, we will need to re-deploy them frequently.
+
+## Hint #1 for the workshop
+
+If you stack with implementing ARM template either because you are not familiar with the resources we will use during the workshop or because it's not that obvious from the documentation reference what property or parameter to use, feel free to implement that is described at the lab from the portal and then just export ARM template and see how it should actually be implemented. You can find `Export template` option at the right side menu.  
+
+This is in fact the fastest way to learn how to implement ARM template, especially for complex resources cush as VM, ApplicationGateways, APIM etc...
+
+## Hint 2 for the workshop
+
+Alternative option to learn ARM templates is to check the [Azure Quickstart Templates ](https://github.com/Azure/azure-quickstart-templates). Just search for the resource you want to implement and most likely you will find it there.
+
+For our workshop these 2 can be relevant:
+* [Create a Network Security Group](https://github.com/Azure/azure-quickstart-templates/tree/master/101-security-group-create)
+
+* [Virtual Network with two Subnets](https://github.com/Azure/azure-quickstart-templates/tree/master/101-vnet-two-subnets)
+
 ## Prerequisites
 
 ### Laptop
 
 Of course you need an laptop. OS installed at this laptop doesn't really matter. The tools we will use work cross platform. I will be using Windows 10 with ubuntu (WSL) as a shell.
+
+### Microsoft Teams
+
+Download and install [Microsoft Teams](https://products.office.com/en-US/microsoft-teams/group-chat-software)
 
 ### Visual Studio Code
 
