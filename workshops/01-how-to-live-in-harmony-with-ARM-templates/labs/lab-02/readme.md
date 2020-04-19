@@ -67,3 +67,7 @@ empty-template-01-02-2020-11-22-11  iac-dev-rg       Succeeded  2020-04-11T20:58
 or you can go to Azure portal, open your resource group, for instance `iac-dev-rg` and navigate to `Deployments` tab and you will find all your deployments.
 
 ![deployments](img/deployments.png)
+
+## Next
+
+[Go to lab-03](../lab-03/readme.md)
