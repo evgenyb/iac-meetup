@@ -147,6 +147,13 @@ az group deployment create --template-file template.json -g iac-dev-rg
 * You should have one ARM template with 3 resources
 * You should see (at least) 3 deployments at the resource groups level
 
+## Useful links
+
+* [ARM 101: Create a Network Security Group](https://github.com/Azure/azure-quickstart-templates/tree/master/101-security-group-create)
+
+* [ARM 101: Virtual Network with two Subnets](https://github.com/Azure/azure-quickstart-templates/tree/master/101-vnet-two-subnets)
+
+
 ## Next
 
 [Go to lab-04](../lab-04/readme.md)
