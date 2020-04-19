@@ -66,3 +66,23 @@ To check what is the current active subscription, use this command
 ```bash
 az account show
 ```
+
+## Links
+
+[Azure Resource Manager overview](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/overview)
+
+[Azure Resource Manager templates overview](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/overview)
+
+[Understand the structure and syntax of Azure Resource Manager templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-syntax)
+
+[Tutorial: Create and deploy your first Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-tutorial-create-first-template?tabs=azure-cli)
+
+[ARM template functions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/linked-templates)
+
+[ARM template REST](https://docs.microsoft.com/en-us/rest/api/resources/#rest-operation-groups)
+
+[Network Security Group template reference](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/networksecuritygroups)
+
+[Virtual networks template reference](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/virtualnetworks)
+
+[Using linked and nested templates when deploying Azure resources](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/linked-templates)
