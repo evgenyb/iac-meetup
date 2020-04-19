@@ -26,6 +26,10 @@ For our workshop these 2 are very much relevant:
 
 * [Virtual Network with two Subnets](https://github.com/Azure/azure-quickstart-templates/tree/master/101-vnet-two-subnets)
 
+## Naming convention
+
+The following [naming convention](naming-conventions.md) will be used during our workshop(s).
+
 ## Prerequisites
 
 ### Laptop
