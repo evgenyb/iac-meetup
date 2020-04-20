@@ -2,7 +2,7 @@
 
 Parameters are the powerful way to make your ARM templates re-usable. If your infrastructure looks the same between several environments, then you can implement one template, identify the differences between environments, implement them as parameters and specify them at the deployment time.
 
-If we look at our example, the following items are candidates to be defined as parameters:
+If we look at our example, the following values are candidates to be defined as parameters:
 
 * environment
 * location
@@ -10,56 +10,79 @@ If we look at our example, the following items are candidates to be defined as p
 * agw subnet address prefix
 * vnet address prefix
 
-## Task #1 - create `location` parameter at nsg ARM template
+## Task #1 - introduce parameters to nsg ARM template
 
-Create new parameter called `location` with default value `westeurope`. Use `[parameters('location')]` for location everywhere in the template.
+Add the following parameters to the nsg ARM template
+| Parameter  | Type | Default value | Parameter value (used by deployment script)|
+|---|---|---|---|
+| environment | string | | dev|
+| location | string | westeurope | westeurope|
+| agwSubnetAddressPrefix | securestring | | 10.112.16.128/25 |
+| aksSubnetAddressPrefix | securestring | | 10.112.0.0/20 |
 
-### Validate template
+Use `[parameters('<parameter-name>')]` construct in the template.
 
-```bash
-az group deployment validate -g iac-dev-rg --template-file template.json --parameters location=westeurope
-```
-
-Note, that we need to specify value for parameter `location` as part of the script
-
-### Deploy template
-
-```bash
-az group deployment create -g iac-dev-rg --template-file template.json --parameters location=westeurope
-```
-
-## Task #2 - create `environment` parameter at nsg ARM template
-
-Create new parameter called `environment` with no default value. Use `[parameters('environment')]` for environment everywhere in the template.
-
-### Validate templates
+### Validate template (script is not completed)
 
 ```bash
-az group deployment validate -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev
+az group deployment validate -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev ...
 ```
 
-Note, that we now need to specify both `location` and `environment` as parameters
+Note, that we need to use `--parameters` for each parameter.
 
-### Deploy templates
+### Deploy template (script is not completed)
 
 ```bash
-az group deployment create -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev
+az group deployment create -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev ...
 ```
 
-## Task #3 - create `agwSubnetAddressPrefix` parameter at nsg and vnet ARM templates
+Note, that we need to use `--parameters` for each parameter.
 
-Create new parameter called `agwSubnetAddressPrefix` with no default value. Use `[parameters('agwSubnetAddressPrefix')]` everywhere in the template where agw subnet prefix is used.
+## Task #2 - change `validate.sh` and `deploy.sh` file
 
-Validate and deploy templates
+Apply corresponding changes to the `validate.sh` and `deploy.sh` files.
 
-## Task #4 - create `aksSubnetAddressPrefix` parameter at nsg and vnet ARM templates
+Validate and deploy by using `validate.sh` and `deploy.sh` scripts.
 
-Create new parameter called `aksSubnetAddressPrefix` with no default value. Use `[parameters('aksSubnetAddressPrefix')]` everywhere in the template where aks subnet prefix is used.
+## Task #3 - introduce parameters to vnet ARM template
 
-Validate and deploy templates
+Add the following parameters to the nsg ARM template
+| Parameter  | Type | Default value | Parameter value (used by deployment script)|
+|---|---|---|---|
+| environment | string | | dev|
+| location | string | westeurope | westeurope|
+| vnetAddressPrefix | securestring | | 110.112.0.0/16 |
+| agwSubnetAddressPrefix | securestring | | 10.112.16.128/25 |
+| aksSubnetAddressPrefix | securestring | | 10.112.0.0/20 |
 
-## Task #5 - create `vnetAddressPrefix` parameter at vnet ARM template
+Use `[parameters('<parameter-name>')]` construct in the template.
 
-Create new parameter called `vnetAddressPrefix` with no default value. Use `[parameters('vnetAddressPrefix')]` everywhere in the template where vnet address prefix is used.
+### Validate template (script is not completed)
 
-Validate and deploy template
+```bash
+az group deployment validate -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev ...
+```
+
+Note, that we need to use `--parameters` for each parameter.
+
+### Deploy template (script is not completed)
+
+```bash
+az group deployment create -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev ...
+```
+
+Note, that we need to use `--parameters` for each parameter.
+
+## Task #4 - change `validate.sh` and `deploy.sh` file
+
+Apply corresponding changes to the `validate.sh` and `deploy.sh` files.
+
+Validate and deploy by using `validate.sh` and `deploy.sh` scripts.
+
+## Checkpoints
+
+Make sure that you still can validate and deploy by using master validate and deploy scripts.
+
+## Next
+
+[Go to lab-09](../lab-09/readme.md)
