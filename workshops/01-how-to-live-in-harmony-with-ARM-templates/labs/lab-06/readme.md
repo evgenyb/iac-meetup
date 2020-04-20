@@ -36,7 +36,6 @@ You can find field called `outputs`. It's empty, because we didn't implemented a
 
 Note, you shouldn't use `-o table` or other parameters for the `az group deployment create` command, otherwise you will not be able to find `outputs` section.
 
-
 ## Task #2 - compose variable with `concat` function and print it's value to ARM template `outputs`
 
 Create new variable called `environment` with value `dev`. Create new variable `nsgName` and build it's value by using `concat` function and following pattern `iac-{environment}-aks-nsg`. Create new `outputs` object called `nsgName` type of `string` with value from `nsgName` variable.
