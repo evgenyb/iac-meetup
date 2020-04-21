@@ -24,7 +24,7 @@ Note. AKS and ApplicationGateway are outside of the scope of our labs, but will 
 
 ## Task #1 - Network Security Group for AGW subnet
 
-Create ARM template for Network Security Group called `iac-dev-agw-nsg` with 3 rules:
+Create new ARM template called `template.json` and add new resource defining  Network Security Group called `iac-dev-agw-nsg` with 3 rules:
 
 ```txt
 name: INT-T443-IN-ALLOW
@@ -77,7 +77,7 @@ az group deployment create -g iac-dev-rg --template-file template.json
 
 ## Task #2 - create Network Security Group for AKS subnet
 
-Create ARM template for Network Security Group called `iac-dev-aks-nsg` with 1 rule:
+Add new resource defining Network Security Group called `iac-dev-aks-nsg` with 1 rule:
 
 ```txt
 name: AGW-T443-IN-ALLOW
@@ -108,7 +108,7 @@ az group deployment create -g iac-dev-rg --template-file template.json
 
 ## Task #3 - create new private Virtual Network
 
-Create ARM template for private Virtual Network called `iac-dev-vnet` with 2 subnets and the following specifications:
+Add new resource defining private Virtual Network called `iac-dev-vnet` with 2 subnets and the following specifications:
 
 ```txt
 VNet name: iac-dev-vnet
