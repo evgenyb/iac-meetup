@@ -1,22 +1,58 @@
 # lab-07 - refactoring: introduce variables and implement naming convention with variables
 
-## Task #1 - use variables for subnet IP prefix (both in nsg and vnet templates)
+Variables are very powerful concept in ARM templates. You use variables to simplify your templates. Rather than repeating complicated expressions throughout your template, you define a variable that contains the complicated expression. Then, you reference that variable as needed throughout your template.
 
-Add new variable called `agwSubnetAddressPrefix` with value `10.112.16.128/25`. Replace all hard-coded values with new variable.
-Add new variable called `aksSubnetAddressPrefix` with value `10.112.0.0/20`. Replace all hard-coded values with new variable.
+## Task #1 - introduce variables in bsg ARM template
 
-## Task 2 - andd new `environment` variable (both in nsg and vnet templates)
+Add the following variables to the nsg ARM template
+| Variable |Value |
+|---|---|
+| environment | dev|
+| location | westeurope|
+| agwSubnetAddressPrefix | 10.112.16.128/25 |
+| aksSubnetAddressPrefix | 10.112.0.0/20 |
 
-Add new variable called `environment` with value `dev`.
+Reference variables wherever needed throughout your template.
 
-## Task 3 - use variable to define resource name
+## Task #2 - use variable to build nsg resource name
 
-Introduce new variables called `agwNsgName`, `agwNsgName` and `vnetName`. Use `concat` function to compose resource names by followed our naming convention (`iac-<environment>-agw-nsg`, `iac-<environment>-aks-nsg` and `iac-<environment>-vnet`).
-Use `agwNsgName`, `aksNsgName` and `vnetName` variables in resource definition instead of hard-coded values in both nsg and vnet template files.
+Add 2 new variables
 
-## Task 4 - add new `location` variable (both in nsg and vnet templates)
+| Variable | Value |
+|---|---|
+| agwNsgName | iac-{environment}-agw-nsg |
+| aksNsgName | iac-{environment}-aks-nsg|
 
-Introduce new variable `location` with value `westeurope`. Use `location` variable instead of hard-coded values in both nsg and vnet template files.
+Use `concat` function to compose resource names by followed our naming convention (`iac-<environment>-agw-nsg`, `iac-<environment>-aks-nsg`) and use earlier defined variable `environment` as a parameter for `concat` function.
+Reference `agwNsgName` and `aksNsgName` variables wherever needed throughout your template.
+
+Validate and deploy
+
+## Task #3 - introduce variables in vnet ARM template
+
+Add the following variables to the nsg ARM template
+| Variable |Value |
+|---|---|
+| environment | dev|
+| location | westeurope|
+| vnetAddressPrefix | 10.112.0.0/16 |
+| agwSubnetAddressPrefix | 10.112.16.128/25 |
+| aksSubnetAddressPrefix | 10.112.0.0/20 |
+
+Reference variables wherever needed throughout your template.
+
+## Task #4 - use variable to build nsg resource name
+
+Add 2 new variables
+
+| Variable | Value |
+|---|---|
+| vnetName | iac-{environment}-vnet |
+
+Use `concat` function to compose resource names by followed our naming convention (`iac-<environment>-vnet`) and use earlier defined variable `environment` as a parameter for `concat` function.
+Reference `vnetName` variable wherever needed throughout your template.
+
+Validate and deploy
 
 ## Next
 

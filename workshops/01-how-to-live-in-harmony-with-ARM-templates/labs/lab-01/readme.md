@@ -78,7 +78,7 @@ az group create -n iac-dev-rg -l westeurope --tags owner=team-platform env=dev d
 Create resource group for `prod` environment.
 
 ```bash
-az group create -n iac-prod-rg -l westeurope --tags owner=team-platform env=prod description="Workshop #1 resources for production environment" -o table
+az group create -n iac-prod-rg -l northeurope --tags owner=team-platform env=prod description="Workshop #1 resources for production environment" -o table
 ```
 
 ## Checkpoint for task #2 and #3
@@ -97,7 +97,7 @@ az group list -o table
 Name         Location    Status
 -----------  ----------  ---------
 iac-dev-rg   westeurope  Succeeded
-iac-prod-rg  westeurope  Succeeded
+iac-prod-rg  northeurope  Succeeded
 ```
 
 ## Task #4
