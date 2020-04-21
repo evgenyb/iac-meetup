@@ -1,9 +1,20 @@
 # lab-03 - provisioning of 2 Network Security Groups and one private virtual network
 
+In this lab we will provision the following components of out infrastructure for `dev` environment.
+
+![infra-dev](img/infra-dev.png)
+
+* 2 [network security groups](https://docs.microsoft.com/en-us/azure/virtual-network/security-overview)
+* [private virtual network](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) with 2 subnets
+
+Note. AKS and ApplicationGateway are outside of the scope of our labs, but will be covered at the part 2 the workshop...
+
 ## Estimated completion time - 20 min
 
 ## Useful links
 
+* [Network security groups](https://docs.microsoft.com/en-us/azure/virtual-network/security-overview)
+* [What is Azure Virtual Network?](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview)
 * [ARM template reference for Network Security Group](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/networksecuritygroups)
 * [ARM template reference for virtual Networks](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/virtualnetworks)
 * [ARM 101: Create a Network Security Group](https://github.com/Azure/azure-quickstart-templates/tree/master/101-security-group-create)

@@ -1,7 +1,12 @@
 # lab-11 - provision production environment
 
-Now it's time to provision production environment.
-Here is the production environment configuration
+Now it's time to provision our production environment.
+
+![infra-dev](img/infra-prod.png)
+
+Note. AKS and ApplicationGateway are outside of the scope of our labs, but will be covered at the part 2 the workshop...
+
+Here is the production environment configuration:
 
 | Parameter  | Value |
 |---|---|
