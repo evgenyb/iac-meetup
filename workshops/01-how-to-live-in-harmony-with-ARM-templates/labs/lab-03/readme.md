@@ -55,7 +55,7 @@ protocol: Tcp
 sourcePortRange: *
 destinationPortRange: 443
 sourceAddressPrefix: 10.112.16.128/25
-destinationAddressPrefix: 10.112.16.128/25
+destinationAddressPrefix: 10.112.0.0/20
 access: Allow
 priority: 10
 direction: Outbound
@@ -86,7 +86,7 @@ protocol: Tcp
 sourcePortRange: *
 destinationPortRange: 443
 sourceAddressPrefix: 10.112.16.128/25
-destinationAddressPrefix: 10.112.16.128/25
+destinationAddressPrefix: 10.112.0.0/20
 access: Allow
 priority: 100
 direction: Inbound
@@ -145,8 +145,6 @@ Deploy ARM template
 ```bash
 az group deployment create -g iac-dev-rg --template-file template.json
 ```
-
-## Task #4 (optional) - find an error in AKS-T443-OUT-ALLOW and AGW-T443-IN-ALLOW rules, fix it and deploy templates
 
 ## Checkpoint
 
