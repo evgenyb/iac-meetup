@@ -8,6 +8,7 @@ Variables are very powerful concept in ARM templates. You use variables to simpl
 
 * [Variables in Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-variables)
 * [concat() function](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-array#concat)
+* [Tutorial: Add variables to your ARM template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-tutorial-add-variables?tabs=azure-powershell)
 
 ## Task #1 (optional) - copy `lab-05` folder to `lab-07` folder
 

@@ -15,6 +15,7 @@ If we look at our example, the following values are candidates to be defined as 
 ## Useful links
 
 * [Parameters in Azure Resource Manager templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-parameters)
+* [Tutorial: Add parameters to your ARM template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-tutorial-add-parameters?tabs=azure-powershell)
 
 ## Task #1 (optional) - copy `lab-07` folder to `lab-08` folder
 

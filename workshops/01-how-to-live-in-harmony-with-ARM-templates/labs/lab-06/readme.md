@@ -2,6 +2,14 @@
 
 ## Estimated completion time - 15 min
 
+## Useful links
+
+* [Outputs in Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-outputs?tabs=azure-cli)
+* [resourceId() function](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-resource#resourceid)
+* [resourceGroup() function](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-resource#resourcegroup)
+* [concat() function](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-string#concat)
+* [Debugging ARM template deployments](https://azure.microsoft.com/nb-no/blog/debugging-arm-template-deployments/)
+
 ## Task #1 - cerate an empty ARM template
 
 For this lab we don't need any resources, because we will not deploy anything, therefore create an dummy ARM template file called `template.json` without any resources.
@@ -48,7 +56,6 @@ Debug your template and check the output section for the values
 ./debug.sh
 ```
 
-
 ## Task #3 - print current resource group location to ARM template `outputs`
 
 Create new `outputs` object called `inherited_loaction` type of `string`. Use `resourceGroup` function and print current resource group location.
@@ -68,13 +75,6 @@ Debug your template and check the output section for the values
 ```bash
 ./debug.sh
 ```
-
-## Useful links
-
-* [Outputs in Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-outputs?tabs=azure-powershell)
-* [resourceId function](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-resource#resourceid)
-* [resourceGroup](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-resource#resourcegroup)
-* [concat function](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-string#concat)
 
 ## Next
 

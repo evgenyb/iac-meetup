@@ -11,13 +11,13 @@ Then we will implement simple infrastructure component that consists of 2 networ
 And all remaining labs will be a set of refactoring tasks that will help us to improve out ARM templates and make them easy to maintain, update and introduce new environments.
 The reason I choose nsg and vnet as resources for the labs is because it takes very little time to provision them and since we will do a lot of refactoring, we will need to re-deploy them frequently.
 
-## Hint #1 for the workshop
+## Hint #1
 
 If you stack with implementing ARM template either because you are not familiar with the resources we will use during the workshop or because it's not that obvious from the documentation reference what property or parameter to use, feel free to implement that is described at the lab from the portal and then just export ARM template and see how it should actually be implemented. You can find `Export template` option at the right side menu.  
 
 This is in fact the fastest way to learn how to implement ARM template, especially for complex resources cush as VM, ApplicationGateways, APIM etc...
 
-## Hint #2 for the workshop
+## Hint #2
 
 Alternative option to learn ARM templates is to check the [Azure Quickstart Templates ](https://github.com/Azure/azure-quickstart-templates). Just search for the resource you want to implement and most likely you will find it there.
 
@@ -103,20 +103,17 @@ az account show
 
 ## Links
 
-[Azure Resource Manager overview](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/overview)
-
-[Azure Resource Manager templates overview](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/overview)
-
-[Understand the structure and syntax of Azure Resource Manager templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-syntax)
-
-[Tutorial: Create and deploy your first Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-tutorial-create-first-template?tabs=azure-cli)
-
-[ARM template functions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/linked-templates)
-
-[ARM template REST](https://docs.microsoft.com/en-us/rest/api/resources/#rest-operation-groups)
-
-[Network Security Group template reference](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/networksecuritygroups)
-
-[Virtual networks template reference](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/virtualnetworks)
-
-[Using linked and nested templates when deploying Azure resources](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/linked-templates)
+* [What is Azure Resource Manager?](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/overview)
+* [Azure Resource Manager templates overview](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/overview)
+* [Understand the structure and syntax of Azure Resource Manager templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-syntax)
+* [Parameters in Azure Resource Manager templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-parameters)
+* [Create Resource Manager parameter file](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/parameter-files)
+* [Variables in Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-variables)
+* [Outputs in Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-outputs?tabs=azure-powershell)
+* [User-defined functions in Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-user-defined-functions)
+* [Tutorial: Create and deploy your first Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-tutorial-create-first-template?tabs=azure-cli)
+* [ARM template functions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/linked-templates)
+* [ARM template REST](https://docs.microsoft.com/en-us/rest/api/resources/#rest-operation-groups)
+* [Network Security Group template reference](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/networksecuritygroups)
+* [Virtual networks template reference](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/virtualnetworks)
+* [Using linked and nested templates when deploying Azure resources](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/linked-templates)

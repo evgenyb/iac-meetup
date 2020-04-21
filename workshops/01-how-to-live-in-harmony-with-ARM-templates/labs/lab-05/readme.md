@@ -1,4 +1,4 @@
-# lab-05 - introducing master script
+# lab-05 - introducing master validation and deployment scripts
 
 During lab-04 we split one monolithic ARM template into set of small ARM templates located each in its own folder. We also implemented deployment and validation scripts than make our deployment and validation tasks easier. What we are missing now is possibility to deploy all our resources. The only way one can deploy both network security group resources and vnet is to manually go to each folder and execute `deploy.sh` script in correct order (remember, the monolithic template uses `dependson` concept to orchestrate in which order resources should be deployed).
 To solve this issue in our new structure, we need to implement "master" deployment script. The simplest version (which we will use) will look something like this:
