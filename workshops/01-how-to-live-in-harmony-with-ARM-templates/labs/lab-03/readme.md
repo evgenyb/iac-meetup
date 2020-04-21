@@ -1,4 +1,4 @@
-# lab-03 - provisioning of 2 Network Security Groups and one private virtual network
+# lab-03 - create ARM template to provision 2 Network Security Groups and one private virtual network
 
 In this lab we will provision the following components of out infrastructure for `dev` environment.
 
