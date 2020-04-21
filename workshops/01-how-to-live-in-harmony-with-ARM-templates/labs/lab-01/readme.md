@@ -1,4 +1,4 @@
-# Lab-01 - initialize environment and create resource groups
+# Lab-01 - initialize `az cli` environment and create resource groups
 
 ## Estimated completion time - 5 min
 

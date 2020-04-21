@@ -25,6 +25,8 @@ Create new json file called `template.json` under the `lab-02` folder. Copy and 
 }
 ```
 
+If you have [Azure Resource Manager (ARM) Tools](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools) VS Code plugin installed, you can use `arm!` snippet to create empty ARM template.
+
 ## Task #1 - validate ARM template deployment
 
 In terminal execute the following command from the folder where `template.json` file is located:
@@ -38,9 +40,9 @@ Succeeded  d508d10e-354f-4f7b-b53d-2d0bd312e392
 
 Argument `-g iac-dev-rg` or `--resource-group iac-dev-rg` is a resource group where you deploy your ARM template and `--template-file template.json` is the file containing ARM template.
 
-This command validates ARM template and if it's not valid it will show validation errors. Note that actually `--validate` command is not 100% guaranty that deployment will succeed, but you should know that there is validate option available.
+This command validates ARM template and if it's not valid it will show validation errors. Note that actually `validate` command is not 100% guaranty that deployment will succeed.
 
-## Task #2 - deploy and empty ARM template
+## Task #2 - deploy empty ARM template
 
 ```bash
 az group deployment create -g iac-dev-rg --template-file template.json -n empty-template-01-02-2020-11-22-11 -o table

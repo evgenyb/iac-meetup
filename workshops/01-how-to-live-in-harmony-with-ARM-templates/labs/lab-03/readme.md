@@ -2,6 +2,15 @@
 
 ## Estimated completion time - 20 min
 
+## Useful links
+
+* [ARM template reference for Network Security Group](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/networksecuritygroups)
+* [ARM template reference for virtual Networks](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/virtualnetworks)
+* [ARM 101: Create a Network Security Group](https://github.com/Azure/azure-quickstart-templates/tree/master/101-security-group-create)
+* [ARM 101: Virtual Network with two Subnets](https://github.com/Azure/azure-quickstart-templates/tree/master/101-vnet-two-subnets)
+* [how to define the order for deploying resources in ARM templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/define-resource-dependency)
+* [resourceId() function](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-resource#resourceid)
+
 ## Task #1 - Network Security Group for AGW subnet
 
 Create ARM template for Network Security Group called `iac-dev-agw-nsg` with 3 rules:
@@ -41,8 +50,7 @@ priority: 10
 direction: Outbound
 ```
 
-Use the following
-[ARM template reference for Network Security Group](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/networksecuritygroups) to learn more about Network Security Group resource properties.
+Hint. Try to use `arm-nsg` snippet of [Azure Resource Manager (ARM) Tools](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools) or check this example [ARM 101: Create a Network Security Group](https://github.com/Azure/azure-quickstart-templates/tree/master/101-security-group-create) for the Network Security Group ARM template syntax.
 
 Validate template
 
@@ -72,6 +80,8 @@ access: Allow
 priority: 100
 direction: Inbound
 ```
+
+Hint. Try to use `arm-nsg` snippet of [Azure Resource Manager (ARM) Tools](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools) or check this example [ARM 101: Create a Network Security Group](https://github.com/Azure/azure-quickstart-templates/tree/master/101-security-group-create) for the Network Security Group ARM template syntax.
 
 Validate template
 
@@ -103,12 +113,11 @@ Subnets:
     networkSecurityGroup.id: iac-dev-agw-nsg
 ```
 
-Use the following
-[ARM template reference for virtual Networks](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/virtualnetworks) to learn more about virtual Networks resource properties.
+Hint. Try to use `arm-nsg` snippet of [ARM template reference for virtual Networks](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/virtualnetworks) or check this example [ARM 101: Virtual Network with two Subnets](https://github.com/Azure/azure-quickstart-templates/tree/master/101-vnet-two-subnets) for the Virtual Network ARM template syntax.
 
 ### Hint #1
 
-Our subnet uses network security group that are described at the same template, therefore we should specify nsg resources as dependencies of vnet resource. Read more about [how to define the order for deploying resources in ARM templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/define-resource-dependency)  
+Our subnet uses network security group that are described at the same template, therefore we should specify nsg resources as dependencies of vnet resource. Read more about [how to define the order for deploying resources in ARM templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/define-resource-dependency)
 
 ### Hint #2
 
@@ -132,12 +141,6 @@ az group deployment create -g iac-dev-rg --template-file template.json
 
 * You should have one ARM template with 3 resources
 * You should see (at least) 3 deployments at the resource groups level
-
-## Useful links
-
-* [ARM 101: Create a Network Security Group](https://github.com/Azure/azure-quickstart-templates/tree/master/101-security-group-create)
-
-* [ARM 101: Virtual Network with two Subnets](https://github.com/Azure/azure-quickstart-templates/tree/master/101-vnet-two-subnets)
 
 ## Next
 
