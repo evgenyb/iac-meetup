@@ -11,7 +11,9 @@ Here is the production environment configuration
 | agwSubnetAddressPrefix | 10.100.16.128/25 |
 | aksSubnetAddressPrefix | 10.100.0.0/20 |
 
-## Task #1 - add parameters file for production environment for nsg ARM template
+## Task #1 (optional) - copy `lab-10` folder to `lab-11` folder
+
+## Task #2 - add parameters file for production environment for nsg ARM template
 
 Create `parameters-prod.json` file with the following parameters
 
@@ -22,7 +24,7 @@ Create `parameters-prod.json` file with the following parameters
 | agwSubnetAddressPrefix | 10.100.16.128/25 |
 | aksSubnetAddressPrefix | 10.100.0.0/20 |
 
-## Task 2 - add parameters file for production environment for vnet ARM template
+## Task #3 - add parameters file for production environment for vnet ARM template
 
 Create `parameters-prod.json` file with the following parameters
 
@@ -34,7 +36,7 @@ Create `parameters-prod.json` file with the following parameters
 | agwSubnetAddressPrefix | 10.100.16.128/25 |
 | aksSubnetAddressPrefix | 10.100.0.0/20 |
 
-## Task #3 - deploy production environment
+## Task #4 - deploy production environment
 
 Validate production template with master validation script
 

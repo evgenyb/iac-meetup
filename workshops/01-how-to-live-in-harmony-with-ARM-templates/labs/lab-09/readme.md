@@ -2,6 +2,11 @@
 
 Sending parameters to the deployment command works fine but it's noisy and not really practical. Instead, we can collect all parameters into parameters json file and provide this file as a parameter for the deployment script.
 
+## Useful links
+
+* [Parameters in Azure Resource Manager templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-parameters)
+* [Create Resource Manager parameter file](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/parameter-files)
+
 ## Task #1 (optional) - copy files from `lab-08` folder to `lab-09` folder
 
 ## Task #2 - create parameters file for nsg ARM template

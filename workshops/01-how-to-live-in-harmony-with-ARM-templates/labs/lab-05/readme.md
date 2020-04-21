@@ -13,12 +13,14 @@ cd ../02-vnet
 cd ..
 ```
 
-## Task #1 - implement master `validate.sh` bash (or powershell) script
+## Task #1 (optional) - copy `lab-04` folder to `lab-05` folder
+
+## Task #2 - implement master `validate.sh` bash (or powershell) script
 
 Implement `validate.sh` script that will execute `validate.sh` scripts from both `01-nsg` and `02-vnet` folders.
 Validate all resources with new master validation script.
 
-## Task #2 - implement master `deploy.sh` bash (or powershell) script
+## Task #3 - implement master `deploy.sh` bash (or powershell) script
 
 Implement `deploy.sh` script that will execute `deploy.sh` scripts from both `01-nsg` and `02-vnet` folders.
 Validate all resources with new master validation script.

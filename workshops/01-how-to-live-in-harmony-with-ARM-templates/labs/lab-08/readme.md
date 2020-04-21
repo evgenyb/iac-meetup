@@ -10,7 +10,13 @@ If we look at our example, the following values are candidates to be defined as 
 * agw subnet address prefix
 * vnet address prefix
 
-## Task #1 - introduce parameters to nsg ARM template
+## Useful links
+
+* [Parameters in Azure Resource Manager templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-parameters)
+
+## Task #1 (optional) - copy `lab-07` folder to `lab-08` folder
+
+## Task #2 - introduce parameters to nsg ARM template
 
 Add the following parameters to the nsg ARM template
 | Parameter  | Type | Default value | Parameter value (used by deployment script)|
@@ -38,13 +44,13 @@ az group deployment create -g iac-dev-rg --template-file template.json --paramet
 
 Note, that we need to use `--parameters` for each parameter.
 
-## Task #2 - change `validate.sh` and `deploy.sh` file
+## Task #3 - change `validate.sh` and `deploy.sh` file
 
 Apply corresponding changes to the `validate.sh` and `deploy.sh` files.
 
 Validate and deploy by using `validate.sh` and `deploy.sh` scripts.
 
-## Task #3 - introduce parameters to vnet ARM template
+## Task #4 - introduce parameters to vnet ARM template
 
 Add the following parameters to the nsg ARM template
 | Parameter  | Type | Default value | Parameter value (used by deployment script)|
@@ -73,7 +79,7 @@ az group deployment create -g iac-dev-rg --template-file template.json --paramet
 
 Note, that we need to use `--parameters` for each parameter.
 
-## Task #4 - change `validate.sh` and `deploy.sh` file
+## Task #5 - change `validate.sh` and `deploy.sh` file
 
 Apply corresponding changes to the `validate.sh` and `deploy.sh` files.
 

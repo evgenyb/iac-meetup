@@ -2,7 +2,14 @@
 
 Variables are very powerful concept in ARM templates. You use variables to simplify your templates. Rather than repeating complicated expressions throughout your template, you define a variable that contains the complicated expression. Then, you reference that variable as needed throughout your template.
 
-## Task #1 - introduce variables in bsg ARM template
+## Useful links
+
+* [Variables in Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-variables)
+* [concat() function](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-array#concat)
+
+## Task #1 (optional) - copy `lab-05` folder to `lab-07` folder
+
+## Task #2 - introduce variables in bsg ARM template
 
 Add the following variables to the nsg ARM template
 | Variable |Value |
@@ -14,7 +21,7 @@ Add the following variables to the nsg ARM template
 
 Reference variables wherever needed throughout your template.
 
-## Task #2 - use variable to build nsg resource name
+## Task #3 - use variable to build nsg resource name
 
 Add 2 new variables
 
@@ -28,7 +35,7 @@ Reference `agwNsgName` and `aksNsgName` variables wherever needed throughout you
 
 Validate and deploy
 
-## Task #3 - introduce variables in vnet ARM template
+## Task #4 - introduce variables in vnet ARM template
 
 Add the following variables to the nsg ARM template
 | Variable |Value |
@@ -41,7 +48,7 @@ Add the following variables to the nsg ARM template
 
 Reference variables wherever needed throughout your template.
 
-## Task #4 - use variable to build nsg resource name
+## Task #5 - use variable to build nsg resource name
 
 Add 2 new variables
 
