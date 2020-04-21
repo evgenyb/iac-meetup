@@ -7,7 +7,7 @@
 * 02 - ARM template structure and syntax
 * [lab-02](labs/lab-02/readme.md) - create, validate and deploy empty ARM template (10 min)
 * 03 - ARM Tools for Visual Studio Code
-* [lab-03](labs/lab-03/readme.md) - provisioning of 2 Network Security Groups and one private virtual network (20 min)
+* [lab-03](labs/lab-03/readme.md) - create ARM template to provision 2 Network Security Groups and one private virtual network
 * [lab-04](labs/lab-04/readme.md) - refactoring: splitting one ARM template to ARM template per resource type and move them into it's own folder (15 min)
 * [lab-05](labs/lab-05/readme.md) - introducing master validation and deployment scripts (10 min)
 * 04 - How to debug ARM templates
