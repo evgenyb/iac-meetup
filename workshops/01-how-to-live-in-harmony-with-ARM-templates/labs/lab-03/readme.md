@@ -1,5 +1,7 @@
 # lab-03 - provisioning of 2 Network Security Groups and one private virtual network
 
+## Estimated completion time - 20 min
+
 ## Task #1 - Network Security Group for AGW subnet
 
 Create ARM template for Network Security Group called `iac-dev-agw-nsg` with 3 rules:

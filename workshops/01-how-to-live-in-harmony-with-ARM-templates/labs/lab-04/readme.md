@@ -2,6 +2,8 @@
 
 The gaol for this lab is to refactor one big ARM template with 3 resources into 2 ARM templates: one for network security groups and one for private vnet. Splitting one big ARM template will reduce the size of the ARM template and will improve our structure. Later, if you want to implement CI/CD pipeline, it will be easier to setup commit triggers and only deploy resources that were changed. For example, if I added new security rule, I don't need to deploy vnet, etc...
 
+## Estimated completion time - 15 min
+
 ## Task #1 - copy `template.json` from `lab-03` into `lab-04` folder
 
 ## Task #2 - create new `template.json` file inside `01-nsg` folder and move nsg ARM resources section from `template.json` into this file

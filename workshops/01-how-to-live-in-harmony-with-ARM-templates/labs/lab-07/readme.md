@@ -2,6 +2,8 @@
 
 Variables are very powerful concept in ARM templates. You use variables to simplify your templates. Rather than repeating complicated expressions throughout your template, you define a variable that contains the complicated expression. Then, you reference that variable as needed throughout your template.
 
+## Estimated completion time - 15 min
+
 ## Useful links
 
 * [Variables in Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-variables)

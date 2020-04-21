@@ -1,5 +1,7 @@
 # Lab-02 - create, validate and deploy empty ARM template
 
+## Estimated completion time - 10 min
+
 The goal for this lab is to get familiar with the workflow and get some hands on experience on how to validate and deploy ARM templates.
 
 ## Task #1 - create an empty ARM template

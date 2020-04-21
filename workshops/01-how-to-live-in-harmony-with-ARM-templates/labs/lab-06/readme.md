@@ -1,5 +1,7 @@
 # lab-06 - tips and tricks, how to use output for debugging ARM templates
 
+## Estimated completion time - 15 min
+
 ## Task #1 - cerate an empty ARM template
 
 For this lab we don't need any resources, because we will not deploy anything, therefore create an dummy ARM template file called `template.json` without any resources.

@@ -11,6 +11,8 @@ Here is the production environment configuration
 | agwSubnetAddressPrefix | 10.100.16.128/25 |
 | aksSubnetAddressPrefix | 10.100.0.0/20 |
 
+## Estimated completion time - 5 min
+
 ## Task #1 (optional) - copy `lab-10` folder to `lab-11` folder
 
 ## Task #2 - add parameters file for production environment for nsg ARM template

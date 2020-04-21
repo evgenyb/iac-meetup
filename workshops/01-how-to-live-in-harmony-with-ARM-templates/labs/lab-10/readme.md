@@ -2,6 +2,8 @@
 
 All parameters we worked until now belongs to the `dev` environment. If we have several environments, we can introduce parameter file with the following convention `parameters-{environment}.json`. This way, we will have one ARM template at `template.json` and several parameters files, one per environment. During the deployment, we need to specify what environment we want to deploy to and use correct parameters file for deployment script and this is easily done with simple string function in the script.
 
+## Estimated completion time - 10 min
+
 ## Task #1 (optional) - copy `lab-09` folder to `lab-10` folder
 
 ## Task #2 - introduce environment specific parameters file for nsg ARM template

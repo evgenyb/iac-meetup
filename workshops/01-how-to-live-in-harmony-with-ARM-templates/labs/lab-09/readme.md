@@ -2,6 +2,8 @@
 
 Sending parameters to the deployment command works fine but it's noisy and not really practical. Instead, we can collect all parameters into parameters json file and provide this file as a parameter for the deployment script.
 
+## Estimated completion time - 10 min
+
 ## Useful links
 
 * [Parameters in Azure Resource Manager templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-parameters)

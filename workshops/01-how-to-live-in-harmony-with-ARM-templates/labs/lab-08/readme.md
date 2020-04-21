@@ -10,6 +10,8 @@ If we look at our example, the following values are candidates to be defined as 
 * agw subnet address prefix
 * vnet address prefix
 
+## Estimated completion time - 15 min
+
 ## Useful links
 
 * [Parameters in Azure Resource Manager templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-parameters)

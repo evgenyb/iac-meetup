@@ -13,6 +13,8 @@ cd ../02-vnet
 cd ..
 ```
 
+## Estimated completion time - 10 min
+
 ## Task #1 (optional) - copy `lab-04` folder to `lab-05` folder
 
 ## Task #2 - implement master `validate.sh` bash (or powershell) script
