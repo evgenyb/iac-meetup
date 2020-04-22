@@ -10,7 +10,7 @@
 * [concat() function](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-string#concat)
 * [Debugging ARM template deployments](https://azure.microsoft.com/nb-no/blog/debugging-arm-template-deployments/)
 
-## Task #1 - cerate an empty ARM template
+## Task #1 - create an empty ARM template
 
 For this lab we don't need any resources, because we will not deploy anything, therefore create an dummy ARM template file called `template.json` without any resources.
 

@@ -124,7 +124,7 @@ Subnets:
     networkSecurityGroup.id: iac-dev-agw-nsg
 ```
 
-Hint. Try to use `arm-nsg` snippet of [ARM template reference for virtual Networks](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/virtualnetworks) or check this example [ARM 101: Virtual Network with two Subnets](https://github.com/Azure/azure-quickstart-templates/tree/master/101-vnet-two-subnets) for the Virtual Network ARM template syntax.
+Hint. Try to use `arm-vnet` snippet of [ARM template reference for virtual Networks](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/virtualnetworks) or check this example [ARM 101: Virtual Network with two Subnets](https://github.com/Azure/azure-quickstart-templates/tree/master/101-vnet-two-subnets) for the Virtual Network ARM template syntax.
 
 ### Hint #1
 
