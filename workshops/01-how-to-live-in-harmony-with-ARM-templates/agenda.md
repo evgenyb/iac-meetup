@@ -4,7 +4,7 @@
 * 17:10 - 17:15 - Maxim and Azure Badges
 * 01 - Azure and ARM template introduction
 * [lab-01](labs/lab-01/readme.md) - initialize `az cli` environment and create resource groups (5 min)
-* 02 - ARM template structure and syntax and [ARM Tools](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools) for Visual Studio Code
+* 02 - [ARM template structure and syntax](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-syntax) and [ARM Tools](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools) for Visual Studio Code
 * [lab-02](labs/lab-02/readme.md) - create, validate and deploy empty ARM template (10 min)
 * [lab-03](labs/lab-03/readme.md) - create ARM template to provision 2 Network Security Groups and one private virtual network
 * [lab-04](labs/lab-04/readme.md) - refactoring: splitting one ARM template to ARM template per resource type and move them into it's own folder (15 min)
