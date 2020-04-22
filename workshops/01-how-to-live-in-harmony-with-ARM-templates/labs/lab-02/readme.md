@@ -32,7 +32,7 @@ If you have [Azure Resource Manager (ARM) Tools](https://marketplace.visualstudi
 In terminal execute the following command from the folder where `template.json` file is located:
 
 ```bash
-az group deployment validate -g iac-dev-rg --template-file template.json -o table
+az deployment group validate -g iac-dev-rg --template-file template.json -o table
 Result     CorrelationId
 ---------  ------------------------------------
 Succeeded  d508d10e-354f-4f7b-b53d-2d0bd312e392
@@ -45,7 +45,7 @@ This command validates ARM template and if it's not valid it will show validatio
 ## Task #2 - deploy empty ARM template
 
 ```bash
-az group deployment create -g iac-dev-rg --template-file template.json -n empty-template-01-02-2020-11-22-11 -o table
+az deployment group create -g iac-dev-rg --template-file template.json -n empty-template-01-02-2020-11-22-11 -o table
  - Running ..
  Name      ResourceGroup    State      Timestamp                         Mode
 --------  ---------------  ---------  --------------------------------  -----------
@@ -61,7 +61,7 @@ Note, it's a good practice to always specify deployment name, make it self expla
 You can find all deployments in resource group by running this command:
 
 ```bash
-az group deployment list -g iac-dev-rg  -o table
+az deployment group list -g iac-dev-rg  -o table
 Name                                ResourceGroup    State      Timestamp                         Mode       
 ----------------------------------  ---------------  ---------  --------------------------------  -----------
 template                            iac-dev-rg       Succeeded  2020-04-11T20:54:06.360836+00:00  Incremental
