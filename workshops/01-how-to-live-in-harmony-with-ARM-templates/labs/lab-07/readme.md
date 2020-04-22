@@ -19,8 +19,6 @@ Add the following variables to the nsg ARM template
 |---|---|
 | environment | dev|
 | location | westeurope|
-| agwSubnetAddressPrefix | 10.112.16.128/25 |
-| aksSubnetAddressPrefix | 10.112.0.0/20 |
 | agwNsgName | iac-{environment}-agw-nsg |
 | aksNsgName | iac-{environment}-aks-nsg|
 
