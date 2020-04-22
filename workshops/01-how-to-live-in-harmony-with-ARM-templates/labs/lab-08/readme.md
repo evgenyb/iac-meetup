@@ -60,7 +60,7 @@ Add the following parameters to the nsg ARM template
 |---|---|---|---|
 | environment | string | | dev|
 | location | string | westeurope | westeurope|
-| vnetAddressPrefix | securestring | | 110.112.0.0/16 |
+| vnetAddressPrefix | securestring | | 10.112.0.0/16 |
 | agwSubnetAddressPrefix | securestring | | 10.112.16.128/25 |
 | aksSubnetAddressPrefix | securestring | | 10.112.0.0/20 |
 
