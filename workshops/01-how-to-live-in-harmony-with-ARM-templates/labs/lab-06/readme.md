@@ -18,13 +18,13 @@ Create new script called `debug.sh` with deployment command
 (use powershell equivalent if you use PS)
 
 ```bash
-az group deployment create -g iac-dev-rg --template-file template.json --verbose
+az deployment group create -g iac-dev-rg --template-file template.json --verbose
 ```
 
 The output of this command will look something like that:
 
 ```txt
-$ az group deployment create -g iac-dev-rg --template-file template.json
+$ az deployment group create -g iac-dev-rg --template-file template.json
 {
   "id": "/subscriptions/<your-subscription-id>/resourceGroups/iac-dev-rg/providers/Microsoft.Resources/deployments/template",
   "location": null,

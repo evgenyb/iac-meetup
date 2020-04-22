@@ -26,15 +26,13 @@ Add the following parameters to the nsg ARM template
 |---|---|---|---|
 | environment | string | | dev|
 | location | string | westeurope | westeurope|
-| agwSubnetAddressPrefix | securestring | | 10.112.16.128/25 |
-| aksSubnetAddressPrefix | securestring | | 10.112.0.0/20 |
 
 Use `[parameters('<parameter-name>')]` construct in the template.
 
 ### Validate template (script is not completed)
 
 ```bash
-az group deployment validate -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev ...
+az deployment group validate -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev ...
 ```
 
 Note, that we need to use `--parameters` for each parameter.
@@ -42,7 +40,7 @@ Note, that we need to use `--parameters` for each parameter.
 ### Deploy template (script is not completed)
 
 ```bash
-az group deployment create -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev ...
+az deployment group create -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev ...
 ```
 
 Note, that we need to use `--parameters` for each parameter.
@@ -69,7 +67,7 @@ Use `[parameters('<parameter-name>')]` construct in the template.
 ### Validate template (script is not completed)
 
 ```bash
-az group deployment validate -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev ...
+az deployment group validate -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev ...
 ```
 
 Note, that we need to use `--parameters` for each parameter.
@@ -77,7 +75,7 @@ Note, that we need to use `--parameters` for each parameter.
 ### Deploy template (script is not completed)
 
 ```bash
-az group deployment create -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev ...
+az deployment group create -g iac-dev-rg --template-file template.json --parameters location=westeurope --parameters environment=dev ...
 ```
 
 Note, that we need to use `--parameters` for each parameter.

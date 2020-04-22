@@ -16,19 +16,18 @@ Sending parameters to the deployment command works fine but it's noisy and not r
 Create `parameters.json` file at the `01-nsg` folder.
 Add the following parameters to this file.
 
-Hint. Try to use `armp!` and `arm-param` snippets of `Azure Resource Manager (ARM) Tools`.
+Hint 1: Try to use `armp!` and `arm-param` snippets of `Azure Resource Manager (ARM) Tools`.
+Hint 2: VS Code can autogenerate parameter file for you. Open your `template.json` file, press **F1** and from the menu select "Azure Resource Manager Tools: Select/Create Parameter file...". Choose "new" and "all parameters". Choose a name for your file and fill in missing values.
 
 | Parameter  | Value |
 |---|---|
 | environment | dev |
 | location | westeurope |
-| agwSubnetAddressPrefix | 10.112.16.128/25 |
-| aksSubnetAddressPrefix | 10.112.0.0/20 |
 
 ## Validate ARM template
 
 ```bash
-az group deployment validate -g iac-dev-rg --template-file template.json --parameters @parameters.json -o table
+az deployment group validate -g iac-dev-rg --template-file template.json --parameters @parameters.json -o table
 ```
 
 Note that this time we use `parameters.json` as a value for `--parameters` attribute.
@@ -36,7 +35,7 @@ Note that this time we use `parameters.json` as a value for `--parameters` attri
 ## Deploy ARM template
 
 ```bash
-az group deployment create -g iac-dev-rg --template-file template.json --parameters @parameters.json -o table
+az deployment group create -g iac-dev-rg --template-file template.json --parameters @parameters.json -o table
 ```
 
 Note that this time we use `parameters.json` as a value for `--parameters` attribute.
@@ -52,7 +51,8 @@ Validate and deploy by using `validate.sh` and `deploy.sh` scripts.
 Create `parameters.json` file at the `02-vnet` folder.
 Add the following parameters to this file.
 
-Hint. Try to use `armp!` and `arm-param` snippets of `Azure Resource Manager (ARM) Tools`.
+Hint 1: Try to use `armp!` and `arm-param` snippets of `Azure Resource Manager (ARM) Tools`.
+Hint 2: VS Code can autogenerate parameter file for you. Open your `template.json` file, press **F1** and from the menu select "Azure Resource Manager Tools: Select/Create Parameter file...". Choose "new" and "all parameters". Choose a name for your file and fill in missing values.
 
 | Parameter  | Value |
 |---|---|
@@ -65,7 +65,7 @@ Hint. Try to use `armp!` and `arm-param` snippets of `Azure Resource Manager (AR
 ## Validate ARM template
 
 ```bash
-az group deployment validate -g iac-dev-rg --template-file template.json --parameters @parameters.json -o table
+az deployment group validate -g iac-dev-rg --template-file template.json --parameters @parameters.json -o table
 ```
 
 Note that this time we use `parameters.json` as a value for `--parameters` attribute.
@@ -73,7 +73,7 @@ Note that this time we use `parameters.json` as a value for `--parameters` attri
 ## Deploy ARM template
 
 ```bash
-az group deployment create -g iac-dev-rg --template-file template.json --parameters @parameters.json -o table
+az deployment group create -g iac-dev-rg --template-file template.json --parameters @parameters.json -o table
 ```
 
 Note that this time we use `parameters.json` as a value for `--parameters` attribute.

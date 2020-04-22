@@ -57,7 +57,7 @@ destinationPortRange: 443
 sourceAddressPrefix: 10.112.16.128/25
 destinationAddressPrefix: 10.112.0.0/20
 access: Allow
-priority: 100
+priority: 102
 direction: Outbound
 ```
 
@@ -66,13 +66,13 @@ Hint. Try to use `arm-nsg` snippet of [Azure Resource Manager (ARM) Tools](https
 Validate template
 
 ```bash
-az group deployment validate --template-file template.json -g iac-dev-rg
+az deployment group validate --template-file template.json -g iac-dev-rg
 ```
 
 Deploy ARM template
 
 ```bash
-az group deployment create -g iac-dev-rg --template-file template.json
+az deployment group create -g iac-dev-rg --template-file template.json
 ```
 
 ## Task #2 - create Network Security Group for AKS subnet
@@ -97,13 +97,13 @@ Hint. Try to use `arm-nsg` snippet of [Azure Resource Manager (ARM) Tools](https
 Validate template
 
 ```bash
-az group deployment validate --template-file template.json -g iac-dev-rg
+az deployment group validate --template-file template.json -g iac-dev-rg
 ```
 
 Deploy ARM template
 
 ```bash
-az group deployment create -g iac-dev-rg --template-file template.json
+az deployment group create -g iac-dev-rg --template-file template.json
 ```
 
 ## Task #3 - create new private Virtual Network
@@ -137,13 +137,13 @@ To specify `nsg` for subnet definition, use `networkSecurityGroup` property an s
 Validate template
 
 ```bash
-az group deployment validate --template-file template.json -g iac-dev-rg
+az deployment group validate --template-file template.json -g iac-dev-rg
 ```
 
 Deploy ARM template
 
 ```bash
-az group deployment create -g iac-dev-rg --template-file template.json
+az deployment group create -g iac-dev-rg --template-file template.json
 ```
 
 ## Checkpoint
