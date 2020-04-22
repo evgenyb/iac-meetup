@@ -1,4 +1,4 @@
-# This is the first workshop in the serious of hands-on workshops
+# This is the first workshop in the series of hands-on workshops
 
 At this workshop I will share some of my experience and tips & tricks on how I use ARM templates to implement complex infrastructure. You will learn how to use template functions to simplify multi-environment configuration, how to structure your ARM templates so it’s easy to work with them.
 
