@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "environment": {
+            "value": "dev"
+        },
+        "location": {
+            "value": "westeurope"
+        },
+        "agwSubnetAddressPrefix": {
+            "value": "10.112.16.128/25"
+        },
+        "aksSubnetAddressPrefix": {
+            "value": "10.112.0.0/20"
+        }
+    }
+}

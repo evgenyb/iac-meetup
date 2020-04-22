@@ -1,0 +1,22 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "variables": {
+        "environment": "dev"
+    },
+    "resources": [],
+    "outputs": {
+        "nsgName": {
+            "type": "string",
+            "value": "[concat('iac-', variables('environment'), '-aks-nsg')]"
+        },
+        "location": {
+            "type": "string",
+            "value": "[resourceGroup().location]"
+        },
+        "resource-id": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/networkSecurityGroups', 'iac-dev-aks-nsg')]"
+        }
+    }
+}

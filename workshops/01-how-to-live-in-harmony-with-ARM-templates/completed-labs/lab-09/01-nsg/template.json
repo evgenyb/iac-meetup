@@ -1,0 +1,101 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "environment": {
+           "type": "string"
+        },
+        "location": {
+           "type": "string",
+           "defaultValue": "westeurope"
+        },
+        "agwSubnetAddressPrefix": {
+           "type": "securestring"
+        },
+        "aksSubnetAddressPrefix": {
+           "type": "securestring"
+        }
+    },
+    "variables": {
+        "agwNsgName": "[concat('iac-', parameters('environment'), '-agw-nsg')]",
+        "aksNsgName": "[concat('iac-', parameters('environment'), '-aks-nsg')]"
+    },
+    "resources": [
+        {
+            "name": "[variables('agwNsgName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-11-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "INT-T443-IN-ALLOW",
+                        "properties": {
+                            "description": "",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "443",
+                            "sourceAddressPrefix": "Internet",
+                            "destinationAddressPrefix": "[parameters('agwSubnetAddressPrefix')]",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "INT-T80-IN-ALLOW",
+                        "properties": {
+                            "description": "",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "80",
+                            "sourceAddressPrefix": "Internet",
+                            "destinationAddressPrefix": "[parameters('agwSubnetAddressPrefix')]",
+                            "access": "Allow",
+                            "priority": 101,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "AKS-T443-OUT-ALLOW",
+                        "properties": {
+                            "description": "",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "443",
+                            "sourceAddressPrefix": "[parameters('aksSubnetAddressPrefix')]",
+                            "destinationAddressPrefix": "[parameters('agwSubnetAddressPrefix')]",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Outbound"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('aksNsgName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-11-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "AGW-T443-IN-ALLOW",
+                        "properties": {
+                            "description": "",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "443",
+                            "sourceAddressPrefix": "[parameters('agwSubnetAddressPrefix')]",
+                            "destinationAddressPrefix": "[parameters('aksSubnetAddressPrefix')]",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "variables": {
+        "environment": "dev",
+        "location": "westeurope",
+        "vnetAddressPrefix": "10.112.0.0/16",
+        "agwSubnetAddressPrefix": "10.112.16.128/25",
+        "aksSubnetAddressPrefix": "10.112.0.0/20",
+        "vnetName": "[concat('iac-', variables('environment'), '-vnet')]",
+        "agwNsgName": "[concat('iac-', variables('environment'), '-agw-nsg')]",
+        "aksNsgName": "[concat('iac-', variables('environment'), '-aks-nsg')]"
+    },
+    "resources": [
+        {
+            "name": "[variables('vnetName')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2019-11-01",
+            "location": "[variables('location')]",
+            "tags": {
+                "displayName": "iac-dev-vnet"
+            },
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('vnetAddressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "aks-net",
+                        "properties": {
+                            "addressPrefix": "[variables('aksSubnetAddressPrefix')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('aksNsgName'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "agw-net",
+                        "properties": {
+                            "addressPrefix": "[variables('agwSubnetAddressPrefix')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('agwNsgName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

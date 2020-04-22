@@ -1,0 +1,65 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+         "environment": {
+           "type": "string"
+        },
+        "location": {
+           "type": "string",
+           "defaultValue": "westeurope"
+        },
+        "vnetAddressPrefix": {
+           "type": "securestring"
+        },
+        "agwSubnetAddressPrefix": {
+           "type": "securestring"
+        },
+        "aksSubnetAddressPrefix": {
+           "type": "securestring"
+        }
+    },
+    "variables": {
+        "vnetName": "[concat('iac-', parameters('environment'), '-vnet')]",
+        "agwNsgName": "[concat('iac-', parameters('environment'), '-agw-nsg')]",
+        "aksNsgName": "[concat('iac-', parameters('environment'), '-aks-nsg')]"
+    },
+    "resources": [
+        {
+            "name": "[variables('vnetName')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2019-11-01",
+            "location": "[parameters('location')]",
+            "tags": {
+                "displayName": "iac-dev-vnet"
+            },
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('vnetAddressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "aks-net",
+                        "properties": {
+                            "addressPrefix": "[parameters('aksSubnetAddressPrefix')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('aksNsgName'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "agw-net",
+                        "properties": {
+                            "addressPrefix": "[parameters('agwSubnetAddressPrefix')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('agwNsgName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
