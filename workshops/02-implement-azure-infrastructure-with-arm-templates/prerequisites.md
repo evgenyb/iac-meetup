@@ -2,7 +2,7 @@
 
 ## Complete all labs from workshop #1
 
-You should complete all labs from [workshop #1](../01-how-to-live-in-harmony-with-ARM-templates/agenda.md). This is important because we will use a lot of techniques introduced during that workshop, so, please invest some time (you need approx. 4-5 hours) and go through the [labs](../01-how-to-live-in-harmony-with-ARM-templates/agenda.md).
+If you didn't attend previous workshop, I recommend you to complete all labs from [workshop #1](../01-how-to-live-in-harmony-with-ARM-templates/agenda.md). This is important because we will use a lot of techniques introduced during that workshop, so, please invest some time (you need approx. 4-5 hours) and work with [labs](../01-how-to-live-in-harmony-with-ARM-templates/agenda.md).
 
 ## Laptop
 
