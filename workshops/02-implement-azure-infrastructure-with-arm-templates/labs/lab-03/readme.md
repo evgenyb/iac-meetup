@@ -65,8 +65,25 @@ Try to deploy storage account to the `blue` environment:
 ./deploy.sh blue local-run
 ```
 
+## Task #5 - commit and push your changes
+
+```bash
+git add .
+git comment -m "Finish lab-03"
+git push
+```
+
 ## Checkpoint
 
+You should now have storage account provisioned at `iac-ws2-blue-rg` and static web site should be enabled.
+
+You should have no changes at your repository
+
+```bash
+git status
+...
+nothing to commit, working tree clean
+```
 
 ## Next
 

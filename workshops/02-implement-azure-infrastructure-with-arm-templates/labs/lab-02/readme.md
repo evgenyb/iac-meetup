@@ -102,6 +102,14 @@ infrastructure
 
 Your template should be valid for both environments.
 
+You should have no changes at your repository
+
+```bash
+git status
+...
+nothing to commit, working tree clean
+```
+
 ## Next
 
 [<<< Go to lab-01](../lab-01/readme.md) | [Go to lab-03 >>>](../lab-03/readme.md) 
