@@ -79,6 +79,14 @@ Validate your template:
 ./validate.sh green
 ```
 
+## Task #5 - commit and push your changes
+
+```bash
+git add .
+git comment -m "Finish lab-02"
+git push
+```
+
 ## Checkpoint
 
 You should have the following files and folders structure.
