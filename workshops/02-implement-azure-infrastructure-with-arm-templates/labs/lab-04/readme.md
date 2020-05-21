@@ -52,11 +52,13 @@ Here is step-by-step guide how to do it:
 ### Select template
 
 ![step14](images/step1-4.png)
+
 We want to build our build from scratch, therefore select `Empty job`
 
 ### Configure build agent specifications
 
 ![step15](images/step1-5.png)
+
 We want to use `ubuntu-16.04`
 
 ### Add `Copy files` task
@@ -97,15 +99,19 @@ We want to use `ubuntu-16.04`
 ### Configure build Triggers
 
 ![step110](images/step1-10.png)
+
 * Enable continuous integration
 * Select to changes from what branch we want to trigger this build. We will use `master` branch
 * Add `Path filters`
+
 ![step111](images/step1-11.png)
+
 * Specify to the changes from what folder we want to trigger this build. We will use `master`. We only want this build to start when storage account ARM template, parameters or script files are changed, therefore we use `infrastructure/arm/01-storage-account`. If you have different folder structure, please adjust this value.
 
 ### Configure build number format
 
 ![step112](images/step1-12.png)
+
 * We will use `storage-account-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)` pattern for build number
 
 ### Give your build a name
@@ -124,21 +130,28 @@ Pipeline is ready and you can find it under the list of pipelines. Since we neve
 ## Task #2 - run pipeline manually
 
 ![step21](images/step2-1.png)
+
 Open build and click `Run pipeline`.
+
 ![step22](images/step2-2.png)
 You can specify from what branch you want to build. We use `master`, so just click `Run`
 
 Now build start running. You can check that the name of the build is follows your build naming convention. In my case it's `storage-account-master-20200521.1`.
+
 ![step22](images/step2-3.png)
+
 You can now check build logs, by clicking to `Agent job 1` link...
 
 ![step22](images/step2-4.png)
+
 Here at the left pane you can  select different build tasks and you will see logs at the right panel. In this example, I selected `Copy storage account ARM templates` and it shows what files were copied.
 
 Now we can check if artifacts were published
+
 ![step22](images/step2-5.png)
 
 and we can check what files are included into the artifact
+
 ![step22](images/step2-6.png)
 
 ## Task #3 - start pipeline by trigger
@@ -164,6 +177,7 @@ git push
 ```
 
 Then go to Azure DevOps and check that `storage-account` build is running...
+
 ![step3](images/step3-1.png)
 
 ## Checkpoint
