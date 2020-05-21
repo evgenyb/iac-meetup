@@ -19,9 +19,7 @@ Therefore our storage account deployment script will do 2 things:
 
 ## Task #1 - create deployment script
 
-Create `deploy.sh` file with 
-
-Here is the list of requirements for the script:
+Create `deploy.sh` file followed the following list of requirements:
 
 * the name for the script should be `deploy.sh`
 * if should have 2 input parameters
@@ -77,6 +75,10 @@ git push
 
 You should now have storage account provisioned at `iac-ws2-blue-rg` and static web site should be enabled.
 
+You can check `Static website` settings at at the portal and it should be `Enabled`.
+
+![img](images/sa-static-web.png)
+
 You should have no changes at your repository
 
 ```bash
@@ -87,4 +89,4 @@ nothing to commit, working tree clean
 
 ## Next
 
-[<<< Go to lab-02](../lab-02/readme.md) | [Go to lab-04 >>>](../lab-04/readme.md) 
+[Go to lab-04](../lab-04/readme.md)
