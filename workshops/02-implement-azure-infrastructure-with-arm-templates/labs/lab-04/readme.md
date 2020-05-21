@@ -31,13 +31,16 @@ We want our build pipeline to do the following things:
 
 Here is step-by-step guide how to do it:
 
-1. Create new pipeline
+### Create new pipeline
+
 ![step11](images/step1-1.png)
 
-2. Since we want to create classic build, choose `Use the classic editor`
+### Since we want to create classic build, choose `Use the classic editor`
+
 ![step12](images/step1-2.png)
 
-3. Configure source code options
+### Configure source code options
+
 ![step13](images/step1-3.png)
 
 * Since our git repository hosted under Azure DevOpe, select `Azure Repos Git`.
@@ -46,15 +49,18 @@ Here is step-by-step guide how to do it:
 * (optional) If you want to build from other branch, select branch
 * Click `Continue`
 
-4. Select template
+### Select template
+
 ![step14](images/step1-4.png)
 We want to build our build from scratch, therefore select `Empty job`
 
-5. Configure build agent specifications
+### Configure build agent specifications
+
 ![step15](images/step1-5.png)
 We want to use `ubuntu-16.04`
 
-6. Add `Copy files` task
+### Add `Copy files` task
+
 ![step16](images/step1-6.png)
 
 * Select `Agent job 1`
@@ -62,7 +68,8 @@ We want to use `ubuntu-16.04`
 * Type `copy` in the search field
 * From the list select task called `Copy files` and click `Add`
 
-7. Configure `Copy files` task
+### Configure `Copy files` task
+
 ![step17](images/step1-7.png)
 
 * Give a task a name, for example, `Copy storage account ARM templates`
@@ -70,7 +77,8 @@ We want to use `ubuntu-16.04`
 * Specify your content filtering rules. For our case, we can use the default one.
 * Specify `Target Folder` where files will be copied to. We will use the default one `$(Build.ArtifactStagingDirectory)`
 
-8. Add `Publish build artifacts` task
+### Add `Publish build artifacts` task
+
 ![step18](images/step1-8.png)
 
 * Select `Agent job 1`
@@ -78,14 +86,16 @@ We want to use `ubuntu-16.04`
 * Type `publish build` in the search field
 * From the list select task called `Publish build artifacts` and click `Add`
 
-9. Configure `Publish build artifacts` task
+### Configure `Publish build artifacts` task
+
 ![step19](images/step1-9.png)
 
 * Give a task a name, for example, `Publish storage account ARM templates artifacts`
 * Specify `Path to publish` - the folder or file path to publish. We will use the path where we copied our ARM template files at `Copy files` step - $(Build.ArtifactStagingDirectory)
 * Specify `Artifact name` - the name of the artifact to create in the publish location.
 
-10. Configure build Triggers
+### Configure build Triggers
+
 ![step110](images/step1-10.png)
 * Enable continuous integration
 * Select to changes from what branch we want to trigger this build. We will use `master` branch
@@ -93,15 +103,18 @@ We want to use `ubuntu-16.04`
 ![step111](images/step1-11.png)
 * Specify to the changes from what folder we want to trigger this build. We will use `master`. We only want this build to start when storage account ARM template, parameters or script files are changed, therefore we use `infrastructure/arm/01-storage-account`. If you have different folder structure, please adjust this value.
 
-11. Configure build number format
+### Configure build number format
+
 ![step112](images/step1-12.png)
 * We will use `storage-account-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)` pattern for build number
 
-12. Give your build a name
+### Give your build a name
+
 ![step113](images/step1-13.png)
 We will use `storage-account` as a build name
 
-13. Save your build pipeline
+### Save your build pipeline
+
 ![step114](images/step1-14.png)
 You can either just `Save` or you `Save & queue`
 
@@ -109,6 +122,7 @@ Pipeline is ready and you can find it under the list of pipelines. Since we neve
 ![step115](images/step1-15.png)
 
 ## Task #2 - run pipeline manually
+
 ![step21](images/step2-1.png)
 Open build and click `Run pipeline`.
 ![step22](images/step2-2.png)
@@ -121,10 +135,40 @@ You can now check build logs, by clicking to `Agent job 1` link...
 ![step22](images/step2-4.png)
 Here at the left pane you can  select different build tasks and you will see logs at the right panel. In this example, I selected `Copy storage account ARM templates` and it shows what files were copied.
 
+Now we can check if artifacts were published
 ![step22](images/step2-5.png)
+
+and we can check what files are included into the artifact
+![step22](images/step2-6.png)
+
+## Task #3 - start pipeline by trigger
+
+Now let's check that our trigger is configured properly. If you apply any change to any of the files inside the `infrastructure/arm/01-storage-account` folder. For example, add extra line to the end of `template.json` file, then commit and push change to git.
+
+```bash
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   infrastructure/arm/01-storage-account/template.json
+```
+
+```bash
+git add .
+git commit -m "Testing build trigger"
+git push
+```
+
+Then go to Azure DevOps and check that `storage-account` build is running...
+![step3](images/step3-1.png)
 
 ## Checkpoint
 
+You now should have build pipeline `storage-account` that publishes storage account ARM templates and scripts as Azure DevOps artifacts and triggers automatically every time you apply changes to storage account ARM templates, parameters or deployment script.
 
 You should have no changes at your repository
 
