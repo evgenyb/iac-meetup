@@ -27,10 +27,13 @@ Let's follow the following conventions:
 | Validation script | validate.sh |
 | Deployment script | deploy.sh |
 | Deployment name | {type}-yyyyMMdd-hhmmss |
-| Resource Group | iac-ws2-{slot}-rg |
-| Storage accounts | iacws2{user}{slot}sa |
+| Environment specific Resource Group | iac-ws2-{environment}-rg |
+| Base Resource Group | iac-ws2-rg |
+| Storage accounts | iacws2{user}{environment}sa |
+| Front Door | iac-ws2-{user}-fd |
+| Azure pipeline YML file | {name}-pipeline.yaml |
 
 where
 
-* `slot` - can be either `blue` or `green`
+* `environment` - can be either `blue` or `green`
 * `user` - something that will differentiate you from other participants. Storage account and Front Door products register names in DNS, therefore the name should be globally unique

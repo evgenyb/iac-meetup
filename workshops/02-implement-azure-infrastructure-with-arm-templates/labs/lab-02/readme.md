@@ -1,4 +1,4 @@
-# Lab-02 - create ARM template for storage account
+# Lab-02 - create storage account ARM template
 
 The goals for this lab are:
 
@@ -57,7 +57,7 @@ Create 2 parameter files called `parameters-blue.json` and `parameters-green.jso
 
 ## Task #4 - create validate script
 
-Now let's create validation script.
+Create `validate.sh` script.
 Note that `storageAccountName` should follow [naming convention](../../conventions.md) and should be composed as `iacws2{user}{slot}sa`.
 We want to use the same script to validate template for both `blue` and `green` environments, therefore environment will be sent as an input parameter.
 
