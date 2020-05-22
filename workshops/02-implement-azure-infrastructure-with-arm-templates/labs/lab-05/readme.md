@@ -150,7 +150,32 @@ You can find release in the release list.
 
 ![task-2-8](images/task-2-8.png)
 
+## Task #3 - check CI/CD integration
+
+At this point we have almost 100% automated CI/CD pipeline. `storage-account` build is automatically starting with every commit to the ARM templates and release pipeline is configured to automatically start after each new successful build. 
+
+Let's test it.
+
+* Change storage account ARM template
+* Commit and push changes
+
+```bash
+git add .
+git commit -m "Testing CI/CD"
+git push
+```
+
+* Go to Azure DevOps and check that `storage-account` build is running...
+
+![task-3-1](images/task-3-1.png)
+
+* Wait until build is finished and check that new `storage-account` release was created
+
+![task-3-2](images/task-3-2.png)
+
 ## Checkpoint
+
+Now we have both build and release pipelines and we can deploy our infrastructure changes both from local PC and via Azure DevOps pipelines. Note, it's the same script we use both at pipelines and locally.
 
 You should have no changes at your repository
 
