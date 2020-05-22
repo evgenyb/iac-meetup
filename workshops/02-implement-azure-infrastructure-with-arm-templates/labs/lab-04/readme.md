@@ -21,7 +21,7 @@ There are 2 ways you can implement build pipelines in Azure DevOps: classic (aka
 * [Azure Pipelines documentation](https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=azure-devops)
 * [YAML schema reference](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema)
 
-## Task #1 - create `storage-account-ci` build pipeline
+## Task #1 - create `storage-account` build pipeline
 
 We want our build pipeline to do the following things:
 
