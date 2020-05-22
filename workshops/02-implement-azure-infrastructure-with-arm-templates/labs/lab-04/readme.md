@@ -176,7 +176,7 @@ git commit -m "Testing build trigger"
 git push
 ```
 
-Then go to Azure DevOps and check that `storage-account` build is running...
+Go to Azure DevOps and check that `storage-account` build is running...
 
 ![step3](images/step3-1.png)
 
