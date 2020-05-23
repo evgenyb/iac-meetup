@@ -1,0 +1,16 @@
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - infrastructure/arm/02-front-door/*
+steps:
+- task: AzureCLI@2
+  displayName: 'Deploy Front Door'
+  inputs:
+    azureSubscription: 'evgeny.borzenin (5d541385-7526-4b12-bf15-69857e9b21c4)'
+    scriptType: bash
+    scriptPath: 'infrastructure/arm/02-front-door/deploy.sh'
+    arguments: '$(Build.BuildNumber)'
+    workingDirectory: 'infrastructure/arm/02-front-door'
