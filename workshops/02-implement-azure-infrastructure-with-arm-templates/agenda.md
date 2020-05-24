@@ -1,5 +1,7 @@
 # Workshop agenda
 
+![logo](images/iac-user-group-logo.png)
+
 * 17:05 - 17:10 - welcome + practical info
 * 17:10 - 17:15 - MS Azure Badges
 * [lab-01](labs/lab-01/readme.md) - initialize `az cli` environment and create resource groups (xx min)
