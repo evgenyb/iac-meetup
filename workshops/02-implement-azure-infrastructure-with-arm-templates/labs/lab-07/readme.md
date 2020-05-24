@@ -2,7 +2,6 @@
 
 Storage account CI/CD pipelines were implemented as classic Azure DevOps pipelines. To give you hands-on feeling what it takes to work with YAML based pipelines, let's implement Front Door pipeline using YAML syntax.
 
-
 ![pipelines-image-yaml](https://docs.microsoft.com/en-us/azure/devops/pipelines/media/pipelines-image-yaml.png?view=azure-devops)
 
 ## Estimated completion time - x min
@@ -208,6 +207,10 @@ git commit -m "Testing CI trigger"
 git push
 ```
 
+and check that new build has started...
+
+![task-5-1](images/task-5-1.png)
+
 ## Task #6 - commit and push any un-committed changes
 
 ```bash
@@ -215,10 +218,6 @@ git add .
 git comment -m "Finish lab-07"
 git push
 ```
-
-check that new build has started 
-
-![task-5-1](images/task-5-1.png)
 
 ## Checkpoint
 
