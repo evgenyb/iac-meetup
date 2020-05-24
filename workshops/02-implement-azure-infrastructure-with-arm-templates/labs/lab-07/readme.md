@@ -1,4 +1,4 @@
-# Lab-07 - create YAML based Frond Door CI/CD pipeline
+# Lab-07 - create YAML based Front Door CI/CD pipeline
 
 Storage account CI/CD pipelines were implemented as classic Azure DevOps pipelines. To give you hands-on feeling what it takes to work with YAML based pipelines, let's implement Front Door pipeline using YAML syntax.
 
