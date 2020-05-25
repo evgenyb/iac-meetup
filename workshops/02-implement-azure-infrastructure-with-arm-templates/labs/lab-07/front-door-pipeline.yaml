@@ -1,3 +1,4 @@
+name: front-door-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
 trigger:
   branches:
     include:
