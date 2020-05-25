@@ -20,14 +20,16 @@ The gaol for this lab is to implement YAML based build pipeline
 
 ## Task #1 - implement build configuration as YAML file
 
-We will use 2 tasks in our build:
+Here are the requirements for the build:
 
-* copy file from 
-* publish artifacts called `web`
+* the pipeline file should be called `webapp-pipeline.yaml` ans should be stored at the root of the repository
+* the build number should be `webapp-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)`
+* build should copy all files and sub-folders from `src/webapp` folder
+* build should copy both scripts (`*.sh`) from `src` folder
+* build should publish artifacts called `deploy`
+* build should only start if there are changes at any webapp files.
 
-Build should only start if there are changes at any webapp files.
-
-Create `webapp-pipeline.yaml` file at the root of your repo. Implement it yourself or use my version.
+ Feel free to implement it yourself or just copy / paste my version.
 
 ```yaml
 name: webapp-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
@@ -42,13 +44,16 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy webapp to: $(Build.ArtifactStagingDirectory)'
   inputs:
-    sourceFolder: src/webapp
-    contents: '**'
+    sourceFolder: src
+    contents: |
+      webapp/**
+      *.sh
     targetFolder: '$(Build.ArtifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: web'
+  displayName: 'Publish Artifact: deploy'
   inputs:
-    artifactName: web
+    artifactName: deploy
+
 ```
 
 Now commit and push pipeline file to remote repo.
