@@ -13,5 +13,4 @@ The goals for this workshop are:
 * We will use Azure Storage Account and it's static web site feature to host web site content.
 * We will use Azure Front Door to orchestrate our traffic.
 
-![foo](/images/infra.png)
-
+![foo](images/infra.png)
