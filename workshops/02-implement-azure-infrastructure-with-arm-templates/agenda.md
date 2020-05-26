@@ -12,5 +12,5 @@
 * [lab-06](labs/lab-06/readme.md) - create Front Door ARM template (xx min)
 * [lab-07](labs/lab-07/readme.md) - create YAML based Front Door CI/CD pipeline (xx min)
 * [lab-08](labs/lab-08/readme.md) - implement webapp deployment script to active environment (xx min)
-* [lab-09](labs/lab-09/readme.md) - implement webapp deployment script to vNext environment (xx min)
-* [lab-10](labs/lab-10/readme.md) - create webapp CI/CD pipeline to deploy webapp to Storage Account (xx min)
+* [lab-09](labs/lab-09/readme.md) - create webapp build pipeline (YAML based) (xx min)
+* [lab-10](labs/lab-10/readme.md) - create webapp release pipeline (xx min)
