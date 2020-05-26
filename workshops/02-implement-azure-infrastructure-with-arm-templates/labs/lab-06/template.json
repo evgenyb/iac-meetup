@@ -1,0 +1,123 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "release": {
+            "type": "string"
+        },
+        "environment": {
+            "type": "string",
+            "defaultValue": "blue"
+        }
+    },
+    "variables": {
+        "fdName": "iac-ws2-evg-fd",
+        "frontendEndpointName": "[concat(variables('fdName'), '-azurefd-net')]",
+        "webBlueHost": "iacws2evgblueas.z6.web.core.windows.net",
+        "webGreenHost": "iacws2evggreenas.z6.web.core.windows.net",
+        "blueSlotState": "[if(equals(parameters('environment'), 'blue'), 'Enabled', 'Disabled')]",
+        "greenSlotState": "[if(equals(parameters('environment'), 'green'), 'Enabled', 'Disabled')]",
+        "backendPoolName": "[parameters('environment')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/frontdoors",
+            "apiVersion": "2018-08-01",
+            "name": "[variables('fdName')]",
+            "location": "Global",
+            "tags": {
+                "owner": "team-platform",
+                "release": "[parameters('release')]"
+            },
+            "properties": {
+                "backendPools": [
+                    {
+                        "name": "[variables('backendPoolName')]",
+                        "properties": {
+                            "backends": [
+                                {
+                                    "address": "[variables('webBlueHost')]",
+                                    "httpPort": 80,
+                                    "httpsPort": 443,
+                                    "priority": 1,
+                                    "weight": 100,
+                                    "backendHostHeader": "[variables('webBlueHost')]",
+                                    "enabledState": "[variables('blueSlotState')]"
+                                },
+                                {
+                                    "address": "[variables('webGreenHost')]",
+                                    "httpPort": 80,
+                                    "httpsPort": 443,
+                                    "priority": 1,
+                                    "weight": 100,
+                                    "backendHostHeader": "[variables('webGreenHost')]",
+                                    "enabledState": "[variables('greenSlotState')]"
+                                }
+                            ],
+                            "healthProbeSettings": {
+                                "id": "[concat(resourceId('Microsoft.Network/frontdoors', variables('fdName')), '/HealthProbeSettings/healthProbeSettings')]"
+                            },
+                            "loadBalancingSettings": {
+                                "id": "[concat(resourceId('Microsoft.Network/frontdoors', variables('fdName')), '/LoadBalancingSettings/loadBalancingSettings')]"
+                            }
+                        }
+                    }
+                ],
+                "healthProbeSettings": [
+                    {
+                        "name": "healthProbeSettings",
+                        "properties": {
+                            "intervalInSeconds": 30,
+                            "path": "/",
+                            "protocol": "Https"
+                        }
+                    }
+                ],
+                "frontendEndpoints": [
+                    {
+                        "name": "[variables('frontendEndpointName')]",
+                        "properties": {
+                            "hostName": "[concat(variables('fdName'), '.azurefd.net')]",
+                            "sessionAffinityEnabledState": "Disabled",
+                            "sessionAffinityTtlSeconds": 0
+                        }
+                    }
+                ],
+                "loadBalancingSettings": [
+                    {
+                        "name": "loadBalancingSettings",
+                        "properties": {
+                            "sampleSize": 4,
+                            "successfulSamplesRequired": 2
+                        }
+                    }
+                ],
+                "routingRules": [
+                    {
+                        "name": "defaultRule",
+                        "properties": {
+                            "frontendEndpoints": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/frontdoors', variables('fdName')), concat('/FrontendEndpoints/', variables('frontendEndpointName')))]"
+                                }
+                            ],
+                            "acceptedProtocols": [
+                                "Http",
+                                "Https"
+                            ],
+                            "patternsToMatch": [
+                                "/*"
+                            ],
+                            "forwardingProtocol": "MatchRequest",
+                            "backendPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/frontdoors', variables('fdName')), '/backendPools/', variables('backendPoolName'))]"
+                            },
+                            "enabledState": "Enabled"
+                        }
+                    }
+                ],
+                "enabledState": "Enabled"
+            }
+        }
+    ]
+}
