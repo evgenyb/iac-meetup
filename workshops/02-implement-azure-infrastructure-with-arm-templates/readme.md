@@ -17,7 +17,7 @@ The goals for this workshop are:
 
 ## Links
 
-* [Rrerequisites](prerequisites.md)
+* [Prerequisites](prerequisites.md)
 * [Agenda](agenda.md)
 * [Test scenario](scenario.md)
 * [Conventions](conventions.md)
