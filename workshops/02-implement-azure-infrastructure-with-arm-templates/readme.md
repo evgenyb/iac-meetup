@@ -9,8 +9,15 @@ The goals for this workshop are:
 
 ## Infrastructure architecture
 
-* We will implement a very simple website with static content only. 
+* We will implement a very simple website with static content only
 * We will use Azure Storage Account and it's static web site feature to host web site content.
 * We will use Azure Front Door to orchestrate our traffic.
 
 ![foo](images/infra.png)
+
+## Links
+
+* [Rrerequisites](prerequisites.md)
+* [Agenda](agenda.md)
+* [Test scenario](scenario.md)
+* [Conventions](conventions.md)
