@@ -1,4 +1,4 @@
-# Lab-08 - implement webapp deployment script to active environment
+# Lab-08 - implement webapp deployment script to active and vNext environments
 
 Now it's time to work with our web application. Our webapp is just a static web site with 2 html pages with images. Let's use the following folder and files structure:
 
@@ -30,7 +30,7 @@ Let's introduce some concepts for this lab.
 
 The gaol for this lab is to implement deployment script that will deploy our webapp to the active environment.
 
-## Estimated completion time - x min
+## Estimated completion time - 15 min
 
 ## Useful links
 
@@ -142,7 +142,61 @@ Now if you navigate to your Front Door Frontend host,you should see the same pag
 
 ![webapp](images/task-6-1.png)
 
-## Task #7 - commit and push any un-committed changes
+## Task #7 - create `deploy-to-vnext.sh` script
+
+Our deployment script to active environment should fullfil the following requirements:
+
+* it should be located inside `src` folder
+* it should pass path to the webapp as input parameter
+* it should identify what is the vNext environment
+* deploy webapp to the vNext storage account blob
+
+When we implemented Front Door logic we use a convention that backend pool name should be the name of the active environment. We will use it to identify what is the name of active environment. Since there is only one backend pool, we can use [az network front-door backend-pool list](https://docs.microsoft.com/en-us/cli/azure/ext/front-door/network/front-door/backend-pool?view=azure-cli-latest#ext-front-door-az-network-front-door-backend-pool-list) command to get backend pool' name.
+
+To upload webapp content we will use [az storage blob upload-batch](https://docs.microsoft.com/en-us/cli/azure/storage/blob?view=azure-cli-latest#az-storage-blob-upload-batch) command.
+
+The final version of the script may look like this:
+
+```bash
+#!/usr/bin/env bash
+# Usage:
+#   ./deploy-to-vnext.sh webapp
+#
+webappFolder=$1
+
+echo -e "Install front-door extension"
+az extension add -n front-door
+
+frontDoorName="<Use your FD name>"
+frontDoorResourceGroupName="iac-ws2-rg"
+
+echo -e "Get vnext slot name from Front Dore instance"
+activeSlot=$(az network front-door backend-pool list -f ${frontDoorName} -g ${frontDoorResourceGroupName} --query [0].name -o tsv)
+
+vnextSlot=""
+if [[ ${activeSlot} == "blue" ]]; then
+    vnextSlot="green"
+fi
+if [[ ${activeSlot} == "green" ]]; then
+    vnextSlot="blue"
+fi
+
+storageAccountName="iacws2evg${vnextSlot}as"
+
+echo -e "Deploying webapp to ${storageAccountName}"
+az storage blob upload-batch \
+    -s ${webappFolder} \
+    -d \$web \
+    --account-name ${storageAccountName}
+```
+
+## Task #8 - deploy your webapp
+
+```bash
+./deploy-to-vnext.sh webapp
+```
+
+## Task #9 - commit and push any un-committed changes
 
 ```bash
 git add .
@@ -151,7 +205,6 @@ git push
 ```
 
 ## Checkpoint
-
 
 You should have no changes at your repository
 
