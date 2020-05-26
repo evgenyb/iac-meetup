@@ -1,4 +1,4 @@
-# Lab-05 - create storage account release pipeline 
+# Lab-05 - create storage account release pipeline
 
 At this point, we have ARM template and build pipeline that pushes new artifacts every time we do any changes to storage account ARM templates or scripts. Now let's setup the release pipeline that will get artifacts from `storage-account` build and deploy them to `blue` environment. 
 
@@ -6,7 +6,7 @@ For this exercise we will still use classic release pipeline.
 
 ![classic](https://docs.microsoft.com/en-us/azure/devops/pipelines/media/pipelines-image-designer.png?view=azure-devops)
 
-## Estimated completion time - x min
+## Estimated completion time - 15-20 min
 
 ## Useful links
 

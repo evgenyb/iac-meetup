@@ -4,7 +4,7 @@ Storage account CI/CD pipelines were implemented as classic Azure DevOps pipelin
 
 ![pipelines-image-yaml](https://docs.microsoft.com/en-us/azure/devops/pipelines/media/pipelines-image-yaml.png?view=azure-devops)
 
-## Estimated completion time - x min
+## Estimated completion time - 15 min
 
 ## Useful links
 
@@ -111,6 +111,7 @@ Now let's get back to Azure DevOps and edit `front-door` pipeline
 * Select `Script Type` as `Shell`
 * Select `Script location` as `Script path`
 * Set `Script path` to your Front Door deploy.sh script. If you follow our naming convention, it will be `infrastructure/arm/02-front-door/deploy.sh`
+* Set `Script Arguments` to $(Build.BuildNumber) - this is input parameter for `deploy.sh`
 * Open `Advanced` section
 * Set `Working Directory` to the folder, where front door deploy.sh script is located. If you follow our naming convention, it will be `infrastructure/arm/02-front-door/`
 * Click `Add`
@@ -124,6 +125,8 @@ Now let's get back to Azure DevOps and edit `front-door` pipeline
 ![task-2-5](images/task-2-5.png)
 
 * Edit commit message if needed and click `Save`
+
+You can find my version of the yaml configuration in this [file](front-door-pipeline.yaml)
 
 ### Pull changes to your local repo
 

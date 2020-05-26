@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "release": {
@@ -14,7 +14,7 @@
         "fdName": "iac-ws2-evg-fd",
         "frontendEndpointName": "[concat(variables('fdName'), '-azurefd-net')]",
         "webBlueHost": "iacws2evgblueas.z6.web.core.windows.net",
-        "webGreenHost": "iacws2evggreenas.z6.web.core.windows.net",
+        "webGreenHost": "iacws2evggreenas.z16.web.core.windows.net",
         "blueSlotState": "[if(equals(parameters('environment'), 'blue'), 'Enabled', 'Disabled')]",
         "greenSlotState": "[if(equals(parameters('environment'), 'green'), 'Enabled', 'Disabled')]",
         "backendPoolName": "[parameters('environment')]"

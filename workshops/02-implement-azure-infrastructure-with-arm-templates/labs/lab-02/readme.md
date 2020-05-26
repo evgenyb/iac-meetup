@@ -5,7 +5,7 @@ The goals for this lab are:
 * implement ARM template for storage account with `Standard_LRS` sku
 * implement parameters file for `blue` and `green` environments
 
-## Estimated completion time - x min
+## Estimated completion time - 10 min
 
 ## Useful links
 
@@ -63,12 +63,12 @@ We want to use the same script to validate template for both `blue` and `green` 
 
 ```bash
 #!/usr/bin/env bash
-slot=$1
-storageAccountName="iacws2evg${slot}as"
+environment=$1
+storageAccountName="iacws2evg${environment}as"
 
-az deployment group validate -g iac-ws2-${slot}-rg \
+az deployment group validate -g iac-ws2-${environment}-rg \
         --template-file template.json \
-        --parameters @parameters-${slot}.json \
+        --parameters @parameters-${environment}.json \
         --parameters storageAccountName=${storageAccountName} -o table
 ```
 
@@ -98,6 +98,7 @@ infrastructure
             template.json
             parameters-blue.json
             parameters-green.json
+            validate.sh
 ```
 
 Your template should be valid for both environments.

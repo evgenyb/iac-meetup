@@ -9,7 +9,7 @@ Therefore our storage account deployment script will do 2 things:
 * deploy ARM template
 * enable static web hosting feature
 
-## Estimated completion time - x min
+## Estimated completion time - 5-10 min
 
 ## Useful links
 

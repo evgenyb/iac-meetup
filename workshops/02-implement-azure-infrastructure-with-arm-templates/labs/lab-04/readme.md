@@ -11,7 +11,7 @@ There are 2 ways you can implement build pipelines in Azure DevOps: classic (aka
 
 ![classic](https://docs.microsoft.com/en-us/azure/devops/pipelines/media/pipelines-image-designer.png?view=azure-devops)
 
-## Estimated completion time - x min
+## Estimated completion time - 10 min
 
 ## Useful links
 

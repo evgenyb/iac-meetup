@@ -2,7 +2,7 @@
 
 The goal of this lab is to implement Front Door ARM template, validation and deployment scripts.
 
-## Estimated completion time - x min
+## Estimated completion time - 10-15 min
 
 ## Useful links
 
@@ -37,6 +37,12 @@ Create `template.json` file inside `02-front-door` folder and implement Front Do
 * the Front Door name should be unique and should follow [naming convention](../../conventions.md). Use your user signature to make sure we avoid conflicts with other participants instance names
 
 Feel free to create Front Door instance manually at the portal or use my version of the [template](template.json).
+
+Some comments regarding template variables:
+
+* `fdName` variable has to be unique, because it will be part of the Front Door DNS name
+* `webBlueHost` and `webGreenHost` should point towards your storage account `Primary endpoint`
+![pic](images/sa-url.png)
 
 ## Task #3 (optional) - create validate.sh script
 
