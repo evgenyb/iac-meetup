@@ -37,7 +37,7 @@ The gaol for this lab is to implement YAML based build pipeline
 * Use `Build` as a source type
 * Select your Project
 * Select your repo
-* Set artifact alias to `artifacts` 
+* Set artifact alias to `artifacts`
 * Click `Add`
 
 ### Configure continuous trigger
@@ -76,14 +76,58 @@ The gaol for this lab is to implement YAML based build pipeline
 
 ![pic](images/task-1-10.png)
 
-### Save and start the release
+### Save and Create new release
 
-## Task #2 - commit and push any un-committed changes
+## Task #3 - create new stage for `vNext` environment
+
+### Open `webapp` release pipeline in Edit mode
+
+![pic](images/task-2-0.png)
+
+### Select `active` stage and Clone it
+
+![pic](images/task-2-1.png)
+
+### Set triggering mode to `Manual only`
+
+We don't want to deploy to `vNext` environment automatically.
+
+![pic](images/task-2-2.png)
+
+### Change the name of the stage to `vNext`
+
+![pic](images/task-2-3.png)
+
+### Configure `Azure CLI` task
+
+![pic](images/task-2-4.png)
+
+Since we cloned it from already existing stage, we only need to change the name and deployment script.
+
+* Change the name of the task
+* Set `Script path` to `$(System.DefaultWorkingDirectory)/artifacts/deploy/deploy-to-vnext.sh` (if you don't follow our convention, you may need to adjust the path)
+* Save the pipeline
+
+## Task #3 - commit and push any un-committed changes
 
 ```bash
 git add .
 git comment -m "Finish lab-08"
 git push
+```
+
+## Checkpoint
+
+Now you should have release pipeline with 2 stages: `active` and `vNext`.
+
+![pic](images/task-2-5.png)
+
+You should have no changes at your repository
+
+```bash
+git status
+...
+nothing to commit, working tree clean
 ```
 
 ## Next
