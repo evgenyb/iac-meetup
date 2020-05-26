@@ -173,9 +173,37 @@ git push
 
 ![task-3-2](images/task-3-2.png)
 
+## Task #4 - add deploy to `green` stage
+
+### Open `storage-account` release in Edit mode
+
+![pic](images/task-4-1.png)
+
+### Select `blue` stage and Clone it
+
+![pic](images/task-4-2.png)
+
+### Set trigger mode to `Manual only`
+
+![pic](images/task-4-3.png)
+
+### Rename stage to `green`
+
+![pic](images/task-4-4.png)
+
+### Configure `Azure CLI` stage for `green` environment
+
+Since cloned this stage from `blue`, the only thing we need to change is the `Script Arguments` and we should send `green` as an input parameter. 
+
+![pic](images/task-4-5.png)
+
+### Save pipeline
+
 ## Checkpoint
 
-Now we have both build and release pipelines and we can deploy our infrastructure changes both from local PC and via Azure DevOps pipelines. Note, it's the same script we use both at pipelines and locally.
+Now we have both build and release pipelines and we can deploy our infrastructure changes both from local PC and via Azure DevOps pipelines with the same script.
+
+With release pipeline we can deploy our infrastructure both to `blue` and `green` environments.
 
 You should have no changes at your repository
 
