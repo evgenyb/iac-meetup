@@ -2,7 +2,7 @@
 
 ## Complete all labs from workshop #1
 
-You should complete all labs from [workshop #1](../01-how-to-live-in-harmony-with-ARM-templates/agenda.md). This is important because we will use a lot of techniques introduced during that workshop, so, please invest some time (you need approx. 4-5 hours) and go through the [labs](../01-how-to-live-in-harmony-with-ARM-templates/agenda.md).
+If you didn't attend previous workshop, I recommend you to complete all labs from [workshop #1](../01-how-to-live-in-harmony-with-ARM-templates/agenda.md). This is important because we will use a lot of techniques introduced during that workshop, so, please invest some time (you need approx. 4-5 hours) and work with [labs](../01-how-to-live-in-harmony-with-ARM-templates/agenda.md).
 
 ## Laptop
 
@@ -30,6 +30,34 @@ If you don't have an Azure account, please create one before the workshop.
 
 If you don't have an Azure DevOps, please create one before the workshop.
 [Azure DevOps - start for free](https://azure.microsoft.com/en-gb/services/devops/)
+
+## Create a new Project at Azure DevOps
+
+Follow this [how-to guide](https://docs.microsoft.com/en-us/azure/devops/organizations/projects/create-project?view=azure-devops&tabs=preview-page) and create a new project called `iac-ws-2`. Feel free to use existing project, if you already have one.
+
+## Create a new git repository
+
+Create new git repository under your Azure DevOps project. Follow this [how-to guide](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?toc=%2Fazure%2Fdevops%2Forganizations%2Ftoc.json&bc=%2Fazure%2Fdevops%2Forganizations%2Fbreadcrumb%2Ftoc.json&view=azure-devops) and create a new repository called `immutable-infra`.
+
+## Check that you have access to Azure DevOps
+
+Try to login to your Azure DevOps Account. Use some time and get yourself familiar with this product. During the workshop we will use the following features of this product:
+
+* [Repos](https://docs.microsoft.com/en-gb/azure/devops/repos/get-started/what-is-repos?view=azure-devops) - here we will keep our source code
+* [Pipelines](https://docs.microsoft.com/en-gb/azure/devops/pipelines/get-started/what-is-azure-pipelines?view=azure-devops) - all our build and release pipelines will be implemented here
+
+### Useful links
+
+* [Introducing Azure DevOps](https://azure.microsoft.com/en-us/blog/introducing-azure-devops/)
+* [Introduction to Azure DevOps](https://www.youtube.com/watch?v=JhqpF-5E10I)
+
+## Clone your newly created repository to your laptop
+
+Clone your repository to your PC. Make sure that your git environment is initialized and you can pull and push code from / to you repository. Add readme.md file, commit changes and push them to the remote.
+
+## Learn git
+
+If you have never worked with git, learn the git [commands basics](https://docs.gitlab.com/ee/gitlab-basics/start-using-git.html). You should be comfortable to clone, pull, commit and push your changes.
 
 ## Install `az cli`
 
