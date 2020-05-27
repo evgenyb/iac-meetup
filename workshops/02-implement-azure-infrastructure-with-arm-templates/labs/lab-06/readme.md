@@ -91,7 +91,7 @@ Try to deploy your Front Door:
 
 ```bash
 git add .
-git comment -m "Finish lab-06"
+git commit -m "Finish lab-06"
 git push
 ```
 

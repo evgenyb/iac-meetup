@@ -67,7 +67,7 @@ Try to deploy storage account to the `blue` environment:
 
 ```bash
 git add .
-git comment -m "Finish lab-03"
+git commit -m "Finish lab-03"
 git push
 ```
 

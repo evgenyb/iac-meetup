@@ -112,7 +112,7 @@ Since we cloned it from already existing stage, we only need to change the name 
 
 ```bash
 git add .
-git comment -m "Finish lab-08"
+git commit -m "Finish lab-10"
 git push
 ```
 
@@ -129,7 +129,3 @@ git status
 ...
 nothing to commit, working tree clean
 ```
-
-## Next
-
-[Go to lab-11](../lab-11/readme.md)

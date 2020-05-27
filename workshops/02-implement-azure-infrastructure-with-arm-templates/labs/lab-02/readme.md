@@ -83,7 +83,7 @@ Validate your template:
 
 ```bash
 git add .
-git comment -m "Finish lab-02"
+git commit -m "Finish lab-02"
 git push
 ```
 

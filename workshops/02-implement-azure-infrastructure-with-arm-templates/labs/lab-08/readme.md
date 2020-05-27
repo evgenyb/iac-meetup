@@ -103,6 +103,13 @@ az storage blob upload-batch \
 
 ## Task #4 - deploy your webapp
 
+Run the following command from your command line:
+
+```bash
+./deploy-to-active.sh webapp
+```
+You should see similar output:
+
 ```bash
 ./deploy-to-active.sh webapp
 No connection string, account key or sas token found, we will query account keys for your storage account. Please try to use --auth-mode login or provide one of the following parameters: connection string, account key or sas token for your storage account.
@@ -193,7 +200,7 @@ az storage blob upload-batch \
 
 ```bash
 git add .
-git comment -m "Finish lab-08"
+git commit -m "Finish lab-08"
 git push
 ```
 

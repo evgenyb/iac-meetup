@@ -130,7 +130,7 @@ check that build started
 
 ```bash
 git add .
-git comment -m "Finish lab-08"
+git commit -m "Finish lab-09"
 git push
 ```
 
