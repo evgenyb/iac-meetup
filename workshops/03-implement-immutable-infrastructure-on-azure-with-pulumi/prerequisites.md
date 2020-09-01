@@ -37,8 +37,8 @@ Create new git repository under your Azure DevOps project. Follow this [how-to g
 
 Try to login to your Azure DevOps Account. Use some time and get yourself familiar with this product. During the workshop we will use the following features of this product:
 
-* [Repos](https://docs.microsoft.com/en-gb/azure/devops/repos/get-started/what-is-repos?view=azure-devops&WT.mc_id=DOP-MVP-5003837) - here we will keep our source code
-* [Pipelines](https://docs.microsoft.com/en-gb/azure/devops/pipelines/get-started/what-is-azure-pipelines?view=azure-devops&WT.mc_id=DOP-MVP-5003837) - all our build and release pipelines will be implemented here
+* [Repos](https://docs.microsoft.com/en-gb/azure/devops/repos/get-started/what-is-repos?WT.mc_id=DOP-MVP-5003837) - here we will keep our source code
+* [Pipelines](https://docs.microsoft.com/en-gb/azure/devops/pipelines/get-started/what-is-azure-pipelines?WT.mc_id=DOP-MVP-5003837) - all our build and release pipelines will be implemented here
 
 ## Clone your newly created repository to your laptop
 
