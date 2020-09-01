@@ -18,27 +18,27 @@ I will be using [Pulumi for .NET Core C#](https://www.pulumi.com/docs/intro/lang
 ## Create your Azure account
 
 If you don't have an Azure account, please create one before the workshop.
-[Create your Azure free account](https://azure.microsoft.com/en-us/free/)
+[Create your Azure free account](https://azure.microsoft.com/en-us/free/?WT.mc_id=AZ-MVP-5003837)
 
 ## Create your Azure DevOps account
 
 If you don't have an Azure DevOps, please create one before the workshop.
-[Azure DevOps - start for free](https://azure.microsoft.com/en-gb/services/devops/)
+[Azure DevOps - start for free](https://azure.microsoft.com/en-gb/services/devops/?WT.mc_id=DOP-MVP-5003837)
 
 ## Create a new Project at Azure DevOps
 
-Follow this [how-to guide](https://docs.microsoft.com/en-us/azure/devops/organizations/projects/create-project?view=azure-devops&tabs=preview-page) and create a new project called `iac-ws-3`, or use an existing project, if you already have one.
+Follow this [how-to guide](https://docs.microsoft.com/en-us/azure/devops/organizations/projects/create-project?view=azure-devops&tabs=preview-page&WT.mc_id=DOP-MVP-5003837) and create a new project called `iac-ws-3`, or use an existing project, if you already have one.
 
 ## Create a new git repository
 
-Create new git repository under your Azure DevOps project. Follow this [how-to guide](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?toc=%2Fazure%2Fdevops%2Forganizations%2Ftoc.json&bc=%2Fazure%2Fdevops%2Forganizations%2Fbreadcrumb%2Ftoc.json&view=azure-devops) and create a new repository called `iac-ws-3`.
+Create new git repository under your Azure DevOps project. Follow this [how-to guide](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?toc=%2Fazure%2Fdevops%2Forganizations%2Ftoc.json&bc=%2Fazure%2Fdevops%2Forganizations%2Fbreadcrumb%2Ftoc.json&view=azure-devops&WT.mc_id=DOP-MVP-5003837) and create a new repository called `iac-ws-3`.
 
 ## Check that you have access to Azure DevOps
 
 Try to login to your Azure DevOps Account. Use some time and get yourself familiar with this product. During the workshop we will use the following features of this product:
 
-* [Repos](https://docs.microsoft.com/en-gb/azure/devops/repos/get-started/what-is-repos?view=azure-devops) - here we will keep our source code
-* [Pipelines](https://docs.microsoft.com/en-gb/azure/devops/pipelines/get-started/what-is-azure-pipelines?view=azure-devops) - all our build and release pipelines will be implemented here
+* [Repos](https://docs.microsoft.com/en-gb/azure/devops/repos/get-started/what-is-repos?view=azure-devops&WT.mc_id=DOP-MVP-5003837) - here we will keep our source code
+* [Pipelines](https://docs.microsoft.com/en-gb/azure/devops/pipelines/get-started/what-is-azure-pipelines?view=azure-devops&WT.mc_id=DOP-MVP-5003837) - all our build and release pipelines will be implemented here
 
 ## Clone your newly created repository to your laptop
 
@@ -51,7 +51,7 @@ If you have never worked with git, learn the git [commands basics](https://docs.
 ## Install `az cli`
 
 Download and install latest version of `az cli` from this link  
-[Install the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
+[Install the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest&WT.mc_id=AZ-MVP-5003837)
 
 ## Test your azure account with `az cli`
 
@@ -93,7 +93,7 @@ Download and install latest version of `pulumi cli` from this link
 
 ### Useful links
 
-* [Introducing Azure DevOps](https://azure.microsoft.com/en-us/blog/introducing-azure-devops/)
+* [Introducing Azure DevOps](https://azure.microsoft.com/en-us/blog/introducing-azure-devops/?WT.mc_id=DOP-MVP-5003837)
 * [Introduction to Azure DevOps](https://www.youtube.com/watch?v=JhqpF-5E10I)
 * [Pulumi - get Started with Azure](https://www.pulumi.com/docs/get-started/azure/)
 * [Pulumi languages](https://www.pulumi.com/docs/intro/languages/)
