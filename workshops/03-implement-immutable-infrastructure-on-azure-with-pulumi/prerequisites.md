@@ -15,6 +15,12 @@ Download and install VS Code. It's available for all platforms.
 
 I will be using [Pulumi for .NET Core C#](https://www.pulumi.com/docs/intro/languages/dotnet/), but if you prefer other [languages](https://www.pulumi.com/docs/intro/languages/), it should be no problem to follow. In that case, use your preferred language IDE.
 
+## Install .NET Core 3.1 SDK or later
+
+If you chose to use C# as a language, then you need to install .NET SDK. Pulumi will need the dotnet executable in order to build and run your Pulumi .NET application. Ensure that the dotnet executable can be found on your path after installation.
+
+Download and install [.NET Core 3.1 SDK or later](https://dotnet.microsoft.com/download)
+
 ## Create your Azure account
 
 If you don't have an Azure account, please create one before the workshop.
@@ -98,3 +104,4 @@ Download and install latest version of `pulumi cli` from this link
 * [Pulumi - get Started with Azure](https://www.pulumi.com/docs/get-started/azure/)
 * [Pulumi languages](https://www.pulumi.com/docs/intro/languages/)
 * [Installing Pulumi](https://www.pulumi.com/docs/get-started/install/)
+* [Install .NET Core 3.1 SDK or later](https://dotnet.microsoft.com/download)
