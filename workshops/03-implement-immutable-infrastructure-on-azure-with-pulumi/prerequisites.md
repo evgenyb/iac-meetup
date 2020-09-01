@@ -27,11 +27,11 @@ If you don't have an Azure DevOps, please create one before the workshop.
 
 ## Create a new Project at Azure DevOps
 
-Follow this [how-to guide](https://docs.microsoft.com/en-us/azure/devops/organizations/projects/create-project?view=azure-devops&tabs=preview-page&WT.mc_id=DOP-MVP-5003837) and create a new project called `iac-ws-3`, or use an existing project, if you already have one.
+Follow this [how-to guide](https://docs.microsoft.com/en-us/azure/devops/organizations/projects/create-project?WT.mc_id=DOP-MVP-5003837) and create a new project called `iac-ws-3`, or use an existing project, if you already have one.
 
 ## Create a new git repository
 
-Create new git repository under your Azure DevOps project. Follow this [how-to guide](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?toc=%2Fazure%2Fdevops%2Forganizations%2Ftoc.json&bc=%2Fazure%2Fdevops%2Forganizations%2Fbreadcrumb%2Ftoc.json&view=azure-devops&WT.mc_id=DOP-MVP-5003837) and create a new repository called `iac-ws-3`.
+Create new git repository under your Azure DevOps project. Follow this [how-to guide](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?WT.mc_id=DOP-MVP-5003837) and create a new repository called `iac-ws-3`.
 
 ## Check that you have access to Azure DevOps
 
