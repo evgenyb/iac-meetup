@@ -104,3 +104,4 @@ Download and install latest version of `pulumi cli` from this link
 * [Pulumi - get Started with Azure](https://www.pulumi.com/docs/get-started/azure/)
 * [Pulumi languages](https://www.pulumi.com/docs/intro/languages/)
 * [Installing Pulumi](https://www.pulumi.com/docs/get-started/install/)
+* [Install .NET Core 3.1 SDK or later](https://dotnet.microsoft.com/download)
