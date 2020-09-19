@@ -78,6 +78,6 @@ class MyStack : Stack
 * [Pulumi: create new Azure project](https://www.pulumi.com/docs/get-started/azure/create-project/)
 * [Pulumi: programming model](https://www.pulumi.com/docs/intro/concepts/programming-model/)
 
-## Next
+## Next: working with pulumi "flow"
 
 [Go to lab-02](../lab-02/readme.md)

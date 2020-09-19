@@ -31,7 +31,7 @@ The goals for this workshop are:
 * Infrastructure as Code
 * Pulumi 101
 * [lab-01](labs/lab-01/readme.md) - create new Pulumi project (xx min)
-* lab-02 - work with pulumi "flow" (xx min)
+* [lab-02](labs/lab-02/readme.md) - working with pulumi "flow" (xx min)
 * lab-03 - working with stack (xx min)
 * [lab-04](labs/lab-04/readme.md) - working with stack Outputs (xx min)
 * lab-05 - pulumi state and backends (xx min)
