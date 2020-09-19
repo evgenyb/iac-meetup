@@ -11,7 +11,7 @@ The original plan was to implement 2 workshops per tool:
 
 ## Prerequisites
 
-Please use some time prior the workshop to do all preparations described at [prerequisites](prerequisites.md).
+Please ensure you have completed the Workshop [prerequisites](prerequisites.md)
 
 ## Workshop goals
 
@@ -28,18 +28,19 @@ The goals for this workshop are:
 * 17:10 - 17:15 - MS Azure Badges
 * Infrastructure as Code
 * Pulumi 101
-* lab-01 - create a new project (xx min)
+* lab-01 - create new Pulumi project (xx min)
 * lab-02 - work with pulumi "flow" (xx min)
 * lab-03 - working with stack (xx min)
-* lab-04 - pulumi state (xx min)
-* lab-05 - persisting state at Azure Storage Account (xx min)
-* lab-06 - working with configuration and secrets (xx min)
-* lab-07 - managing Secrets with Azure Key-Vault (xx min)
-* lab-08 - import existing resources (xx min)
+* lab-04 - working with stack Outputs (xx min)
+* lab-05 - pulumi state and backends (xx min)
+* lab-06 - persisting state at Azure Storage Account (xx min)
+* lab-07 - working with configuration and secrets (xx min)
+* lab-08 - managing Secrets with Azure Key-Vault (xx min)
+* lab-09 - import existing resources (xx min)
 * Immutable Infrastructure + use-case introduction
-* lab-09 - implement `blue` static website using Azure Blob Storage (xx min)
-* lab-10 - clone `green` static website using Azure Blob Storage (xx min)
-* lab-11 - implement Azure FrontDoor to orchestrate canary traffic between `blue` / `green` slots  (xx min)
+* lab-10 - implement `blue` static website using Azure Blob Storage (xx min)
+* lab-11 - clone `green` static website using Azure Blob Storage (xx min)
+* lab-12 - implement Azure FrontDoor to orchestrate canary traffic between `blue` / `green` slots  (xx min)
 
 ## Links
 
