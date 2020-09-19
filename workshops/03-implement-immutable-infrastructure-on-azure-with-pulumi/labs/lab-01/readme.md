@@ -36,7 +36,7 @@ and that indicates that your project was successfully created.
 
 Now you can open your project at the IDE you normally use. Since this is dotnet project, you can use [VS Code](https://code.visualstudio.com/), [Visual Studio](https://visualstudio.microsoft.com/) or [JetBrains Rider](https://www.jetbrains.com/rider/). I will use VS Code.
 
-Open your project in VC code
+Open your project in VS code
 
 ```bash
 $ code .
@@ -51,9 +51,26 @@ Let’s review some of the generated project files:
 * Program.cs  - program entry point
 * MyStack.cs - the Pulumi program that defines stack resources. The default stack contains Azure Resource group, Azure Storage Account resources and exposes Storage Account connection string as Stack output. We will work with stack output at [lab-04](../lab-04/readme.md).
 
-
+Let's remove code defining Storage Account resource and output property, so the only resource we should have is resource group.
 
 ## Checkpoint
+
+:ballot_box_with_check: by the end of this lab, your `MyStack.cs` should look like this.
+
+```c#
+using Pulumi;
+using Pulumi.Azure.Core;
+using Pulumi.Azure.Storage;
+
+class MyStack : Stack
+{
+    public MyStack()
+    {
+        // Create an Azure Resource Group
+        var resourceGroup = new ResourceGroup("resourceGroup");
+    }
+}
+```
 
 ## Useful links
 

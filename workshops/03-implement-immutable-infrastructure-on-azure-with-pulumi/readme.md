@@ -1,5 +1,7 @@
 # Implement immutable infrastructure with Pulumi
 
+![logo](images/ws-logo.png)
+
 Welcome to the third workshop at the series of workshop dedicated to Infrastructure as Code tools and frameworks. During the first 2 workshops we learned what are ARM templates and how to use them. This time we will look at Pulumi - an open source infrastructure as code tool for creating, deploying, and managing cloud infrastructure.
 
 The original plan was to implement 2 workshops per tool: 
