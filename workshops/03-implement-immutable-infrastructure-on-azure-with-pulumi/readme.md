@@ -4,10 +4,10 @@
 
 Welcome to the third workshop at the series of workshop dedicated to Infrastructure as Code tools and frameworks. During the first 2 workshops we learned what are ARM templates and how to use them. This time we will look at Pulumi - an open source infrastructure as code tool for creating, deploying, and managing cloud infrastructure.
 
-The original plan was to implement 2 workshops per tool: 
+The original plan was to implement 2 workshops per tool:
 
-1. Get started with the `tool`
-2. Implement immutable infrastructure on Azure with `tool`
+1. Get started with `a tool`
+2. Implement immutable infrastructure on Azure with `a tool`
 
  But it turned out that Pulumi is so easy to work with, that I decided to merge both workshops into one.
 
@@ -21,8 +21,8 @@ The goals for this workshop are:
 
 * get started with Pulumi on Azure
 * learn how to use Azure services like Storage Account and Key Vault  to self-manage the state and secrets management
-* implement immutable infrastructure on Azure 
-* create an configure set of CI/CD pipelines for infrastructure provisioning and deployment
+* implement immutable infrastructure on Azure
+* (??? if we have time) create an configure set of CI/CD pipelines for infrastructure provisioning and deployment
 
 ## Agenda
 

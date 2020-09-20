@@ -114,13 +114,9 @@ Resources:
 Duration: 11s
 ```
 
-## Task #3 - modify your resources
+## Task #3 - modify your resources and deploy changes
 
 Now, let's make some modifications to our resources, for example, add Tags.
-
-
-
-## Task #4 - deploy resource changes
 
 ## Task #5 - destroy resources
 

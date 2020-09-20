@@ -16,7 +16,7 @@ $ cd iac-ws-infra
 $ pulumi new azure-csharp
 ```
 
-In this workshop I will use C# as a language and Azure as a cloud provider, therefore I used `azure-csharp` template. If you use different language, feel free to select it instead of C#. You get full list of available templates by running the following command and scroll to the `Available Templates:` section.
+During the workshop I will use C# as a language and Azure as a cloud provider, therefore I used `azure-csharp` template. If you use different language, feel free to select it instead of C#. You get full list of available templates by running the following command and scroll to the `Available Templates:` section.
 
 ```bash
 pulumi new --help
