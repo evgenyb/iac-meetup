@@ -30,14 +30,14 @@ The goals for this workshop are:
 * 17:10 - 17:15 - MS Azure Badges
 * Infrastructure as Code
 * Pulumi 101
-* [lab-01](labs/lab-01/readme.md) - create new Pulumi project (xx min)
-* [lab-02](labs/lab-02/readme.md) - working with pulumi "flow" (xx min)
+* [lab-01](labs/lab-01/readme.md) - create new project (xx min)
+* [lab-02](labs/lab-02/readme.md) - working with the "flow" (xx min)
 * lab-03 - working with stack (xx min)
 * [lab-04](labs/lab-04/readme.md) - working with stack Outputs (xx min)
-* lab-05 - pulumi state and backends (xx min)
+* lab-05 - state and backends (xx min)
 * lab-06 - persisting state at Azure Storage Account (xx min)
 * lab-07 - working with configuration and secrets (xx min)
-* lab-08 - managing Secrets with Azure Key-Vault (xx min)
+* lab-08 - managing secrets with Azure Key-Vault (xx min)
 * lab-09 - import existing resources (xx min)
 * Immutable Infrastructure + use-case introduction
 * lab-10 - implement `blue` static website using Azure Blob Storage (xx min)
