@@ -8,15 +8,37 @@ To adopt existing resources so that Pulumi is able to manage subsequent updates 
 
 ## Goals
 
+* Learn how you can import existing resources into Pulumi stack
+
+## Useful links
+
+* [Pulumi import](https://www.pulumi.com/docs/intro/concepts/programming-model/#import)
+* [Pulumi: VirtualNetwork reference](https://www.pulumi.com/docs/reference/pkg/azure/network/virtualnetwork/)
+* [Pulumi: Subnet reference](https://www.pulumi.com/docs/reference/pkg/azure/network/subnet/)
+* [Import existing Azure DNS Zone into Pulumi](https://borzenin.com/import-dns-zone-into-pulumi/)
+* [Visual Subnet Calculator](http://www.davidc.net/sites/default/subnets/subnets.html)
+* [Virtual Network documentation](https://docs.microsoft.com/en-us/azure/virtual-network/?WT.mc_id=AZ-MVP-5003837)
+* [Manage Azure Resource Manager resource groups by using the Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal?WT.mc_id=AZ-MVP-5003837)
+* [Azure Command-Line Interface (CLI) documentation](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest&WT.mc_id=AZ-MVP-5003837)
+* [Azure PowerShell Az](https://docs.microsoft.com/en-us/powershell/azure/new-azureps-module-az?view=azps-4.6.1&WT.mc_id=AZ-MVP-5003837)
+
 ## Task #1 - create new resource group and private virtual Vnet
 
-First, let's create new resource group called `iac-pulumi-import-rg` and private virtual Vnet `iac-pulumi-import-vnet` with 3 subnets:
+First, let's manually create new resource group called `iac-pulumi-import-rg` and private virtual Vnet `iac-pulumi-import-vnet` with 3 subnets. You can use portal, `az cli` or Powershell.
 
 Subnet | Range
 ----|----
 aks|10.0.0.0/24
 agw|10.0.1.0/24
 apim|10.0.2.0/24
+
+```
+$ az group create -n iac-pulumi-import-rg -l norwayeast
+$ az network vnet create -n iac-pulumi-import-vnet -g iac-pulumi-import-rg --address-prefixes 10.0.0.0/16
+$ az network vnet subnet create -n aks  --vnet-name iac-pulumi-import-vnet -g iac-pulumi-import-rg --address-prefixes 10.0.0.0/24
+$ az network vnet subnet create -n agw  --vnet-name iac-pulumi-import-vnet -g iac-pulumi-import-rg --address-prefixes 10.0.1.0/24
+$ az network vnet subnet create -n apim  --vnet-name iac-pulumi-import-vnet -g iac-pulumi-import-rg --address-prefixes 10.0.2.0/24
+```
 
 ## Task #2 - create new Pulumi project called iac-pulumi-import
 
@@ -157,18 +179,6 @@ Updating (dev)
  =   └─ azure:network:Subnet          apim                   imported     
 
 ```
-
-## Useful links
-
-* [Pulumi import](https://www.pulumi.com/docs/intro/concepts/programming-model/#import)
-* [Import existing Azure DNS Zone into Pulumi](https://borzenin.com/import-dns-zone-into-pulumi/)
-* [Visual Subnet Calculator](http://www.davidc.net/sites/default/subnets/subnets.html)
-* [Virtual Network documentation](https://docs.microsoft.com/en-us/azure/virtual-network/?WT.mc_id=AZ-MVP-5003837)
-* [Manage Azure Resource Manager resource groups by using the Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal?WT.mc_id=AZ-MVP-5003837)
-* [Azure Command-Line Interface (CLI) documentation](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest&WT.mc_id=AZ-MVP-5003837)
-* [Azure PowerShell Az](https://docs.microsoft.com/en-us/powershell/azure/new-azureps-module-az?view=azps-4.6.1&WT.mc_id=AZ-MVP-5003837)
-* [VirtualNetwork reference](https://www.pulumi.com/docs/reference/pkg/azure/network/virtualnetwork/)
-* [Subnet reference](https://www.pulumi.com/docs/reference/pkg/azure/network/subnet/)
 
 ## Next
 
