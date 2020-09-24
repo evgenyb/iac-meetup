@@ -39,14 +39,13 @@ Storage Account names **MUST** be globally unique. Do not use storage account na
 iacpulumi***usr***sa, where `usr` is short version of your username, in mya case I will use `iacpulumievgsa`
 
 ```bash
-
-az group create --name iac-pulumistate-rg --location westeurope
-az storage account create --name iacpulumievgsa --resource-group iac-pulumistate-rg --location westeurope --sku Standard_LRS --https-only true --kind StorageV2
-KEYS=$(az storage account keys list --account-name iacpulumievgsa --resource-group iac-pulumistate-rg --output json)
-export AZURE_STORAGE_ACCOUNT="iacpulumievgsa"
-export AZURE_STORAGE_KEY=$(echo $KEYS | jq -r .[0].value)
-az storage container create --name state
-export PULUMI_CONFIG_PASSPHRASE="foobar"
+$ az group create --name iac-pulumistate-rg --location westeurope
+$ az storage account create --name iacpulumievgsa --resource-group iac-pulumistate-rg --location westeurope --sku Standard_LRS --https-only true --kind StorageV2
+$ KEYS=$(az storage account keys list --account-name iacpulumievgsa --resource-group iac-pulumistate-rg --output json)
+$ export AZURE_STORAGE_ACCOUNT="iacpulumievgsa"
+$ export AZURE_STORAGE_KEY=$(echo $KEYS | jq -r .[0].value)
+$ az storage container create --name state
+$ export PULUMI_CONFIG_PASSPHRASE="foobar"
 ```
 
 Alternatively, you can set `AZURE_STORAGE_SAS_TOKEN` as  environment variable to access Storage Account.
@@ -60,7 +59,7 @@ Once you executed scripts you should be able to find an Azure Storage Container 
 To configure Pulumi’s backend to the Azure Storage Container, run the following command
 
 ```bash
-pulumi login azblob://state
+$ pulumi login azblob://state
 ```
 
 Pulumi will use the environment variables `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_KEY` to authenticate to Azure Storage.
@@ -70,9 +69,9 @@ Pulumi will use the environment variables `AZURE_STORAGE_ACCOUNT` and `AZURE_STO
 Now let's create a new stack and see what will happen at the Storage Account
 
 ```bash
-mkdir use-azure-backend
-cd use-azure-backend
-pulumi new azure-csharp
+$ mkdir use-azure-backend
+$ cd use-azure-backend
+$ pulumi new azure-csharp
 $ pulumi new azure-csharp
 This command will walk you through creating a new Pulumi project.
 
@@ -95,6 +94,7 @@ Installing dependencies...
 Let's only keep resource group `iac-ws3-lab06-rg` at the stack 
 
 ```c#
+...
 class MyStack : Stack
 {
     public MyStack()
@@ -103,12 +103,13 @@ class MyStack : Stack
         var resourceGroup = new ResourceGroup("iac-ws3-lab06");
     }
 }
+...
 ```
 
 and deploy it
 
 ```bash
-pulumi up
+$ pulumi up
 Previewing update (dev):
      Type                         Name                   Plan
  +   pulumi:pulumi:Stack          use-azure-backend-dev  create
@@ -165,7 +166,7 @@ $ pulumi stack export
 ## Task #05 - destroy stack resources
 
 ```bash
-pulumi destroy
+$ pulumi destroy
 Previewing destroy (dev):
      Type                         Name                   Plan
  -   pulumi:pulumi:Stack          use-azure-backend-dev  delete
