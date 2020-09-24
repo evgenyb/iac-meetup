@@ -35,10 +35,10 @@ The goals for this workshop are:
 * lab-03 - working with stack (xx min)
 * [lab-04](labs/lab-04/readme.md) - working with stack Outputs (xx min)
 * lab-05 - state and backends (xx min)
-* lab-06 - persisting state at Azure Storage Account (xx min)
+* [lab-06](labs/lab-06/readme.md) - persisting state at Azure Storage Account (xx min)
 * lab-07 - working with configuration and secrets (xx min)
 * lab-08 - managing secrets with Azure Key-Vault (xx min)
-* lab-09 - import existing resources (xx min)
+* [lab-09](labs/lab-09/readme.md) - import existing resources (xx min)
 * Immutable Infrastructure + use-case introduction
 * lab-10 - implement `blue` static website using Azure Blob Storage (xx min)
 * lab-11 - clone `green` static website using Azure Blob Storage (xx min)

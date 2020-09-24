@@ -195,9 +195,6 @@ Resources:
     - 2 deleted
 ```
 
-
-## Checkpoint
-
 ## Useful links
 
 * [Pulumi CLI](https://www.pulumi.com/docs/reference/cli/)
