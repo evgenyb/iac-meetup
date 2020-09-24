@@ -7,7 +7,7 @@ Pulumi stores its own copy of the current state of your infrastructure and there
 * The Pulumi Service backend
 * A self-managed backend, either stored locally on filesystem or remotely using a cloud storage service, in our case, Azure Blob Storage
 
-## Why using self-managed backend
+## Why using self-managed backend?
 
 It might be several reasons why you want to store the state the storage you maintained yourself. One reason can be legal aspects. Pulumi Service backend is hosted at AWS in USA. So, it might be that you can't store your state outside of the EU. Or if you want to have full control over who has access to the state. In this case you can configure pulumi to store state at your backend and it supports multiple options, including Azure Blog storage that we will use in this lab.
 
@@ -57,15 +57,17 @@ Once you executed scripts you should be able to find an Azure Storage Container 
 
 ## Task #2 - login to Azure backend
 
-Run the following command
+To configure Pulumi’s backend to the Azure Storage Container, run the following command
 
 ```bash
 pulumi login azblob://state
 ```
 
-Pulumi will use the environment variables `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_KEY` to authenticate to Azure Storage ànd this will configure Pulumi’s backend to the Azure Storage Container.
+Pulumi will use the environment variables `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_KEY` to authenticate to Azure Storage.
 
 ## Task #3 - create new stack
+
+Now let's create a new stack and see what will happen at the Storage Account
 
 ```bash
 mkdir use-azure-backend
@@ -90,7 +92,20 @@ Saved config
 Installing dependencies...
 ```
 
-Now, let's remove storage account from the stack and rename resource group to `iac-ws3-lab06-rg` and deploy stack.
+Let's only keep resource group `iac-ws3-lab06-rg` at the stack 
+
+```c#
+class MyStack : Stack
+{
+    public MyStack()
+    {
+        // Create an Azure Resource Group
+        var resourceGroup = new ResourceGroup("iac-ws3-lab06");
+    }
+}
+```
+
+and deploy it
 
 ```bash
 pulumi up
