@@ -39,9 +39,9 @@ The goals for this workshop are:
 * lab-07 - working with configuration and secrets (xx min)
 * lab-08 - managing secrets with Azure Key-Vault (xx min)
 * [lab-09](labs/lab-09/readme.md) - import existing resources (xx min)
+* lab-10 - working with inter-stack dependencies (xx min)
 * Immutable Infrastructure + use-case introduction
-* lab-10 - implement `blue` static website using Azure Blob Storage (xx min)
-* lab-11 - clone `green` static website using Azure Blob Storage (xx min)
+* lab-11 - implement `blue` and `green` static websites (xx min)
 * lab-12 - implement Azure FrontDoor to orchestrate canary traffic between `blue` / `green` slots  (xx min)
 
 ## Links

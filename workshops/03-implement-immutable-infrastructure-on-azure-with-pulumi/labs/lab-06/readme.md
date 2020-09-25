@@ -39,9 +39,9 @@ Storage Account names **MUST** be globally unique. Do not use storage account na
 iacpulumi***usr***sa, where `usr` is short version of your username, in mya case I will use `iacpulumievgsa`
 
 ```bash
-$ az group create --name iac-pulumistate-rg --location westeurope
-$ az storage account create --name iacpulumievgsa --resource-group iac-pulumistate-rg --location westeurope --sku Standard_LRS --https-only true --kind StorageV2
-$ KEYS=$(az storage account keys list --account-name iacpulumievgsa --resource-group iac-pulumistate-rg --output json)
+$ az group create --name iac-pulumiinfra-rg --location westeurope
+$ az storage account create --name iacpulumievgsa --resource-group iac-pulumiinfra-rg --location westeurope --sku Standard_LRS --https-only true --kind StorageV2
+$ KEYS=$(az storage account keys list --account-name iacpulumievgsa --resource-group iac-pulumiinfra-rg --output json)
 $ export AZURE_STORAGE_ACCOUNT="iacpulumievgsa"
 $ export AZURE_STORAGE_KEY=$(echo $KEYS | jq -r .[0].value)
 $ az storage container create --name state
