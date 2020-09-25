@@ -76,6 +76,20 @@ secretsprovider: azurekeyvault://iac-evg-pulumi-kv.vault.azure.net/keys/pulumien
 encryptedkey: b05XWS1ScU1OcHAtYnZpR1lZbDBFeHN2U1Nob2RZb2lPQUk2WHpUQzNmRmQzbW1nWHp3WE1...
 ```
 
+## Task #3 - cleanup
+
+Destroy all resources
+
+```bash
+$ pulumi destroy
+```
+
+and remove `dev` stack
+
+```bash
+$ pulumi stack rm dev
+```
+
 ## Next: import existing resources
 
 [Go to lab-09](../lab-09/readme.md)

@@ -130,7 +130,7 @@ Resources:
 Duration: 11s
 ```
 
-## Task #04 - check the stack state
+## Task #4 - check the stack state
 
 Now, let's go over to your Azure Storage Account and check the content of our container. You should see a folder structure similar to the one in the following screenshot.
 
@@ -163,7 +163,7 @@ $ pulumi stack export
 ...
 ```
 
-## Task #05 - destroy stack resources
+## Task #5 - destroy stack resources
 
 ```bash
 $ pulumi destroy
@@ -215,7 +215,7 @@ and compare it with the content of the `dev.json` file at the Azure Blob
 
 ![destroyed](images/sa-state-content-destroyed.png)
 
-Now we can remove state by running the following command
+Now we can remove stack by running the following command
 
 ```bash
 $ pulumi stack rm dev
