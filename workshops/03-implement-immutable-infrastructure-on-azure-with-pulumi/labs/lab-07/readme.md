@@ -151,9 +151,9 @@ config:
   lab-07:vnet.subnets.aks-net: 10.0.0.0/20
 ```
 
-Now, in the code we should use [Config](https://www.pulumi.com/docs/intro/concepts/programming-model/#config) class and programmatically read address range valued from the configuration. Configuration values can be retrieved using either `Config.Get` or `Config.Require`. Using `Config.Get` will return `null` if the configuration value was not provided, and `Config.Require` will raise an exception with a helpful error message to prevent the deployment from continuing until the variable has been set using the CLI.
+Now, in the code we should use [Config](https://www.pulumi.com/docs/intro/concepts/programming-model/#config) class and programmatically read address range values from the configuration. Configuration values can be retrieved using either `Config.Get` or `Config.Require` methods. Using `Config.Get` will return `null` if the configuration value was not provided, and `Config.Require` will raise an exception to prevent the deployment from continuing until the variable has been set using the CLI.
 
-Now the code might look something  like this
+Now, let's refactor our code to use `Config` class. Here is my implementation.
 
 ```c#
 class MyStack : Stack
@@ -189,7 +189,7 @@ class MyStack : Stack
 }
 ```
 
-Deploy it and it should be no changes
+Deploy the stack and there should be no changes
 
 ```bash
 $ pulumi up
@@ -203,14 +203,14 @@ Resources:
 
 ## Task #3 - add `prod` stack
 
-Now, let's add new stack that will represent our production environment.
+Now, let's add new `prod` stack that will represent our production environment.
 
 ```bash
-$ $ pulumi stack init -s prod
+$ pulumi stack init -s prod
 Created stack 'prod'
 ```
 
-Now let's add vnet address range values for the `prod` environment
+Now, let's add vnet address range values for the `prod` environment
 
 ```bash
 $ pulumi config set vnet.address '10.1.0.0/16'
@@ -218,6 +218,8 @@ $ pulumi config set vnet.subnets.aks-net '10.1.0.0/20'
 $ pulumi config set vnet.subnets.apim-net '10.1.16.0/27'
 $ pulumi config set azure:location northeurope
 ```
+
+Note, when you `init` new stack with Azure provider, it doesn't ask you for the stack location, therefore we needed to manually add `azure:location` key.
 
 If you check your `Pulumi.prod.yaml` file, you will find 3 new config items.
 
@@ -264,6 +266,7 @@ Duration: 27s
 ## Task #4 - working with the secrets
 
 Some configuration data is sensitive. Passwords or service tokens are good examples of such a data. For such cases, use `--secret` flag of the config set command will encrypt the data and instead of text will store the resulting ciphertext into the state.
+
 
 
 ## Task #5 - cleanup
