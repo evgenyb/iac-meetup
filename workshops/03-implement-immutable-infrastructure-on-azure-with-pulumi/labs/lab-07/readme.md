@@ -210,7 +210,7 @@ $ pulumi stack init -s prod
 Created stack 'prod'
 ```
 
-Now, let's add vnet address range values for the `prod` environment
+Next, add vnet address range values for the `prod` environment
 
 ```bash
 $ pulumi config set vnet.address '10.1.0.0/16'
@@ -219,7 +219,7 @@ $ pulumi config set vnet.subnets.apim-net '10.1.16.0/27'
 $ pulumi config set azure:location northeurope
 ```
 
-Note, when you `init` new stack with Azure provider, it doesn't ask you for the stack location, therefore we needed to manually add `azure:location` key.
+Note, when you `init` new stack with Azure provider, it doesn't ask you for the stack location, therefore we needed to add `azure:location` key.
 
 If you check your `Pulumi.prod.yaml` file, you will find 3 new config items.
 
@@ -233,7 +233,7 @@ config:
   lab-07:vnet.subnets.aks-net: 10.1.0.0/20
 ```
 
-Now, let's deploy to prod
+Finally, deploy to prod
 
 ```bash
 $ pulumi up
@@ -266,8 +266,6 @@ Duration: 27s
 ## Task #4 - working with the secrets
 
 Some configuration data is sensitive. Passwords or service tokens are good examples of such a data. For such cases, use `--secret` flag of the config set command will encrypt the data and instead of text will store the resulting ciphertext into the state.
-
-
 
 ## Task #5 - cleanup
 
