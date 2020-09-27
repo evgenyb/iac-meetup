@@ -206,7 +206,7 @@ iacweb607ffd9f.z6.web.core.windows.net
 Destroy all resources
 
 ```bash
-$ pulumi destroy -s dev --yes
+$ pulumi destroy --yes
 ```
 
 ## Next: state and backends
