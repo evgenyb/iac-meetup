@@ -24,7 +24,7 @@ The key-value pairs for any given stack are stored in your project’s stack set
 
 ## Task #1 - cerate new project for private virtual network
 
-Let's implement private VNet `iac-lab07-vnet` with 2 subnets:
+Let's implement private VNet `iac-lab06-vnet` with 2 subnets:
 
 Subnet | address range
 ----|----
@@ -32,17 +32,17 @@ aks-net | 10.0.0.0/20
 apim-net | 10.0.16.0/27
 
 ```bash
-$ mkdir lab-07
-$ cd lab-07
+$ mkdir lab-06
+$ cd lab-06
 $ pulumi new azure-csharp
 This command will walk you through creating a new Pulumi project.
 
 Enter a value or leave blank to accept the (default), and press <ENTER>.
 Press ^C at any time to quit.
 
-project name: (lab-07)
+project name: (lab-06)
 project description: (A minimal Azure C# Pulumi program)
-Created project 'lab-07'
+Created project 'lab-06'
 
 stack name: (dev)
 Created stack 'dev'
@@ -65,11 +65,11 @@ class MyStack : Stack
     public MyStack()
     {
         // Create an Azure Resource Group
-        var resourceGroup = new ResourceGroup("iac-lab07-rg");
+        var resourceGroup = new ResourceGroup("iac-lab06-rg");
 
         var vnet = new VirtualNetwork("vnet", new VirtualNetworkArgs
         {
-            Name = "iac-lab07-vnet",
+            Name = "iac-lab06-vnet",
             ResourceGroupName = resourceGroup.Name,
             AddressSpaces = { "10.0.0.0/16" }
         });
@@ -97,8 +97,8 @@ Deploy it
 $ pulumi up
 Previewing update (dev):
      Type                             Name          Plan
- +   pulumi:pulumi:Stack              lab-07-dev    create
- +   ├─ azure:core:ResourceGroup      iac-lab07-rg  create
+ +   pulumi:pulumi:Stack              lab-06-dev    create
+ +   ├─ azure:core:ResourceGroup      iac-lab06-rg  create
  +   ├─ azure:network:VirtualNetwork  vnet          create
  +   ├─ azure:network:Subnet          aks-net       create
  +   └─ azure:network:Subnet          apim-net      create
@@ -109,8 +109,8 @@ Resources:
 Do you want to perform this update? yes
 Updating (dev):
      Type                             Name          Status
- +   pulumi:pulumi:Stack              lab-07-dev    created
- +   ├─ azure:core:ResourceGroup      iac-lab07-rg  created
+ +   pulumi:pulumi:Stack              lab-06-dev    created
+ +   ├─ azure:core:ResourceGroup      iac-lab06-rg  created
  +   ├─ azure:network:VirtualNetwork  vnet          created
  +   ├─ azure:network:Subnet          aks-net       created
  +   └─ azure:network:Subnet          apim-net      created
@@ -146,9 +146,9 @@ $ cat Pulumi.dev.yaml
 ...
 config:
   azure:location: westeurope
-  lab-07:vnet.address: 10.0.0.0/16
-  lab-07:vnet.subnets.apim-net: 10.0.16.0/27
-  lab-07:vnet.subnets.aks-net: 10.0.0.0/20
+  lab-06:vnet.address: 10.0.0.0/16
+  lab-06:vnet.subnets.apim-net: 10.0.16.0/27
+  lab-06:vnet.subnets.aks-net: 10.0.0.0/20
 ```
 
 Now, in the code we should use [Config](https://www.pulumi.com/docs/intro/concepts/programming-model/#config) class and programmatically read address range values from the configuration. Configuration values can be retrieved using either `Config.Get` or `Config.Require` methods. Using `Config.Get` will return `null` if the configuration value was not provided, and `Config.Require` will raise an exception to prevent the deployment from continuing until the variable has been set using the CLI.
@@ -163,11 +163,11 @@ class MyStack : Stack
         var config = new Config();
 
         // Create an Azure Resource Group
-        var resourceGroup = new ResourceGroup("iac-lab07-rg");
+        var resourceGroup = new ResourceGroup("iac-lab06-rg");
 
         var vnet = new VirtualNetwork("vnet", new VirtualNetworkArgs
         {
-            Name = "iac-lab07-vnet",
+            Name = "iac-lab06-vnet",
             ResourceGroupName = resourceGroup.Name,
             AddressSpaces = { config.Require("vnet.address") }
         });
@@ -195,7 +195,7 @@ Deploy the stack and there should be no changes
 $ pulumi up
 Previewing update (dev):
      Type                 Name        Plan
-     pulumi:pulumi:Stack  lab-07-dev
+     pulumi:pulumi:Stack  lab-06-dev
 
 Resources:
     5 unchanged
@@ -228,9 +228,9 @@ $ cat Pulumi.prod.yaml
 ...
 config:
   azure:location: northeurope
-  lab-07:vnet.address: 10.1.0.0/16
-  lab-07:vnet.subnets.apim-net: 10.1.16.0/27
-  lab-07:vnet.subnets.aks-net: 10.1.0.0/20
+  lab-06:vnet.address: 10.1.0.0/16
+  lab-06:vnet.subnets.apim-net: 10.1.16.0/27
+  lab-06:vnet.subnets.aks-net: 10.1.0.0/20
 ```
 
 Finally, deploy to prod
@@ -239,8 +239,8 @@ Finally, deploy to prod
 $ pulumi up
 Previewing update (prod):
      Type                             Name          Plan
- +   pulumi:pulumi:Stack              lab-07-prod   create
- +   ├─ azure:core:ResourceGroup      iac-lab07-rg  create
+ +   pulumi:pulumi:Stack              lab-06-prod   create
+ +   ├─ azure:core:ResourceGroup      iac-lab06-rg  create
  +   ├─ azure:network:VirtualNetwork  vnet          create
  +   ├─ azure:network:Subnet          aks-net       create
  +   └─ azure:network:Subnet          apim-net      create
@@ -251,8 +251,8 @@ Resources:
 Do you want to perform this update? yes
 Updating (prod):
      Type                             Name          Status
- +   pulumi:pulumi:Stack              lab-07-prod   created
- +   ├─ azure:core:ResourceGroup      iac-lab07-rg  created
+ +   pulumi:pulumi:Stack              lab-06-prod   created
+ +   ├─ azure:core:ResourceGroup      iac-lab06-rg  created
  +   ├─ azure:network:VirtualNetwork  vnet          created
  +   ├─ azure:network:Subnet          apim-net      created
  +   └─ azure:network:Subnet          aks-net       created
@@ -289,4 +289,4 @@ $ pulumi stack rm dev
 
 ## Next: managing secrets with Azure Key-Vault
 
-[Go to lab-07](../lab-07/readme.md)
+[Go to lab-06](../lab-06/readme.md)

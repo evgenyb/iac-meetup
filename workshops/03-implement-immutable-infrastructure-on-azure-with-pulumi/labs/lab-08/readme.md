@@ -24,7 +24,10 @@ To adopt existing resources so that Pulumi is able to manage subsequent updates 
 
 ## Task #1 - create new resource group and private virtual Vnet
 
-First, let's manually create new resource group called `iac-pulumi-import-rg` and private virtual Vnet `iac-pulumi-import-vnet` with 3 subnets. You can use portal, `az cli` or Powershell.
+First, let's manually create some resources that we will import into Pulumi. Create 2 resources:
+
+* Resource group called `iac-lab08-rg`
+* private virtual network (further VNet) called `iac-pulumi-import-vnet` with 3 subnets. 
 
 Subnet | Range
 ----|----
@@ -32,19 +35,21 @@ aks|10.0.0.0/24
 agw|10.0.1.0/24
 apim|10.0.2.0/24
 
-```
-$ az group create -n iac-pulumi-import-rg -l norwayeast
-$ az network vnet create -n iac-pulumi-import-vnet -g iac-pulumi-import-rg --address-prefixes 10.0.0.0/16
-$ az network vnet subnet create -n aks  --vnet-name iac-pulumi-import-vnet -g iac-pulumi-import-rg --address-prefixes 10.0.0.0/24
-$ az network vnet subnet create -n agw  --vnet-name iac-pulumi-import-vnet -g iac-pulumi-import-rg --address-prefixes 10.0.1.0/24
-$ az network vnet subnet create -n apim  --vnet-name iac-pulumi-import-vnet -g iac-pulumi-import-rg --address-prefixes 10.0.2.0/24
-```
-
-## Task #2 - create new Pulumi project called iac-pulumi-import
+Use portal, `az cli` or Powershell to create resources. I will use `az cli`.
 
 ```bash
-$ mkdir iac-pulumi-import
-$ cd iac-pulumi-import
+$ az group create -n iac-lab08-rg -l norwayeast
+$ az network vnet create -n iac-pulumi-import-vnet -g iac-lab08-rg --address-prefixes 10.0.0.0/16
+$ az network vnet subnet create -n aks  --vnet-name iac-pulumi-import-vnet -g iac-lab08-rg --address-prefixes 10.0.0.0/24
+$ az network vnet subnet create -n agw  --vnet-name iac-pulumi-import-vnet -g iac-lab08-rg --address-prefixes 10.0.1.0/24
+$ az network vnet subnet create -n apim  --vnet-name iac-pulumi-import-vnet -g iac-lab08-rg --address-prefixes 10.0.2.0/24
+```
+
+## Task #2 - create new Pulumi project
+
+```bash
+$ mkdir lab-08
+$ cd lab-08
 $ pulumi new azure-csharp
 ```
 
@@ -57,14 +62,14 @@ First thing we need to do before we start importing existing resources into Pulu
 Get resource group ID
 
 ```bash
-$ az group show --name iac-pulumi-import-rg --query id
-"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-pulumi-import-rg"
+$ az group show --name iac-lab08-rg --query id
+"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab08-rg"
 ```
 
-Get vnet and subnets IDs
+Get VNet and subnets IDs
 
 ```bash
-$ az network vnet show --vnet-name iac-pulumi-import-vnet -g iac-pulumi-import-rg
+$ az network vnet show --vnet-name iac-pulumi-import-vnet -g iac-lab08-rg
 ```
 
 ## Task #4 - import resource group
@@ -73,15 +78,17 @@ With ID in place, we implement the regular Pulumi stack, but in addition to norm
 
 Here is how we import Resource Group.
 
+Note! You should use your own resource IDs.
+
 ```c#
 var resourceGroup = new ResourceGroup("rg", new ResourceGroupArgs
 {
-    Name = "iac-pulumi-import-rg",
+    Name = "iac-lab08-rg",
     Location = "norwayeast",
 
 }, new CustomResourceOptions
 {
-    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-pulumi-import-rg"
+    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab08-rg"
 });
 ```
 
@@ -91,9 +98,9 @@ If you run `pulumi up` now you will see
 $ pulumi up
 Previewing update (dev)
 
-     Type                             Name                   Plan       
- +   pulumi:pulumi:Stack              iac-pulumi-import-dev  create     
- =   ├─ azure:core:ResourceGroup      rg                     import     
+     Type                         Name        Plan       
+ +   pulumi:pulumi:Stack          lab-08-dev  create     
+ =   └─ azure:core:ResourceGroup  rg          import     
  
 Resources:
     + 1 to create
@@ -103,21 +110,23 @@ Resources:
 Do you want to perform this update? yes
 Updating (dev)
 
-     Type                             Name                   Status       
- +   pulumi:pulumi:Stack              iac-pulumi-import-dev  created      
- =   ├─ azure:core:ResourceGroup      rg                     imported     
+     Type                         Name        Status       
+ +   pulumi:pulumi:Stack          lab-08-dev  created      
+ =   └─ azure:core:ResourceGroup  rg          imported     
  
 Resources:
     + 1 created
     = 1 imported
     2 changes
 
-Duration: 12s
+Duration: 11s
 ```
 
 ## Task #5 - import Vnet
 
-Now, use the same technique and import the private vNet `iac-pulumi-import-vnet` with 3 subnets. Here is the code sample. 
+Now, use the same technique and import the private vNet `iac-pulumi-import-vnet` with 3 subnets. Here is the code sample.
+
+Note! You should use your own resource IDs.
 
 ```c#
 ...
@@ -132,7 +141,7 @@ var vnet = new VirtualNetwork("vnet", new VirtualNetworkArgs
     }
 }, new CustomResourceOptions
 {
-    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-pulumi-import-rg/providers/Microsoft.Network/virtualNetworks/iac-pulumi-import-vnet"
+    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab08-rg/providers/Microsoft.Network/virtualNetworks/iac-pulumi-import-vnet"
 });
 
 var aksSubNet = new Subnet("aks", new SubnetArgs
@@ -143,7 +152,7 @@ var aksSubNet = new Subnet("aks", new SubnetArgs
     AddressPrefixes = "10.0.0.0/24"
 }, new CustomResourceOptions
 {
-    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-pulumi-import-rg/providers/Microsoft.Network/virtualNetworks/iac-pulumi-import-vnet/subnets/aks"
+    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab08-rg/providers/Microsoft.Network/virtualNetworks/iac-pulumi-import-vnet/subnets/aks"
 });
 ...
 ```
@@ -154,30 +163,40 @@ When you run `pulumi up`, you should see similar result
 $ pulumi up
 Previewing update (dev)
 
-     Type                             Name                   Plan       
- +   pulumi:pulumi:Stack              iac-pulumi-import-dev  create     
- =   ├─ azure:core:ResourceGroup      rg                     import     
- =   ├─ azure:network:VirtualNetwork  vnet                   import     
- =   ├─ azure:network:Subnet          aks                    import     
- =   ├─ azure:network:Subnet          agw                    import     
- =   └─ azure:network:Subnet          apim                   import     
+     Type                             Name        Plan       
+     pulumi:pulumi:Stack              lab-08-dev             
+ =   ├─ azure:network:VirtualNetwork  vnet        import     
+ =   ├─ azure:network:Subnet          agw         import     
+ =   ├─ azure:network:Subnet          apim        import     
+ =   └─ azure:network:Subnet          aks         import     
  
 Resources:
-    + 1 to create
-    = 5 to import
-    6 changes
+    = 4 to import
+    2 unchanged
 
 Do you want to perform this update? yes
 Updating (dev)
 
-     Type                             Name                   Status       
- +   pulumi:pulumi:Stack              iac-pulumi-import-dev  created      
- =   ├─ azure:core:ResourceGroup      rg                     imported     
- =   ├─ azure:network:VirtualNetwork  vnet                   imported     
- =   ├─ azure:network:Subnet          agw                    imported     
- =   ├─ azure:network:Subnet          aks                    imported     
- =   └─ azure:network:Subnet          apim                   imported     
+     Type                             Name        Status       
+     pulumi:pulumi:Stack              lab-08-dev               
+ =   ├─ azure:network:VirtualNetwork  vnet        imported     
+ =   ├─ azure:network:Subnet          apim        imported     
+ =   ├─ azure:network:Subnet          agw         imported     
+ =   └─ azure:network:Subnet          aks         imported     
+ 
+Resources:
+    = 4 imported
+    2 unchanged
 
+Duration: 10s
+```
+
+## Task #5 - cleanup
+
+Destroy resources
+
+```bash
+$ pulumi destroy --yes
 ```
 
 ## Next: 
