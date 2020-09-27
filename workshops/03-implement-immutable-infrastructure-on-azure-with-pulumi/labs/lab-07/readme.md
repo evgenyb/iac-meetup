@@ -123,7 +123,7 @@ Duration: 36s
 
 ## Task #2 - extract vnet and subnet address values into Pulumi configuration
 
-HAving IP address values in the code only will work if there is only one environment. If there are more than one, we need to extract them into the stack's settings file representing the environment.
+Having IP address values in the code only will work if there is only one environment. If there are more than one, we need to extract them into the stack's settings file representing the environment.
 
 Let's introduce the following config values:
 

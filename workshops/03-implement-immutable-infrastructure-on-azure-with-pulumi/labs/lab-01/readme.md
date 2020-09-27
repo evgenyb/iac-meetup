@@ -2,17 +2,23 @@
 
 ## Estimated completion time - ?? min
 
+Infrastructure in Pulumi is organized as projects. Each project is a single program that, when run, declares the desired infrastructure for Pulumi to manage.
+
 ## Goals
 
 * create new project and get familiar with program structure
 
-Infrastructure in Pulumi is organized as projects. Each project is a single program that, when run, declares the desired infrastructure for Pulumi to manage.
+## Useful links
+
+* [Pulumi: projects](https://www.pulumi.com/docs/intro/concepts/project/)
+* [Pulumi: create new Azure project](https://www.pulumi.com/docs/get-started/azure/create-project/)
+* [Pulumi: programming model](https://www.pulumi.com/docs/intro/concepts/programming-model/)
 
 ## Task #1 - create new project
 
 ```bash
-$ mkdir iac-ws-infra
-$ cd iac-ws-infra
+$ mkdir labs-01-02
+$ cd labs-01-02
 $ pulumi new azure-csharp
 ```
 
@@ -34,7 +40,7 @@ and that indicates that your project was successfully created.
 
 ## Task #2 - review your project
 
-Now you can open your project at the IDE you normally use. Since this is dotnet project, you can use [VS Code](https://code.visualstudio.com/), [Visual Studio](https://visualstudio.microsoft.com/) or [JetBrains Rider](https://www.jetbrains.com/rider/). I will use VS Code.
+Now, open your project in the IDE of your choice. For dotnet projects, you can use [VS Code](https://code.visualstudio.com/), [Visual Studio](https://visualstudio.microsoft.com/) or [JetBrains Rider](https://www.jetbrains.com/rider/). I will use VS Code.
 
 Open your project in VS code
 
@@ -71,12 +77,6 @@ class MyStack : Stack
     }
 }
 ```
-
-## Useful links
-
-* [Pulumi: projects](https://www.pulumi.com/docs/intro/concepts/project/)
-* [Pulumi: create new Azure project](https://www.pulumi.com/docs/get-started/azure/create-project/)
-* [Pulumi: programming model](https://www.pulumi.com/docs/intro/concepts/programming-model/)
 
 ## Next: working with pulumi "flow"
 

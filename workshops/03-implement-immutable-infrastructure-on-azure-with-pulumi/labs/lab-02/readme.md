@@ -6,6 +6,14 @@
 
 * Learn Pulumi CLI commands and how to use them to control lifecycle of the resources
 
+## Useful links
+
+* [Pulumi CLI](https://www.pulumi.com/docs/reference/cli/)
+* [pulumi preview](https://www.pulumi.com/docs/reference/cli/pulumi_preview/)
+* [pulumi up](https://www.pulumi.com/docs/reference/cli/pulumi_up/)
+* [pulumi destroy](https://www.pulumi.com/docs/reference/cli/pulumi_destroy/)
+* [pulumi stack](https://www.pulumi.com/docs/reference/cli/pulumi_stack/)
+
 ## Task #1 - preview of updates to a stack’s resources
 
 To show a preview of updates run the following command
@@ -14,9 +22,9 @@ To show a preview of updates run the following command
 $ pulumi preview
 Previewing update (dev)
 
-     Type                         Name              Plan       
- +   pulumi:pulumi:Stack          iac-ws-infra-dev  create     
- +   └─ azure:core:ResourceGroup  resourceGroup     create     
+     Type                         Name            Plan       
+ +   pulumi:pulumi:Stack          labs-01-02-dev  create     
+ +   └─ azure:core:ResourceGroup  resourceGroup   create     
  
 Resources:
     + 2 to create
@@ -31,14 +39,15 @@ If you want to display operation as a rich diff showing the overall change, use 
 $ pulumi preview --diff
 Previewing update (dev)
 ...
+'dotnet build -nologo .' completed successfully
 + pulumi:pulumi:Stack: (create)
-    [urn=urn:pulumi:dev::iac-ws-infra::pulumi:pulumi:Stack::iac-ws-infra-dev]
+    [urn=urn:pulumi:dev::labs-01-02::pulumi:pulumi:Stack::labs-01-02-dev]
     + azure:core/resourceGroup:ResourceGroup: (create)
-        [urn=urn:pulumi:dev::iac-ws-infra::azure:core/resourceGroup:ResourceGroup::resourceGroup]
-        [provider=urn:pulumi:dev::iac-ws-infra::pulumi:providers:azure::default_3_20_1::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
+        [urn=urn:pulumi:dev::labs-01-02::azure:core/resourceGroup:ResourceGroup::resourceGroup]
+        [provider=urn:pulumi:dev::labs-01-02::pulumi:providers:azure::default_3_23_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
         location  : "westeurope"
-        name      : "resourcegroup5713ee5b"
-Resources:
+        name      : "resourcegroup82f58714"
+Resources:             
     + 2 to create
 ```
 
@@ -54,11 +63,10 @@ The first thing this command does it shows a preview of the changes that will be
 
 ```bash
 $ pulumi up
-Previewing update (dev)
 
-     Type                         Name              Plan       
- +   pulumi:pulumi:Stack          iac-ws-infra-dev  create     
- +   └─ azure:core:ResourceGroup  resourceGroup     create     
+     Type                         Name            Plan       
+ +   pulumi:pulumi:Stack          labs-01-02-dev  create     
+ +   └─ azure:core:ResourceGroup  resourceGroup   create     
  
 Resources:
     + 2 to create
@@ -74,21 +82,22 @@ Choosing `details` will display a rich diff showing the overall change (similar 
 ```bash
 $ pulumi up
 Previewing update (dev)
-     Type                         Name              Plan       
- +   pulumi:pulumi:Stack          iac-ws-infra-dev  create     
- +   └─ azure:core:ResourceGroup  resourceGroup     create     
+
+     Type                         Name            Plan       
+ +   pulumi:pulumi:Stack          labs-01-02-dev  create     
+ +   └─ azure:core:ResourceGroup  resourceGroup   create     
  
 Resources:
     + 2 to create
 
 Do you want to perform this update? details
 + pulumi:pulumi:Stack: (create)
-    [urn=urn:pulumi:dev::iac-ws-infra::pulumi:pulumi:Stack::iac-ws-infra-dev]
+    [urn=urn:pulumi:dev::labs-01-02::pulumi:pulumi:Stack::labs-01-02-dev]
     + azure:core/resourceGroup:ResourceGroup: (create)
-        [urn=urn:pulumi:dev::iac-ws-infra::azure:core/resourceGroup:ResourceGroup::resourceGroup]
-        [provider=urn:pulumi:dev::iac-ws-infra::pulumi:providers:azure::default_3_20_1::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
+        [urn=urn:pulumi:dev::labs-01-02::azure:core/resourceGroup:ResourceGroup::resourceGroup]
+        [provider=urn:pulumi:dev::labs-01-02::pulumi:providers:azure::default_3_23_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
         location  : "westeurope"
-        name      : "resourcegroupbecc89f0"
+        name      : "resourcegroupa14b221a"
 
 Do you want to perform this update?  [Use arrows to move, enter to select, type to filter]
   yes
@@ -102,16 +111,14 @@ Choosing `yes` will create resources in Azure.
 Do you want to perform this update? yes
 Updating (dev)
 
-View Live: https://app.pulumi.com/evgenyb/iac-ws-infra/dev/updates/1
-
-     Type                         Name              Status      
- +   pulumi:pulumi:Stack          iac-ws-infra-dev  created     
- +   └─ azure:core:ResourceGroup  resourceGroup     created     
+     Type                         Name            Status      
+ +   pulumi:pulumi:Stack          labs-01-02-dev  created     
+ +   └─ azure:core:ResourceGroup  resourceGroup   created     
  
 Resources:
     + 2 created
 
-Duration: 11s
+Duration: 12s
 ```
 
 ## Task #3 - modify your resources and deploy changes
@@ -124,10 +131,10 @@ public MyStack()
     // Create an Azure Resource Group
     var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs
     {
-        Tags = 
+        Tags =
         {
             {"Owner", "team-platform"},
-            {"Environments", Deployment.Instance.StackName },
+            {"Environment", "dev"}
         }
     });
 }
@@ -139,9 +146,9 @@ Deploy changes
 $ pulumi up
 Previewing update (dev)
 
-     Type                         Name              Plan       Info
-     pulumi:pulumi:Stack          iac-ws-infra-dev             
- ~   └─ azure:core:ResourceGroup  resourceGroup     update     [diff: ~tags]
+     Type                         Name            Plan       Info
+     pulumi:pulumi:Stack          labs-01-02-dev             
+ ~   └─ azure:core:ResourceGroup  resourceGroup   update     [diff: ~tags]
  
 Resources:
     ~ 1 to update
@@ -149,14 +156,14 @@ Resources:
 
 Do you want to perform this update? details
   pulumi:pulumi:Stack: (same)
-    [urn=urn:pulumi:dev::iac-ws-infra::pulumi:pulumi:Stack::iac-ws-infra-dev]
+    [urn=urn:pulumi:dev::labs-01-02::pulumi:pulumi:Stack::labs-01-02-dev]
     ~ azure:core/resourceGroup:ResourceGroup: (update)
-        [id=/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourcegroupb965cf3b]
-        [urn=urn:pulumi:dev::iac-ws-infra::azure:core/resourceGroup:ResourceGroup::resourceGroup]
-        [provider=urn:pulumi:dev::iac-ws-infra::pulumi:providers:azure::default_3_20_1::61ad2ddb-15cf-4ed6-9d87-23f962ba0128]
+        [id=/subscriptions/8878beb2-5e5d-4418-81ae-783674eea324/resourceGroups/resourcegroupf8dc8baa]
+        [urn=urn:pulumi:dev::labs-01-02::azure:core/resourceGroup:ResourceGroup::resourceGroup]
+        [provider=urn:pulumi:dev::labs-01-02::pulumi:providers:azure::default_3_23_0::a17d2342-7734-49fb-8ec0-cb1ec38172df]
       ~ tags: {
-          + Environments: "dev"
-          + Owner       : "team-platform"
+          + Environment: "dev"
+          + Owner      : "team-platform"
         }
 
 Do you want to perform this update?  [Use arrows to move, enter to select, type to filter]
@@ -165,9 +172,7 @@ Do you want to perform this update?  [Use arrows to move, enter to select, type 
   details
 ```
 
-Pulumi will update the resource group to add two tags. Note, we can read current stack name from the `Deployment.Instance.StackName` property.
-
-Choosing `yes` will proceed with the update.
+Pulumi will update the resource group and add two tags. Choosing `yes` will proceed with the update.
 
 ## Task #5 - destroy resources
 
@@ -177,9 +182,9 @@ Quite often you need to remove all components included into your infrastructure.
 $ pulumi destroy
 Previewing destroy (dev)
 
-     Type                         Name              Plan       
- -   pulumi:pulumi:Stack          iac-ws-infra-dev  delete     
- -   └─ azure:core:ResourceGroup  resourceGroup     delete     
+     Type                         Name            Plan       
+ -   pulumi:pulumi:Stack          labs-01-02-dev  delete     
+ -   └─ azure:core:ResourceGroup  resourceGroup   delete     
  
 Resources:
     - 2 to delete
@@ -187,21 +192,15 @@ Resources:
 Do you want to perform this destroy? yes
 Destroying (dev)
 
-     Type                         Name              Status      
- -   pulumi:pulumi:Stack          iac-ws-infra-dev  deleted     
- -   └─ azure:core:ResourceGroup  resourceGroup     deleted     
+     Type                         Name            Status      
+ -   pulumi:pulumi:Stack          labs-01-02-dev  deleted     
+ -   └─ azure:core:ResourceGroup  resourceGroup   deleted     
  
 Resources:
     - 2 deleted
+
+Duration: 55s
 ```
-
-## Useful links
-
-* [Pulumi CLI](https://www.pulumi.com/docs/reference/cli/)
-* [pulumi preview](https://www.pulumi.com/docs/reference/cli/pulumi_preview/)
-* [pulumi up](https://www.pulumi.com/docs/reference/cli/pulumi_up/)
-* [pulumi destroy](https://www.pulumi.com/docs/reference/cli/pulumi_destroy/)
-* [pulumi stack](https://www.pulumi.com/docs/reference/cli/pulumi_stack/)
 
 ## Next: working with stack
 
