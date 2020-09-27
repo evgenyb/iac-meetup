@@ -267,6 +267,10 @@ Duration: 27s
 
 Some configuration data is sensitive. Passwords or service tokens are good examples of such a data. For such cases, use `--secret` flag of the config set command will encrypt the data and instead of text will store the resulting ciphertext into the state.
 
+TODO - Output and secrets
+
+Stack outputs respect secret annotations and will also be encrypted appropriately. If a stack contains any secret values, their plaintext values will not be shown by default. Instead, they will be displayed as [secret] in the CLI. Pass --show-secrets to pulumi stack output to see the plaintext value.
+
 ## Task #5 - cleanup
 
 Destroy resources and remove `prod` stack
@@ -282,6 +286,7 @@ Destroy resources and remove `dev` stack
 $ pulumi destroy -s dev
 $ pulumi stack rm dev
 ```
+
 
 ## Next: managing secrets with Azure Key-Vault
 
