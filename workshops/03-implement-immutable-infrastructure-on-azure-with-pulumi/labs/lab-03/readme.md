@@ -6,6 +6,8 @@ Every Pulumi program is deployed to a stack. A stack is an isolated, independent
 
 ## Goals
 
+* To learn how to work with Pulumi Stacks
+
 ## Useful links
 
 * [Pulumi: programming model](https://www.pulumi.com/docs/intro/concepts/programming-model/)
