@@ -30,10 +30,10 @@ The goals for this workshop are:
 * 17:10 - 17:15 - MS Azure Badges
 * Infrastructure as Code
 * Pulumi 101
-* [lab-01](labs/lab-01/readme.md) - create new project (xx min)
+* [lab-01](labs/lab-01/readme.md) - create new Project (xx min)
 * [lab-02](labs/lab-02/readme.md) - working with the "flow" (xx min)
-* [lab-03](labs/lab-03/readme.md) - working with stack (xx min)
-* [lab-04](labs/lab-04/readme.md) - working with stack Outputs (xx min)
+* [lab-03](labs/lab-03/readme.md) - working with Stacks (xx min)
+* [lab-04](labs/lab-04/readme.md) - working with Stack Outputs (xx min)
 * lab-05 - state and backends (xx min)
 * [lab-06](labs/lab-06/readme.md) - persisting state at Azure Storage Account (xx min)
 * [lab-07](labs/lab-07/readme.md) - working with configuration and secrets (xx min)

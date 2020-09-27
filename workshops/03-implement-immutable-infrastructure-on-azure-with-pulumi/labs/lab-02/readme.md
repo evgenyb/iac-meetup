@@ -202,6 +202,6 @@ Resources:
 Duration: 55s
 ```
 
-## Next: working with stack
+## Next: working with Stacks
 
 [Go to lab-03](../lab-03/readme.md)
