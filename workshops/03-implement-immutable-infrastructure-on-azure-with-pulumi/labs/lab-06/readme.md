@@ -1,86 +1,48 @@
-# lab-06 - persisting state at Azure Storage Account
+# lab-06 - working with configuration and secrets
 
 ## Estimated completion time - ?? min
 
-Pulumi stores its own copy of the current state of your infrastructure and there are two state backend options available:
+Quite often, when you work with multiple environments, they will need a different set of configuration values. For instance, private virtual networks will use different address prefix, number of nodes and VM size in your AKS cluster most likely will be different.
 
-* The Pulumi Service backend
-* A self-managed backend, either stored locally on filesystem or remotely using a cloud storage service, in our case, Azure Blob Storage
+Pulumi offers a configuration system for managing such differences. Instead of hard-coding the differences, you can store and retrieve configuration values using a combination of the CLI and the [programming model](https://www.pulumi.com/docs/intro/concepts/programming-model/).
 
-## Why using self-managed backend?
+The key-value pairs for any given stack are stored in your project’s stack settings file called `Pulumi.<stack-name>.yaml`.
 
-It might be several reasons why you want to store the state the storage you maintained yourself. One reason can be legal aspects. Pulumi Service backend is hosted at AWS in USA. So, it might be that you can't store your state outside of the EU. Or if you want to have full control over who has access to the state. In this case you can configure pulumi to store state at your backend and it supports multiple options, including Azure Blog storage that we will use in this lab.
-
-Even though technically this is possible to store state at self-maintained backend, Pulumi doesn't recommend this for organizations as the Pulumi platform provides added security and governance functionality; plus requires more workarounds that need to be maintained over time and would otherwise be removed by using the Pulumi platform.
-
-Please also read [Pulumi: Notes on self-managed backends](https://www.pulumi.com/docs/intro/concepts/state/#notes-on-self-managed-backends)
-> Some commands may behave slightly differently when using the local or remote storage endpoint. For example, when connected to pulumi.com, pulumi up ensures there are no other updates in flight for a given stack. This doesn’t happen with self-managed backends. Pulumi also manages secrets using a key encrypted with a passphrase and stored in Pulumi.<stack-name>.yaml. This requires you enter the passphrase when you preview, update, or delete your stack. If you want to collaborate with another person, you’ll need to share this passphrase with them as well. All of these overhead tasks will have to be managed separately when you opt into the local or remote state backend.
+* The CLI offers a config command with set and get subcommands for managing key-value pairs.
+* The programming model offers a `Config` object with various getters and setters for retrieving values.
 
 ## Goals
 
-* Configure Pulumi to store state at Azure Storage Account
+* Learn how to manage configuration and secrets using `CLI` and programming model.
 
 ## Useful links
 
-* [Pulumi: State and Backends](https://www.pulumi.com/docs/intro/concepts/state/)
-* [Pulumi: Self-managed backends](https://www.pulumi.com/docs/intro/concepts/state/#self-managed-backends)
-* [Pulumi: Notes on self-managed backends](https://www.pulumi.com/docs/intro/concepts/state/#notes-on-self-managed-backends)
-* [pulumi login](https://www.pulumi.com/docs/reference/cli/pulumi_login/)
-* [Using Pulumi on Azure Storage Accounts](https://cloud-right.com/2019/10/pulumi-azure-storage)
-* [Storage account overview](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview?WT.mc_id=AZ-MVP-5003837)
-* [Quickstart: Create, download, and list blobs with Azure CLI](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-cli?WT.mc_id=AZ-MVP-5003837)
+* [Pulumi: programming model](https://www.pulumi.com/docs/intro/concepts/programming-model/)
+* [Pulumi: Configuration and Secrets](https://www.pulumi.com/docs/intro/concepts/config/)
+* [pulumi config](https://www.pulumi.com/docs/reference/cli/pulumi_config/)
+* [Pulumi: Config reference](https://www.pulumi.com/docs/intro/concepts/programming-model/#config)
 
-## Task #1 - create Storage account
+## Task #1 - cerate new project for private virtual network
 
-Note!
+Let's implement private VNet `iac-lab07-vnet` with 2 subnets:
 
-Storage Account names **MUST** be globally unique. Do not use storage account name used in the code below, create your own name and I suggest the following convention: 
-
-iacpulumi***usr***sa, where `usr` is short version of your username, in mya case I will use `iacpulumievgsa`
+Subnet | address range
+----|----
+aks-net | 10.0.0.0/20
+apim-net | 10.0.16.0/27
 
 ```bash
-$ az group create --name iac-pulumiinfra-rg --location westeurope
-$ az storage account create --name iacpulumievgsa --resource-group iac-pulumiinfra-rg --location westeurope --sku Standard_LRS --https-only true --kind StorageV2
-$ KEYS=$(az storage account keys list --account-name iacpulumievgsa --resource-group iac-pulumiinfra-rg --output json)
-$ export AZURE_STORAGE_ACCOUNT="iacpulumievgsa"
-$ export AZURE_STORAGE_KEY=$(echo $KEYS | jq -r .[0].value)
-$ az storage container create --name state
-$ export PULUMI_CONFIG_PASSPHRASE="foobar"
-```
-
-Alternatively, you can set `AZURE_STORAGE_SAS_TOKEN` as  environment variable to access Storage Account.
-
-Once you executed scripts you should be able to find an Azure Storage Container in your subscription.
-
-![pic1](images/sa-state.png)
-
-## Task #2 - login to Azure backend
-
-To configure Pulumi’s backend to the Azure Storage Container, run the following command
-
-```bash
-$ pulumi login azblob://state
-```
-
-Pulumi will use the environment variables `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_KEY` to authenticate to Azure Storage.
-
-## Task #3 - create new stack
-
-Now let's create a new stack and see what will happen at the Storage Account
-
-```bash
-$ mkdir use-azure-backend
-$ cd use-azure-backend
-$ pulumi new azure-csharp
+$ mkdir lab-07
+$ cd lab-07
 $ pulumi new azure-csharp
 This command will walk you through creating a new Pulumi project.
 
 Enter a value or leave blank to accept the (default), and press <ENTER>.
 Press ^C at any time to quit.
 
-project name: (use-azure-backend)
+project name: (lab-07)
 project description: (A minimal Azure C# Pulumi program)
-Created project 'use-azure-backend'
+Created project 'lab-07'
 
 stack name: (dev)
 Created stack 'dev'
@@ -91,143 +53,240 @@ Saved config
 Installing dependencies...
 ```
 
-Let's only keep resource group `iac-ws3-lab06-rg` at the stack 
+Feel free to implement it yourself or use the following code snippet.
 
 ```c#
-...
+using Pulumi;
+using Pulumi.Azure.Core;
+using Pulumi.Azure.Network;
+
 class MyStack : Stack
 {
     public MyStack()
     {
         // Create an Azure Resource Group
-        var resourceGroup = new ResourceGroup("iac-ws3-lab06");
+        var resourceGroup = new ResourceGroup("iac-lab07-rg");
+
+        var vnet = new VirtualNetwork("vnet", new VirtualNetworkArgs
+        {
+            Name = "iac-lab07-vnet",
+            ResourceGroupName = resourceGroup.Name,
+            AddressSpaces = { "10.0.0.0/16" }
+        });
+
+        var aksSubnet = new Subnet("aks-net", new SubnetArgs{
+            Name = "aks-net",
+            ResourceGroupName = resourceGroup.Name,
+            VirtualNetworkName = vnet.Name,
+            AddressPrefixes = {"10.0.0.0/20"}
+        });
+
+        var apimSubnet = new Subnet("apim-net", new SubnetArgs{
+            Name = "apim-net",
+            ResourceGroupName = resourceGroup.Name,
+            VirtualNetworkName = vnet.Name,
+            AddressPrefixes = {"10.0.16.0/27"}
+        });
     }
 }
-...
 ```
 
-and deploy it
+Deploy it
 
 ```bash
 $ pulumi up
 Previewing update (dev):
-     Type                         Name                   Plan
- +   pulumi:pulumi:Stack          use-azure-backend-dev  create
- +   └─ azure:core:ResourceGroup  iac-ws3-lab06          create
+     Type                             Name          Plan
+ +   pulumi:pulumi:Stack              lab-07-dev    create
+ +   ├─ azure:core:ResourceGroup      iac-lab07-rg  create
+ +   ├─ azure:network:VirtualNetwork  vnet          create
+ +   ├─ azure:network:Subnet          aks-net       create
+ +   └─ azure:network:Subnet          apim-net      create
 
 Resources:
-    + 2 to create
+    + 5 to create
 
 Do you want to perform this update? yes
 Updating (dev):
-     Type                         Name                   Status
- +   pulumi:pulumi:Stack          use-azure-backend-dev  created
- +   └─ azure:core:ResourceGroup  iac-ws3-lab06          created
+     Type                             Name          Status
+ +   pulumi:pulumi:Stack              lab-07-dev    created
+ +   ├─ azure:core:ResourceGroup      iac-lab07-rg  created
+ +   ├─ azure:network:VirtualNetwork  vnet          created
+ +   ├─ azure:network:Subnet          aks-net       created
+ +   └─ azure:network:Subnet          apim-net      created
 
 Resources:
-    + 2 created
+    + 5 created
 
-Duration: 11s
+Duration: 36s
 ```
 
-## Task #4 - check the stack state
+## Task #2 - extract vnet and subnet address values into Pulumi configuration
 
-Now, let's go over to your Azure Storage Account and check the content of our container. You should see a folder structure similar to the one in the following screenshot.
+Having IP address values in the code only will work if there is only one environment. If there are more than one, we need to extract them into the stack's settings file representing the environment.
 
-![content](images/sa-state-content.png)
+Let's introduce the following config values:
 
-You can also check the content of the `dev.json` file and it should contain json file with stack state. 
-
-![content](images/sa-state-content-json.png)
-
-This is the json you will get if you run the following command
+Key | Value
+----|----
+vnet.address | 10.0.0.0/16
+vnet.subnets.aks-net | 10.0.0.0/20
+vnet.subnets.apim-net | 10.0.16.0/27
 
 ```bash
-$ pulumi stack export
-{
-    "version": 3,
-    "deployment": {
-        "manifest": {
-            "time": "2020-09-24T22:43:52.617581+02:00",
-            "magic": "025dfc1d117429348e6e7b803d2a4553ccb696ddad474136fcac4f7fa8123e00",
-            "version": "v2.10.2"
-        },
-        "secrets_providers": {
-            "type": "passphrase",
-            "state": {
-                "salt": "v1:x7aRpReVXbQ=:v1:IvIZKdgP2Urxp+87:I6BHpkuCuefycGFAWlCFgX+aXPZF2g=="
-            }
-        },
-        "resources": [
-            {
+$ pulumi config set vnet.address '10.0.0.0/16'
+$ pulumi config set vnet.subnets.aks-net '10.0.0.0/20'
+$ pulumi config set vnet.subnets.apim-net '10.0.16.0/27'
+```
+
+If you check your `Pulumi.dev.yaml` file, you will find 3 new config items. 
+
+```bash
+$ cat Pulumi.dev.yaml
 ...
+config:
+  azure:location: westeurope
+  lab-07:vnet.address: 10.0.0.0/16
+  lab-07:vnet.subnets.apim-net: 10.0.16.0/27
+  lab-07:vnet.subnets.aks-net: 10.0.0.0/20
 ```
 
-## Task #5 - destroy stack resources
+Now, in the code we should use [Config](https://www.pulumi.com/docs/intro/concepts/programming-model/#config) class and programmatically read address range values from the configuration. Configuration values can be retrieved using either `Config.Get` or `Config.Require` methods. Using `Config.Get` will return `null` if the configuration value was not provided, and `Config.Require` will raise an exception to prevent the deployment from continuing until the variable has been set using the CLI.
 
-```bash
-$ pulumi destroy
-Previewing destroy (dev):
-     Type                         Name                   Plan
- -   pulumi:pulumi:Stack          use-azure-backend-dev  delete
- -   └─ azure:core:ResourceGroup  iac-ws3-lab06          delete
+Now, let's refactor our code to use `Config` class. Here is my implementation.
 
-Resources:
-    - 2 to delete
-
-Do you want to perform this destroy? yes
-Destroying (dev):
-     Type                         Name                   Status
-     Type                         Name                   Status
- -   pulumi:pulumi:Stack          use-azure-backend-dev  deleted
- -   └─ azure:core:ResourceGroup  iac-ws3-lab06          deleted
-
-Resources:
-    - 2 deleted
-
-Duration: 53s
-```
-
-Now run the `stack export` command again
-
-```bash
-
-$ pulumi stack export
+```c#
+class MyStack : Stack
 {
-    "version": 3,
-    "deployment": {
-        "manifest": {
-            "time": "2020-09-24T22:55:29.1379112+02:00",
-            "magic": "025dfc1d117429348e6e7b803d2a4553ccb696ddad474136fcac4f7fa8123e00",
-            "version": "v2.10.2"
-        },
-        "secrets_providers": {
-            "type": "passphrase",
-            "state": {
-                "salt": "v1:x7aRpReVXbQ=:v1:IvIZKdgP2Urxp+87:I6BHpkuCuefycGFAWlCFgX+aXPZF2g=="
-            }
-        }
+    public MyStack()
+    {
+        var config = new Config();
+
+        // Create an Azure Resource Group
+        var resourceGroup = new ResourceGroup("iac-lab07-rg");
+
+        var vnet = new VirtualNetwork("vnet", new VirtualNetworkArgs
+        {
+            Name = "iac-lab07-vnet",
+            ResourceGroupName = resourceGroup.Name,
+            AddressSpaces = { config.Require("vnet.address") }
+        });
+
+        var aksSubnet = new Subnet("aks-net", new SubnetArgs{
+            Name = "aks-net",
+            ResourceGroupName = resourceGroup.Name,
+            VirtualNetworkName = vnet.Name,
+            AddressPrefixes = { config.Require("vnet.subnets.aks-net") }
+        });
+
+        var apimSubnet = new Subnet("apim-net", new SubnetArgs{
+            Name = "apim-net",
+            ResourceGroupName = resourceGroup.Name,
+            VirtualNetworkName = vnet.Name,
+            AddressPrefixes = { config.Require("vnet.subnets.apim-net") }
+        });
     }
 }
 ```
 
-and compare it with the content of the `dev.json` file at the Azure Blob
-
-![destroyed](images/sa-state-content-destroyed.png)
-
-Now we can remove stack by running the following command
+Deploy the stack and there should be no changes
 
 ```bash
-$ pulumi stack rm dev
-This will permanently remove the 'dev' stack!
-Please confirm that this is what you'd like to do by typing ("dev"): dev
-Stack 'dev' has been removed!
+$ pulumi up
+Previewing update (dev):
+     Type                 Name        Plan
+     pulumi:pulumi:Stack  lab-07-dev
+
+Resources:
+    5 unchanged
 ```
 
-and if you check the Azure blob now, there will be no `dev.json` file any longer
+## Task #3 - add `prod` stack
 
-![cleaned](images/sa-state-cleaned.png)
+Now, let's add new `prod` stack that will represent our production environment.
 
-## Next: working with configuration and secrets
+```bash
+$ pulumi stack init -s prod
+Created stack 'prod'
+```
+
+Next, add vnet address range values for the `prod` environment
+
+```bash
+$ pulumi config set vnet.address '10.1.0.0/16'
+$ pulumi config set vnet.subnets.aks-net '10.1.0.0/20'
+$ pulumi config set vnet.subnets.apim-net '10.1.16.0/27'
+$ pulumi config set azure:location northeurope
+```
+
+Note, when you `init` new stack with Azure provider, it doesn't ask you for the stack location, therefore we needed to add `azure:location` key.
+
+If you check your `Pulumi.prod.yaml` file, you will find 3 new config items.
+
+```bash
+$ cat Pulumi.prod.yaml
+...
+config:
+  azure:location: northeurope
+  lab-07:vnet.address: 10.1.0.0/16
+  lab-07:vnet.subnets.apim-net: 10.1.16.0/27
+  lab-07:vnet.subnets.aks-net: 10.1.0.0/20
+```
+
+Finally, deploy to prod
+
+```bash
+$ pulumi up
+Previewing update (prod):
+     Type                             Name          Plan
+ +   pulumi:pulumi:Stack              lab-07-prod   create
+ +   ├─ azure:core:ResourceGroup      iac-lab07-rg  create
+ +   ├─ azure:network:VirtualNetwork  vnet          create
+ +   ├─ azure:network:Subnet          aks-net       create
+ +   └─ azure:network:Subnet          apim-net      create
+
+Resources:
+    + 5 to create
+
+Do you want to perform this update? yes
+Updating (prod):
+     Type                             Name          Status
+ +   pulumi:pulumi:Stack              lab-07-prod   created
+ +   ├─ azure:core:ResourceGroup      iac-lab07-rg  created
+ +   ├─ azure:network:VirtualNetwork  vnet          created
+ +   ├─ azure:network:Subnet          apim-net      created
+ +   └─ azure:network:Subnet          aks-net       created
+
+Resources:
+    + 5 created
+
+Duration: 27s
+```
+
+## Task #4 - working with the secrets
+
+Some configuration data is sensitive. Passwords or service tokens are good examples of such a data. For such cases, use `--secret` flag of the config set command will encrypt the data and instead of text will store the resulting ciphertext into the state.
+
+TODO - Output and secrets
+
+Stack outputs respect secret annotations and will also be encrypted appropriately. If a stack contains any secret values, their plaintext values will not be shown by default. Instead, they will be displayed as [secret] in the CLI. Pass --show-secrets to pulumi stack output to see the plaintext value.
+
+## Task #5 - cleanup
+
+Destroy resources and remove `prod` stack
+
+```bash
+$ pulumi destroy -s prod
+$ pulumi stack rm prod
+```
+
+Destroy resources and remove `dev` stack
+
+```bash
+$ pulumi destroy -s dev
+$ pulumi stack rm dev
+```
+
+## Next: managing secrets with Azure Key-Vault
 
 [Go to lab-07](../lab-07/readme.md)

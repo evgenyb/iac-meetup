@@ -1,95 +1,185 @@
-# lab-08 - managing secrets with Azure Key-Vault
+# lab-08 - import existing resources
 
 ## Estimated completion time - ?? min
 
-The Pulumi Service automatically manages per-stack encryption keys on your behalf. Anytime you encrypt a value using `--secret` or by programmatically wrapping it as a secret at runtime, a secure protocol is used between the CLI and Pulumi Service that ensures secret data is encrypted in transit, at rest, and physically anywhere it gets stored.
+Most likely, when you start adapting Pulumi in your project, there will be quite a lot of existing infrastructure already provisioned and then you to import existing resources so they can be managed by Pulumi.
 
-The default encryption mechanism may be insufficient in the following scenarios:
-
-* If you are using the Pulumi CLI independent of the Pulumi Service—either in local mode, or by using one of the available backend plugins.
-
-* If your team already has a preferred cloud encryption provider that you would like to use.
-
-In both cases, you can continue using secrets management as described above, but instruct Pulumi to use an alternative encryption provider, in our case Azure Key-Vault.
+To adopt existing resources so that Pulumi is able to manage subsequent updates to them, Pulumi offers the import resource option. This option requests that a resource defined in your Pulumi program adopts an existing resource in Azure instead of creating a new one.
 
 ## Goals
 
-* To configure Pulumi to use Azure Key Vault as an encryption provider.
+* Learn how you can import existing resources into Pulumi stack
 
 ## Useful links
 
-* [Pulumi: Configuring Secrets Encryption](https://www.pulumi.com/docs/intro/concepts/config/#configuring-secrets-encryption)
-* [Pulumi: Azure Key Vault as Encryption Provider](https://www.pulumi.com/docs/intro/concepts/config/#azure-key-vault)
-* [Pulumi: Managing Secrets with Pulumi](https://www.pulumi.com/blog/managing-secrets-with-pulumi/)
-* [Pulumi: Configuring your secrets provider](https://www.pulumi.com/blog/managing-secrets-with-pulumi/#configuring-your-secrets-provider)
-* [Managing Deployment Secrets with Azure Key Vault](https://cloud-right.com/2020/06/pulumi-encrypt-secrets-azure-keyvault)
-* [Azure Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/?WT.mc_id=AZ-MVP-5003837)
-* [Azure Environment Authentication](https://docs.microsoft.com/en-us/azure/developer/go/azure-sdk-authorization?WT.mc_id=AZ-MVP-5003837#use-environment-based-authentication)
+* [Pulumi import](https://www.pulumi.com/docs/intro/concepts/programming-model/#import)
+* [Pulumi: VirtualNetwork reference](https://www.pulumi.com/docs/reference/pkg/azure/network/virtualnetwork/)
+* [Pulumi: Subnet reference](https://www.pulumi.com/docs/reference/pkg/azure/network/subnet/)
+* [Import existing Azure DNS Zone into Pulumi](https://borzenin.com/import-dns-zone-into-pulumi/)
+* [Visual Subnet Calculator](http://www.davidc.net/sites/default/subnets/subnets.html)
+* [Virtual Network documentation](https://docs.microsoft.com/en-us/azure/virtual-network/?WT.mc_id=AZ-MVP-5003837)
+* [Manage Azure Resource Manager resource groups by using the Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal?WT.mc_id=AZ-MVP-5003837)
+* [Azure Command-Line Interface (CLI) documentation](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest&WT.mc_id=AZ-MVP-5003837)
+* [Azure PowerShell Az](https://docs.microsoft.com/en-us/powershell/azure/new-azureps-module-az?view=azps-4.6.1&WT.mc_id=AZ-MVP-5003837)
 
-## Task #1 - create new Azure key-vault and new keyvault key
+## Task #1 - create new resource group and private virtual Vnet
 
-Note!
+First, let's manually create new resource group called `iac-pulumi-import-rg` and private virtual Vnet `iac-pulumi-import-vnet` with 3 subnets. You can use portal, `az cli` or Powershell.
 
-Azure Key-Vault names **MUST** be globally unique. Do not use key-vault name used in the code below, create your own name and I suggest the following convention: 
+Subnet | Range
+----|----
+aks|10.0.0.0/24
+agw|10.0.1.0/24
+apim|10.0.2.0/24
 
-iac-***usr***-pulumi-encryption-kv, where `usr` is short version of your username, in mya case I will use `iac-evg-pulumi-encryption-kv`
-
-```bash
-$ az group create --name iac-pulumiinfra-rg --location westeurope
-$ az keyvault create --name iac-evg-pulumi-kv --resource-group iac-pulumiinfra-rg --location westeurope
-$ az keyvault key create --name pulumiencryptionkey --vault-name iac-evg-pulumi-kv
+```
+$ az group create -n iac-pulumi-import-rg -l norwayeast
+$ az network vnet create -n iac-pulumi-import-vnet -g iac-pulumi-import-rg --address-prefixes 10.0.0.0/16
+$ az network vnet subnet create -n aks  --vnet-name iac-pulumi-import-vnet -g iac-pulumi-import-rg --address-prefixes 10.0.0.0/24
+$ az network vnet subnet create -n agw  --vnet-name iac-pulumi-import-vnet -g iac-pulumi-import-rg --address-prefixes 10.0.1.0/24
+$ az network vnet subnet create -n apim  --vnet-name iac-pulumi-import-vnet -g iac-pulumi-import-rg --address-prefixes 10.0.2.0/24
 ```
 
-Retrieve your user' object ID and grant a Key Vault Access Policy to this user to access Keys. You can find your user object ID either at the Azure portal. Navigate to `Azure Active Directory -> Users -> <Your user> -> Profile` and copy `Object ID`
-
-![objectid](images/pulumi-user-id.png)
-
-or user `az cli`
+## Task #2 - create new Pulumi project called iac-pulumi-import
 
 ```bash
-$ userId=`az ad user show --id evgeny.borzenin@gmail.com | jq -r .objectId`
-$ az keyvault set-policy --name iac-evg-pulumi-kv --object-id ${userId} --key-permissions encrypt decrypt get create delete list update import backup restore recover
+$ mkdir iac-pulumi-import
+$ cd iac-pulumi-import
+$ pulumi new azure-csharp
 ```
 
-You have now created an Azure Key-Vault with an Encryption Key.
+Remove storage account resource definition code.
 
-![key-vault](images/pulumi-key-vault.png)
+## Task #3 - identify resource ID for resource we wan to import into Pulumi
 
-## Task #2 - configure pulumi to use Azure Key-Vault
+First thing we need to do before we start importing existing resources into Pulumi, is to find Azure resource IDs. You can find this information at the Properties page at the Azure portal, use [az cli](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest&WT.mc_id=AZ-MVP-5003837) or [Azure PowerShell Az](https://docs.microsoft.com/en-us/powershell/azure/new-azureps-module-az?view=azps-4.6.1&WT.mc_id=AZ-MVP-5003837) module.
 
-We use `azurekeyvault` provider and it uses an Azure Key Vault key for encryption. This key is specified using an Azure Key object identifier, which includes both your key vault’s name and the key to use: `azurekeyvault://keyvaultname.vault.azure.net/keys/keyname`.
-
-By default, `azurekeyvault` provider will use [Azure Environment Authentication](https://docs.microsoft.com/en-us/azure/developer/go/azure-sdk-authorization?WT.mc_id=AZ-MVP-5003837#use-environment-based-authentication).
-
-We want to login using the `az cli` for authentication instead, therefore we should set `AZURE_KEYVAULT_AUTH_VIA_CLI` environment variable to `true`.
+Get resource group ID
 
 ```bash
-$ export AZURE_KEYVAULT_AUTH_VIA_CLI=true
-$ pulumi stack init --secrets-provider="azurekeyvault://iac-evg-pulumi-kv.vault.azure.net/keys/pulumiencryptionkey"
+$ az group show --name iac-pulumi-import-rg --query id
+"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-pulumi-import-rg"
 ```
 
-You can now verify that Pulumi has configured our Key Vault Encryption Key by looking at the Pulumi.dev.yaml file.
+Get vnet and subnets IDs
 
 ```bash
-$ cat Pulumi.dev.yaml
-secretsprovider: azurekeyvault://iac-evg-pulumi-kv.vault.azure.net/keys/pulumiencryptionkey
-encryptedkey: b05XWS1ScU1OcHAtYnZpR1lZbDBFeHN2U1Nob2RZb2lPQUk2WHpUQzNmRmQzbW1nWHp3WE1...
+$ az network vnet show --vnet-name iac-pulumi-import-vnet -g iac-pulumi-import-rg
 ```
 
-## Task #3 - cleanup
+## Task #4 - import resource group
 
-Destroy all resources
+With ID in place, we implement the regular Pulumi stack, but in addition to normal resource specification, we use `CustomResourceOptions` class and set `ImportId` to resource ID for each of the resources we want to import.
+
+Here is how we import Resource Group.
+
+```c#
+var resourceGroup = new ResourceGroup("rg", new ResourceGroupArgs
+{
+    Name = "iac-pulumi-import-rg",
+    Location = "norwayeast",
+
+}, new CustomResourceOptions
+{
+    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-pulumi-import-rg"
+});
+```
+
+If you run `pulumi up` now you will see  
 
 ```bash
-$ pulumi destroy
+$ pulumi up
+Previewing update (dev)
+
+     Type                             Name                   Plan       
+ +   pulumi:pulumi:Stack              iac-pulumi-import-dev  create     
+ =   ├─ azure:core:ResourceGroup      rg                     import     
+ 
+Resources:
+    + 1 to create
+    = 1 to import
+    2 changes
+
+Do you want to perform this update? yes
+Updating (dev)
+
+     Type                             Name                   Status       
+ +   pulumi:pulumi:Stack              iac-pulumi-import-dev  created      
+ =   ├─ azure:core:ResourceGroup      rg                     imported     
+ 
+Resources:
+    + 1 created
+    = 1 imported
+    2 changes
+
+Duration: 12s
 ```
 
-and remove `dev` stack
+## Task #5 - import Vnet
+
+Now, use the same technique and import the private vNet `iac-pulumi-import-vnet` with 3 subnets. Here is the code sample. 
+
+```c#
+...
+var vnet = new VirtualNetwork("vnet", new VirtualNetworkArgs
+{
+    ResourceGroupName = resourceGroup.Name,
+    Location = resourceGroup.Location,
+    Name = "iac-pulumi-import-vnet",
+    AddressSpaces = 
+    {
+        { "10.0.0.0/16" }
+    }
+}, new CustomResourceOptions
+{
+    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-pulumi-import-rg/providers/Microsoft.Network/virtualNetworks/iac-pulumi-import-vnet"
+});
+
+var aksSubNet = new Subnet("aks", new SubnetArgs
+{
+    Name = "aks",
+    ResourceGroupName = resourceGroup.Name,
+    VirtualNetworkName = vnet.Name,
+    AddressPrefixes = "10.0.0.0/24"
+}, new CustomResourceOptions
+{
+    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-pulumi-import-rg/providers/Microsoft.Network/virtualNetworks/iac-pulumi-import-vnet/subnets/aks"
+});
+...
+```
+
+When you run `pulumi up`, you should see similar result
 
 ```bash
-$ pulumi stack rm dev
+$ pulumi up
+Previewing update (dev)
+
+     Type                             Name                   Plan       
+ +   pulumi:pulumi:Stack              iac-pulumi-import-dev  create     
+ =   ├─ azure:core:ResourceGroup      rg                     import     
+ =   ├─ azure:network:VirtualNetwork  vnet                   import     
+ =   ├─ azure:network:Subnet          aks                    import     
+ =   ├─ azure:network:Subnet          agw                    import     
+ =   └─ azure:network:Subnet          apim                   import     
+ 
+Resources:
+    + 1 to create
+    = 5 to import
+    6 changes
+
+Do you want to perform this update? yes
+Updating (dev)
+
+     Type                             Name                   Status       
+ +   pulumi:pulumi:Stack              iac-pulumi-import-dev  created      
+ =   ├─ azure:core:ResourceGroup      rg                     imported     
+ =   ├─ azure:network:VirtualNetwork  vnet                   imported     
+ =   ├─ azure:network:Subnet          agw                    imported     
+ =   ├─ azure:network:Subnet          aks                    imported     
+ =   └─ azure:network:Subnet          apim                   imported     
+
 ```
 
-## Next: import existing resources
+## Next: 
 
 [Go to lab-09](../lab-09/readme.md)

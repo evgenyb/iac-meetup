@@ -209,6 +209,6 @@ Destroy all resources
 $ pulumi destroy --yes
 ```
 
-## Next: state and backends
+## Next: persisting state at Azure Storage Account
 
 [Go to lab-05](../lab-05/readme.md)
