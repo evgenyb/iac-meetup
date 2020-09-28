@@ -1,6 +1,6 @@
 # lab-01 - Pulumi basics
 
-## Estimated completion time - ?? min
+## Estimated completion time - 10-15 min
 
 Infrastructure in Pulumi is organized as projects. Each project is a single program that, when run, declares the desired infrastructure for Pulumi to manage.
 

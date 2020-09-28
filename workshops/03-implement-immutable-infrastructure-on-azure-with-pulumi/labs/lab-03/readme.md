@@ -1,12 +1,12 @@
 # lab-03 - working with Stack Outputs
 
-## Estimated completion time - ?? min
+## Estimated completion time - 15 min
 
 ### Pulumi output
 
 Here are some quotes collected from the original [documentation](https://www.pulumi.com/docs/intro/concepts/programming-model/#outputs).
 
->Resource properties are treated specially in Pulumi. All resource arguments accept inputs. Inputs are values of type Input<T> , a type that permits either a raw value of a given type (like string, integer, boolean etc...), an asynchronously computed value (i.e., a `Promise` or `Task`), or an output read from another resource’s properties.
+>Resource properties are treated specially in Pulumi, both for purposes of input and output. All resource arguments accept inputs. Inputs are values of type Input<T> , a type that permits either a raw value of a given type (like string, integer, boolean etc...), an asynchronously computed value (i.e., a `Promise` or `Task`), or an output read from another resource’s properties.
 
 >All resource properties on the instance object itself are outputs. Outputs are values of type Output<T> , which behave very much like promises; this is necessary because outputs are not fully known until the infrastructure resource has actually completed provisioning, which happens asynchronously. Outputs are also how Pulumi tracks dependencies between resources.
 
@@ -39,24 +39,24 @@ $ cd lab-03
 $ pulumi new azure-csharp
 ```
 
-Open project in IDE and refactor code to use `iac-ws3-lab4-rg` as resource group name and deploy it.
+Open project in IDE and refactor code to use `iac-lab04-rg` as resource group name and deploy it.
 
 ```bash
 $ pulumi up
-Previewing update (lab)
+Previewing update (dev)
 
      Type                         Name           Plan       
- +   pulumi:pulumi:Stack          lab-03-lab     create     
+ +   pulumi:pulumi:Stack          lab-03-dev     create     
  +   ├─ azure:core:ResourceGroup  resourceGroup  create     
  +   └─ azure:storage:Account     iacweb         create     
  
 Resources:
     + 3 to create
 
-Updating (lab)
+Updating (dev)
 
      Type                         Name           Status      
- +   pulumi:pulumi:Stack          lab-03-lab     created     
+ +   pulumi:pulumi:Stack          lab-03-dev     created     
  +   ├─ azure:core:ResourceGroup  resourceGroup  created     
  +   └─ azure:storage:Account     iacweb         created     
  
@@ -106,10 +106,10 @@ Now let's deploy it
 
 ```bash
 $ pulumi up --yes
-Previewing update (lab)
+Previewing update (dev)
 
      Type                      Name        Plan       Info
-     pulumi:pulumi:Stack       lab-03-lab             
+     pulumi:pulumi:Stack       lab-03-dev             
  ~   └─ azure:storage:Account  iacweb      update     [diff: +staticWebsite]
  
 Outputs:
@@ -120,10 +120,10 @@ Resources:
     ~ 1 to update
     2 unchanged
 
-Updating (lab)
+Updating (dev)
 
      Type                      Name        Status      Info
-     pulumi:pulumi:Stack       lab-03-lab              
+     pulumi:pulumi:Stack       lab-03-dev              
  ~   └─ azure:storage:Account  iacweb      updated     [diff: +staticWebsite]
  
 Outputs:
@@ -154,10 +154,10 @@ Add new `WebHost` property type off `Output<string>`, mark it with `[Output]` at
 
 ```bash
 $ pulumi up --yes
-Previewing update (lab)
+Previewing update (dev)
 
      Type                 Name        Plan     
-     pulumi:pulumi:Stack  lab-03-lab           
+     pulumi:pulumi:Stack  lab-03-dev           
  
 Outputs:
   + WebHost         : "iacweb607ffd9f.z6.web.core.windows.net"
@@ -165,10 +165,10 @@ Outputs:
 Resources:
     3 unchanged
 
-Updating (lab)
+Updating (dev)
 
      Type                 Name        Status     
-     pulumi:pulumi:Stack  lab-03-lab             
+     pulumi:pulumi:Stack  lab-03-dev             
  
 Outputs:
     ConnectionString: "...."

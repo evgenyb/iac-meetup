@@ -1,6 +1,6 @@
 # lab-04 - persisting state at Azure Storage Account
 
-## Estimated completion time - ?? min
+## Estimated completion time - 15 min
 
 Pulumi stores its own copy of the current state of your infrastructure and there are two state backend options available:
 
@@ -30,7 +30,7 @@ Please also read [Pulumi: Notes on self-managed backends](https://www.pulumi.com
 * [Storage account overview](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview?WT.mc_id=AZ-MVP-5003837)
 * [Quickstart: Create, download, and list blobs with Azure CLI](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-cli?WT.mc_id=AZ-MVP-5003837)
 
-## Task #1 - create Storage account
+## Task #1 - create Storage account for Pulumi state backend
 
 Note!
 
@@ -69,18 +69,17 @@ Pulumi will use the environment variables `AZURE_STORAGE_ACCOUNT` and `AZURE_STO
 Now let's create a new stack and see what will happen at the Storage Account
 
 ```bash
-$ mkdir use-azure-backend
-$ cd use-azure-backend
-$ pulumi new azure-csharp
+$ mkdir lab-04
+$ cd lab-04
 $ pulumi new azure-csharp
 This command will walk you through creating a new Pulumi project.
 
 Enter a value or leave blank to accept the (default), and press <ENTER>.
 Press ^C at any time to quit.
 
-project name: (use-azure-backend)
+project name: (lab-04)
 project description: (A minimal Azure C# Pulumi program)
-Created project 'use-azure-backend'
+Created project 'lab-04'
 
 stack name: (dev)
 Created stack 'dev'
@@ -91,29 +90,14 @@ Saved config
 Installing dependencies...
 ```
 
-Let's only keep resource group `iac-ws3-lab06-rg` at the stack 
-
-```c#
-...
-class MyStack : Stack
-{
-    public MyStack()
-    {
-        // Create an Azure Resource Group
-        var resourceGroup = new ResourceGroup("iac-ws3-lab06");
-    }
-}
-...
-```
-
-and deploy it
+Let's remove everything from the stack expect resource group and let's call it `iac-lab04-rg` and deploy it
 
 ```bash
 $ pulumi up
 Previewing update (dev):
      Type                         Name                   Plan
- +   pulumi:pulumi:Stack          use-azure-backend-dev  create
- +   └─ azure:core:ResourceGroup  iac-ws3-lab06          create
+ +   pulumi:pulumi:Stack          lab-04-dev  create
+ +   └─ azure:core:ResourceGroup  iac-lab04-rg          create
 
 Resources:
     + 2 to create
@@ -121,8 +105,8 @@ Resources:
 Do you want to perform this update? yes
 Updating (dev):
      Type                         Name                   Status
- +   pulumi:pulumi:Stack          use-azure-backend-dev  created
- +   └─ azure:core:ResourceGroup  iac-ws3-lab06          created
+ +   pulumi:pulumi:Stack          lab-04-dev  created
+ +   └─ azure:core:ResourceGroup  iac-lab04-rg          created
 
 Resources:
     + 2 created
@@ -169,8 +153,8 @@ $ pulumi stack export
 $ pulumi destroy
 Previewing destroy (dev):
      Type                         Name                   Plan
- -   pulumi:pulumi:Stack          use-azure-backend-dev  delete
- -   └─ azure:core:ResourceGroup  iac-ws3-lab06          delete
+ -   pulumi:pulumi:Stack          lab-04-dev  delete
+ -   └─ azure:core:ResourceGroup  iac-lab04-rg          delete
 
 Resources:
     - 2 to delete
@@ -179,8 +163,8 @@ Do you want to perform this destroy? yes
 Destroying (dev):
      Type                         Name                   Status
      Type                         Name                   Status
- -   pulumi:pulumi:Stack          use-azure-backend-dev  deleted
- -   └─ azure:core:ResourceGroup  iac-ws3-lab06          deleted
+ -   pulumi:pulumi:Stack          lab-04-dev  deleted
+ -   └─ azure:core:ResourceGroup  iac-lab04-rg          deleted
 
 Resources:
     - 2 deleted

@@ -1,6 +1,6 @@
-# lab-02 - working with stack
+# lab-02 - working with Stacks
 
-## Estimated completion time - ?? min
+## Estimated completion time - 15 min
 
 Every Pulumi program is deployed to a stack. A stack is an isolated, independently configurable instance of a Pulumi program. The typical use-case scenario for stack is environments (such as dev, qa, staging and prod).
 
@@ -128,14 +128,14 @@ $ pulumi stack export
 
 There are 2 stacks in our projects now: `dev` and `prod` and we want to use the following naming convention for resource group name:
 
-`iac-ws3-<stack>-rg`.
+`iac-lab02-<stack>-rg`.
 
 By default, Pulumi will use the name of the resource, specified in the constructor and concatenate it with unique string. For instance, if I create resource group without any parameters `var resourceGroup = new ResourceGroup("resourceGroup");`, Pulumi will create resource group called `resourcegroup97b6850f`. This is OK behavior for some of the scenarios, but doesn't work for us. If you want to control the name of the resource, use `ResourceGroupArgs` object (or `<ResourceType>Args` class for other type of Azure resources) and use `Name` property to tell Pulumi how to name the resource.
 
 ```c#
 var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs
 {
-    Name = "iac-ws3-dev-rg"
+    Name = "iac-lab02-dev-rg"
 });
 ```
 
@@ -145,11 +145,11 @@ To fulfill our requirements we need to dynamically generate resource group name 
 var stackName = Deployment.Instance.StackName;
 var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs
 {
-    Name = $"iac-ws3-{stackName}-rg"
+    Name = $"iac-lab02-{stackName}-rg"
 });
 ```
 
-Let's check Pulumi update plan, run `pulumi up` and select details
+Let's check Pulumi update plan by running `pulumi up` and selecting `details`
 
 ```bash
 $ pulumi up
@@ -167,22 +167,21 @@ Do you want to perform this update? details
   pulumi:pulumi:Stack: (same)
     [urn=urn:pulumi:dev::lab-02::pulumi:pulumi:Stack::lab-02-dev]
     --azure:core/resourceGroup:ResourceGroup: (delete-replaced)
-        [id=/subscriptions/8878beb2-5e5d-4418-81ae-783674eea324/resourceGroups/resourcegroup97b6850f]
+        [id=/subscriptions/.../resourceGroups/resourcegroup5a77e710]
         [urn=urn:pulumi:dev::lab-02::azure:core/resourceGroup:ResourceGroup::resourceGroup]
-        [provider=urn:pulumi:dev::lab-02::pulumi:providers:azure::default_3_23_0::9d234f98-aab6-404d-9a01-2fd6b0dc2b4a]
+        [provider=urn:pulumi:dev::lab-02::pulumi:providers:azure::default_3_23_0::a0652e48-43b4-4f6c-9a16-439e3f3711ed]
     +-azure:core/resourceGroup:ResourceGroup: (replace)
-        [id=/subscriptions/8878beb2-5e5d-4418-81ae-783674eea324/resourceGroups/resourcegroup97b6850f]
+        [id=/subscriptions/.../resourceGroups/resourcegroup5a77e710]
         [urn=urn:pulumi:dev::lab-02::azure:core/resourceGroup:ResourceGroup::resourceGroup]
-        [provider=urn:pulumi:dev::lab-02::pulumi:providers:azure::default_3_23_0::9d234f98-aab6-404d-9a01-2fd6b0dc2b4a]
-      ~ name: "resourcegroup97b6850f" => "iac-ws3-dev-rg"
+        [provider=urn:pulumi:dev::lab-02::pulumi:providers:azure::default_3_23_0::a0652e48-43b4-4f6c-9a16-439e3f3711ed]
+      ~ name: "resourcegroup5a77e710" => "iac-lab02-dev-rg"
     ++azure:core/resourceGroup:ResourceGroup: (create-replacement)
-        [id=/subscriptions/8878beb2-5e5d-4418-81ae-783674eea324/resourceGroups/resourcegroup97b6850f]
+        [id=/subscriptions/.../resourceGroups/resourcegroup5a77e710]
         [urn=urn:pulumi:dev::lab-02::azure:core/resourceGroup:ResourceGroup::resourceGroup]
-        [provider=urn:pulumi:dev::lab-02::pulumi:providers:azure::default_3_23_0::9d234f98-aab6-404d-9a01-2fd6b0dc2b4a]
-      ~ name: "resourcegroup97b6850f" => "iac-ws3-dev-rg"
+        [provider=urn:pulumi:dev::lab-02::pulumi:providers:azure::default_3_23_0::a0652e48-43b4-4f6c-9a16-439e3f3711ed]
+      ~ name: "resourcegroup5a77e710" => "iac-lab02-dev-rg"
 ```
-
-We already deployed `dev` stack and Pulumi created resource group `resourcegroup97b6850f` on Azure. You can't rename resource groups, therefore Pulumi will try to delete existing resource group, rename it in the stack and provision new resource group. THis is Ok operation to do during labs, but this is definitely something you should avoid in real life. Instead, think what is your naming strategy and convention before you start creating resources.
+We already deployed `dev` stack and Pulumi created resource group `resourcegroup5a77e710` on Azure. You can't rename resource groups, therefore Pulumi will try to delete existing resource group, rename it in the stack and provision new resource group. It's OK to do during labs and POCs, but this is definitely something you should avoid in real life. Instead, think what is your naming strategy and convention before you start creating resources.
 
 To deploy changes, select `--yes`
 
@@ -198,7 +197,24 @@ Resources:
     +-1 replaced
     1 unchanged
 
-Duration: 54s
+Duration: 55s
+```
+
+Check that resource group was provisioned
+
+```bash
+$ az group show -n iac-lab02-dev-rg
+{
+  "id": "/subscriptions/.../resourceGroups/iac-lab02-dev-rg",
+  "location": "westeurope",
+  "managedBy": null,
+  "name": "iac-lab02-dev-rg",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": {},
+  "type": "Microsoft.Resources/resourceGroups"
+}
 ```
 
 ## Task #4 - deploy `prod` stack
