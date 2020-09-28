@@ -199,6 +199,6 @@ Destroy resources
 $ pulumi destroy --yes
 ```
 
-## Next: 
+## Next: working with inter-stack dependencies
 
 [Go to lab-09](../lab-09/readme.md)
