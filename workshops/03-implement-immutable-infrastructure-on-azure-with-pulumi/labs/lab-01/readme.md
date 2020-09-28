@@ -23,8 +23,8 @@ Infrastructure in Pulumi is organized as projects. Each project is a single prog
 ## Task #1 - create new project
 
 ```bash
-$ mkdir labs-01-02
-$ cd labs-01-02
+$ mkdir lab-01
+$ cd lab-01
 $ pulumi new azure-csharp
 ```
 
@@ -63,7 +63,15 @@ Let’s review some of the generated project files:
 * Program.cs  - program entry point
 * MyStack.cs - the Pulumi program that defines stack resources. The default stack contains Azure Resource group, Azure Storage Account resources and exposes Storage Account connection string as Stack output. We will work with stack output at [lab-04](../lab-04/readme.md).
 
-Let's remove code defining Storage Account resource and output property, so the only resource we should have is resource group.
+Let's remove code defining Storage Account resource and output property, so the only resource we should have is a resource group.
+
+```c#
+public MyStack()
+{
+    // Create an Azure Resource Group
+    var resourceGroup = new ResourceGroup("resourceGroup");
+}
+```
 
 ## Task #3 - preview of updates to a stack’s resources
 
@@ -74,7 +82,7 @@ $ pulumi preview
 Previewing update (dev)
 
      Type                         Name            Plan       
- +   pulumi:pulumi:Stack          labs-01-02-dev  create     
+ +   pulumi:pulumi:Stack          lab-01-dev      create     
  +   └─ azure:core:ResourceGroup  resourceGroup   create     
  
 Resources:
@@ -92,17 +100,31 @@ Previewing update (dev)
 ...
 'dotnet build -nologo .' completed successfully
 + pulumi:pulumi:Stack: (create)
-    [urn=urn:pulumi:dev::labs-01-02::pulumi:pulumi:Stack::labs-01-02-dev]
+    [urn=urn:pulumi:dev::lab-01::pulumi:pulumi:Stack::lab-01-dev]
     + azure:core/resourceGroup:ResourceGroup: (create)
-        [urn=urn:pulumi:dev::labs-01-02::azure:core/resourceGroup:ResourceGroup::resourceGroup]
-        [provider=urn:pulumi:dev::labs-01-02::pulumi:providers:azure::default_3_23_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
+        [urn=urn:pulumi:dev::lab-01::azure:core/resourceGroup:ResourceGroup::resourceGroup]
+        [provider=urn:pulumi:dev::lab-01::pulumi:providers:azure::default_3_23_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
         location  : "westeurope"
         name      : "resourcegroup82f58714"
 Resources:             
     + 2 to create
 ```
 
-## Task #4 - deploy the stack
+## Task #4 - set ResourceGroup name to `iac-lab01-rg`
+
+By default, Pulumi takes resource name and adds unique string to the end of the original name. As you can see from the `preview --diff` output above, the original resource group name we used was `resourceGroup`, but the actual resource group name becomes `resourcegroup82f58714`. This is totally OK behavior in some of use-cases, but normally you use your own naming convention, therefore you should be able to specify resource name. You do this by sending additional parameter to the resource constructor. In case of `ResourceGroup` object, use `ResourceGroupArgs` class and specify resource group name via `Name` property.
+
+```c#
+public MyStack()
+{
+    // Create an Azure Resource Group
+    var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs {
+        Name = "iac-lab01-rg"
+    });
+}
+```
+
+## Task #5 - deploy the stack
 
 Now, let's deploy the stack:
 
@@ -110,13 +132,13 @@ Now, let's deploy the stack:
 $ pulumi up
 ```
 
-The first thing this command does it shows a preview of the changes that will be made (similar to `pulumi preview`):
+The first thing this command does it shows a preview of the changes (aka plan) that will be made (similar to `pulumi preview`):
 
 ```bash
 $ pulumi up
 
      Type                         Name            Plan       
- +   pulumi:pulumi:Stack          labs-01-02-dev  create     
+ +   pulumi:pulumi:Stack          lab-01-dev  create     
  +   └─ azure:core:ResourceGroup  resourceGroup   create     
  
 Resources:
@@ -134,26 +156,22 @@ Choosing `details` will display a rich diff showing the overall change (similar 
 $ pulumi up
 Previewing update (dev)
 
-     Type                         Name            Plan       
- +   pulumi:pulumi:Stack          labs-01-02-dev  create     
- +   └─ azure:core:ResourceGroup  resourceGroup   create     
- 
+     Type                         Name           Plan
+ +   pulumi:pulumi:Stack          lab-01-dev     create
+ +   └─ azure:core:ResourceGroup  resourceGroup  create
+
 Resources:
     + 2 to create
 
 Do you want to perform this update? details
 + pulumi:pulumi:Stack: (create)
-    [urn=urn:pulumi:dev::labs-01-02::pulumi:pulumi:Stack::labs-01-02-dev]
+    [urn=urn:pulumi:dev::lab-01::pulumi:pulumi:Stack::lab-01-dev]
     + azure:core/resourceGroup:ResourceGroup: (create)
-        [urn=urn:pulumi:dev::labs-01-02::azure:core/resourceGroup:ResourceGroup::resourceGroup]
-        [provider=urn:pulumi:dev::labs-01-02::pulumi:providers:azure::default_3_23_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
+        [urn=urn:pulumi:dev::lab-01::azure:core/resourceGroup:ResourceGroup::resourceGroup]
+        [provider=urn:pulumi:dev::lab-01::pulumi:providers:azure::default_3_23_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9]
         location  : "westeurope"
-        name      : "resourcegroupa14b221a"
+        name      : "iac-lab01-rg"
 
-Do you want to perform this update?  [Use arrows to move, enter to select, type to filter]
-  yes
-> no
-  details
 ```
 
 Choosing `yes` will create resources in Azure.
@@ -162,17 +180,35 @@ Choosing `yes` will create resources in Azure.
 Do you want to perform this update? yes
 Updating (dev)
 
-     Type                         Name            Status      
- +   pulumi:pulumi:Stack          labs-01-02-dev  created     
- +   └─ azure:core:ResourceGroup  resourceGroup   created     
- 
+View Live: https://app.pulumi.com/evgenyb/lab-01/dev/updates/2
+
+     Type                         Name           Status
+ +   pulumi:pulumi:Stack          lab-01-dev     created
+ +   └─ azure:core:ResourceGroup  resourceGroup  created
+
 Resources:
     + 2 created
 
 Duration: 12s
 ```
 
-## Task #5 - modify your resources and deploy changes
+We can check the resource was created by using `az cli`
+
+```bash
+$ az group show -n iac-lab01-rg
+{
+  "id": "/subscriptions/.../resourceGroups/iac-lab01-rg",
+  "location": "westeurope",
+  "managedBy": null,
+  "name": "iac-lab01-rg",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "type": "Microsoft.Resources/resourceGroups"
+}
+```
+
+## Task #6 - modify your resources and deploy changes
 
 Now, let's make some modifications to our resources, for example, add Tags.
 
@@ -180,12 +216,11 @@ Now, let's make some modifications to our resources, for example, add Tags.
 public MyStack()
 {
     // Create an Azure Resource Group
-    var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs
-    {
-        Tags =
-        {
-            {"Owner", "team-platform"},
-            {"Environment", "dev"}
+    var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs{
+        Name = "iac-lab01-rg",
+        Tags = {
+            { "owner", "team-platform" },
+            { "environment", "dev" }
         }
     });
 }
@@ -197,9 +232,9 @@ Deploy changes
 $ pulumi up
 Previewing update (dev)
 
-     Type                         Name            Plan       Info
-     pulumi:pulumi:Stack          labs-01-02-dev             
- ~   └─ azure:core:ResourceGroup  resourceGroup   update     [diff: ~tags]
+     Type                         Name           Plan       Info
+     pulumi:pulumi:Stack          lab-01-dev                
+ ~   └─ azure:core:ResourceGroup  resourceGroup  update     [diff: ~tags]
  
 Resources:
     ~ 1 to update
@@ -207,14 +242,14 @@ Resources:
 
 Do you want to perform this update? details
   pulumi:pulumi:Stack: (same)
-    [urn=urn:pulumi:dev::labs-01-02::pulumi:pulumi:Stack::labs-01-02-dev]
+    [urn=urn:pulumi:dev::lab-01::pulumi:pulumi:Stack::lab-01-dev]
     ~ azure:core/resourceGroup:ResourceGroup: (update)
-        [id=/subscriptions/8878beb2-5e5d-4418-81ae-783674eea324/resourceGroups/resourcegroupf8dc8baa]
-        [urn=urn:pulumi:dev::labs-01-02::azure:core/resourceGroup:ResourceGroup::resourceGroup]
-        [provider=urn:pulumi:dev::labs-01-02::pulumi:providers:azure::default_3_23_0::a17d2342-7734-49fb-8ec0-cb1ec38172df]
+        [id=/subscriptions/.../resourceGroups/iac-lab01-rg]
+        [urn=urn:pulumi:dev::lab-01::azure:core/resourceGroup:ResourceGroup::resourceGroup]
+        [provider=urn:pulumi:dev::lab-01::pulumi:providers:azure::default_3_23_0::d731a9ab-79dc-415f-9a17-3fbd1231742b]
       ~ tags: {
-          + Environment: "dev"
-          + Owner      : "team-platform"
+          + environment: "dev"
+          + owner      : "team-platform"
         }
 
 Do you want to perform this update?  [Use arrows to move, enter to select, type to filter]
@@ -225,7 +260,27 @@ Do you want to perform this update?  [Use arrows to move, enter to select, type 
 
 Pulumi will update the resource group and add two tags. Choosing `yes` will proceed with the update.
 
-## Task #6 - destroy resources
+Check that tags was added by running 
+
+```bash
+$ az group show -n iac-lab01-rg
+{
+  "id": "/subscriptions/.../resourceGroups/iac-lab01-rg",
+  "location": "westeurope",
+  "managedBy": null,
+  "name": "iac-lab01-rg",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": {
+    "environment": "dev",
+    "owner": "team-platform"
+  },
+  "type": "Microsoft.Resources/resourceGroups"
+}
+```
+
+## Task #7 - destroy resources
 
 Quite often you need to remove all components included into your infrastructure. To clean up and tear down the resources that are part of our stack, run the following command:
 
@@ -234,7 +289,7 @@ $ pulumi destroy
 Previewing destroy (dev)
 
      Type                         Name            Plan       
- -   pulumi:pulumi:Stack          labs-01-02-dev  delete     
+ -   pulumi:pulumi:Stack          lab-01-dev  delete     
  -   └─ azure:core:ResourceGroup  resourceGroup   delete     
  
 Resources:
@@ -244,7 +299,7 @@ Do you want to perform this destroy? yes
 Destroying (dev)
 
      Type                         Name            Status      
- -   pulumi:pulumi:Stack          labs-01-02-dev  deleted     
+ -   pulumi:pulumi:Stack          lab-01-dev  deleted     
  -   └─ azure:core:ResourceGroup  resourceGroup   deleted     
  
 Resources:
@@ -253,6 +308,6 @@ Resources:
 Duration: 55s
 ```
 
-## Next: working with pulumi "flow"
+## Next: working with Stacks
 
 [Go to lab-02](../lab-02/readme.md)
