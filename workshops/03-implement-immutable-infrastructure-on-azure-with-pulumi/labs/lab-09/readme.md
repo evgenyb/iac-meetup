@@ -20,27 +20,27 @@ When your resources are spread within several projects, you need a way to refere
 
 ## Use-case description
 
-Here is the typical scenario you need to implement when working on Azure. You have several resources deployed to different resource groups and you need to create diagnostic settings to send platform logs and metrics to different destinations.  Platform logs and metrics can be sent to:
+Here is the typical scenario when you work with resources on Azure. You have several resources deployed to different resource groups and you need to configure diagnostic settings to send platform logs and metrics to different destinations.  Platform logs and metrics can be sent to:
 
 * Log Analytics workspace
 * Event hubs
 * Azure storage account
 
-Normally, you want to collect platform logs and metrics at one place
+Normally, you want to collect platform logs and metrics at one centralized place, therefore you provision one instance of diagnostics storage account and configure several resources to send logs to this storage account.  
 
-Here is the infrastructure model we want to implement in this lab.
+For our lab we will configure Vnet diagnostics settings to send metrics to the storage account. Here is the infrastructure model.
 
 ![use-case](images/lab09-use-case.png)
 
 There are 2 resource groups:
 
 * `iac-lab09-base-rg` for "shared" resources, in our case it's `diag8c462850` - the diagnostics storage account
-* `iac-lab09-vnet-rg` with `iac-lab09-vnet` private virtual network that is configured that platform logs and metrics are send to `diag8c462850` for archiving
+* `iac-lab09-vnet-rg` with `iac-lab09-vnet` private virtual network. It's configured that platform logs and metrics are sent to `diag8c462850` for archiving
 
 There will be 2 Pulumi projects:
 
-* `lab09-base` with storage account resource called `diag`. storage account id will be exposed as output called `DiagnosticsStorageAccountId`
-* `lab09-vnet` with private virtual network resource called `iac-lab09-vnet`. To configure diagnostics settings we we will reference `lab09-base` and use `DiagnosticsStorageAccountId` to read storage account id.
+* `lab09-base` with storage account resource called `diag`. Storage account id will be exposed as output called `DiagnosticsStorageAccountId`.
+* `lab09-vnet` with private virtual network resource called `iac-lab09-vnet`. To configure diagnostics settings we we will use [Inter-Stack Dependencies](https://www.pulumi.com/docs/intro/concepts/organizing-stacks-projects/#inter-stack-dependencies) to reference stack from `lab09-base` project and use `DiagnosticsStorageAccountId` to read storage account id.
 
 ## Task #1 - create project for diagnostic storage account
 
@@ -85,7 +85,7 @@ class MyStack : Stack
 }
 ```
 
-and provision it
+Provision it
 
 ```bash
 $ pulumi up
@@ -151,7 +151,7 @@ class MyStack : Stack
 
         var aksSubNet = new Subnet("aks", new SubnetArgs
         {
-            Name = "aks",
+            Name = "aks-net",
             ResourceGroupName = resourceGroup.Name,
             VirtualNetworkName = vnet.Name,
             AddressPrefixes = { "10.0.0.0/24" }
@@ -160,7 +160,7 @@ class MyStack : Stack
 }
 ```
 
-and provision it
+Provision it
 
 ```bash
 $ pulumi up
@@ -190,7 +190,7 @@ Resources:
 Duration: 28s
 ```
 
-If you check `Diagnostics settings` for newly created Vnet you can find that it's not yet configured.
+If you now check `Diagnostics settings` for newly created Vnet at the Azure Portal you will find that it's not yet configured.
 
 ![task2](images/task2-diagnostics.png)
 
@@ -216,7 +216,7 @@ Once we have that resource, we can fetch the `DiagnosticsStorageAccountId` outpu
 StorageAccountId = baseResources.RequireOutput("DiagnosticsStorageAccountId").Apply(x => x.ToString())
 ```
 
-Here is the code that configures DiagnosticSetting for vnet
+Here is the complete code that configures DiagnosticSetting for vnet
 
 ```c#
 var baseResources = new StackReference("evgenyb/lab09-base/dev");
@@ -238,9 +238,9 @@ var diagnosticSetting = new Pulumi.Azure.Monitoring.DiagnosticSetting("diagnosti
 });
 ```
 
-In the above example, I configured that I want to send all metrics and I no need any retention policy.
+In the above example, I configured that I only want to send metrics and I don't need any retention policy.
 
-deploy it
+Deploy it
 
 ```bash
 $ pulumi up
@@ -268,15 +268,17 @@ Resources:
 Duration: 11s
 ```
 
+At the portal now you can see that Diagnostics Settings are configured
+
 ![task3](images/task3-diagnostics.png)
 
-Click `Edit settings` to verify that only Metrics are configured
+and if you click `Edit settings`, you can see that only Metrics are configured
 
 ![task3](images/task3-diagnostics-edit.png)
 
 ## Task #4 - cleanup
 
-As always, don't forget to remove resources
+As always, don't forget to cleanup resources!
 
 Destroy resources and remove stack for `lab09-base` project
 
