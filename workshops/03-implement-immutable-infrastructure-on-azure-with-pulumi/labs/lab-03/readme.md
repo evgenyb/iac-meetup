@@ -39,7 +39,7 @@ $ cd lab-03
 $ pulumi new azure-csharp
 ```
 
-Open project in IDE and refactor code to use `iac-lab04-rg` as resource group name and deploy it.
+Open project in IDE and refactor code to use `iac-lab03-rg` as resource group name and deploy it.
 
 ```bash
 $ pulumi up
