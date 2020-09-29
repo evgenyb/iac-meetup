@@ -1,6 +1,6 @@
 # lab-08 - working with inter-stack dependencies
 
-## Estimated completion time - ?? min
+## Estimated completion time - 20 min
 
 When you work with complex infrastructure, you will most likely not put everything into one Pulumi project. You will structure your infrastructure resources followed by conventions and criteria used in your organization. Pulumi has a good set of ideas about how you can [organize your Projects and Stacks](https://www.pulumi.com/docs/intro/concepts/organizing-stacks-projects/).
 
@@ -9,7 +9,7 @@ When your resources are spread within several projects, you need a way to refere
 ## Goals
 
 * Learn how Inter-Stack Dependencies work and how to use it in your projects.
-* Use Pulumi to configure private VNet with 2 subnets and deploy it into two environments `dev` and `prod`.
+
 
 ## Useful links
 

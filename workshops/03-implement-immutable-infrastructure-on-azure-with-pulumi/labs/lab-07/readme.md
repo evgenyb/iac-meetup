@@ -1,6 +1,6 @@
 # lab-07 - import existing resources
 
-## Estimated completion time - ?? min
+## Estimated completion time - 15 min
 
 Most likely, when you start adapting Pulumi in your project, there will be quite a lot of existing infrastructure already provisioned and then you to import existing resources so they can be managed by Pulumi.
 
@@ -38,7 +38,7 @@ apim|10.0.2.0/24
 Use portal, `az cli` or Powershell to create resources. I will use `az cli`.
 
 ```bash
-$ az group create -n iac-lab07-rg -l norwayeast
+$ az group create -n iac-lab07-rg -l westeurope
 $ az network vnet create -n iac-lab07-vnet -g iac-lab07-rg --address-prefixes 10.0.0.0/16
 $ az network vnet subnet create -n aks  --vnet-name iac-lab07-vnet -g iac-lab07-rg --address-prefixes 10.0.0.0/24
 $ az network vnet subnet create -n agw  --vnet-name iac-lab07-vnet -g iac-lab07-rg --address-prefixes 10.0.1.0/24
