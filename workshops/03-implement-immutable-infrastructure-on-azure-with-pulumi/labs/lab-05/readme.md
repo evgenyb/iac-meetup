@@ -362,7 +362,7 @@ var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs {
 There will be no changes to the resources, but if you check the state, the Tags section is now encrypted...
 
 ```bash
-$ pulumi state export
+$ pulumi stack export
 
 ...
 "tags": {
