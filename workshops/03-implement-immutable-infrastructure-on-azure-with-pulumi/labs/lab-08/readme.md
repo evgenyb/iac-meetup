@@ -146,7 +146,6 @@ class MyStack : Stack
             Name = "iac-lab08-vnet",
             ResourceGroupName = resourceGroup.Name,
             Location = resourceGroup.Location,
-            Name = "iac-pulumi-import-vnet",
             AddressSpaces = { "10.0.0.0/16" }
         });
 
