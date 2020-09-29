@@ -30,17 +30,19 @@ The goals for this workshop are:
 * 17:10 - 17:15 - MS Azure Badges
 * Infrastructure as Code
 * Pulumi intro (slides - xx min)
-* [lab-01](labs/lab-01/readme.md) - Pulumi basics (10-15 min)
+* [lab-01](labs/lab-01/readme.md) - Pulumi basics (15 min)
 * [lab-02](labs/lab-02/readme.md) - working with Stacks (15 min)
 * [lab-03](labs/lab-03/readme.md) - working with Stack Outputs (15 min)
 * State and Backends (slides - xx min)
 * [lab-04](labs/lab-04/readme.md) - persisting state at Azure Storage Account (15 min)
-* [lab-05](labs/lab-05/readme.md) - working with configuration and secrets (xx min)
-* [lab-06](labs/lab-06/readme.md) - managing secrets with Azure Key-Vault (xx min)
+* [lab-05](labs/lab-05/readme.md) - working with configuration and secrets (15-20 min)
+* [lab-06](labs/lab-06/readme.md) - managing secrets with Azure Key-Vault (15 min)
 * [lab-07](labs/lab-07/readme.md) - import existing resources (xx min)
 * [lab-08](labs/lab-08/readme.md) - working with inter-stack dependencies (xx min)
-* Immutable Infrastructure + use-case introduction
-* lab-09 - implement `blue` and `green` static websites (xx min)
+* Immutable Infrastructure, CI/CD + use-case introduction
+* lab-09 - CI/CD with Azure DevOps (xx min)
+* lab-09 - CI/CD with GitHub Actions (xx min)
+* lab-09 - implement `blue` and `green` static websites (or azure functions) (xx min)
 * lab-10 - implement Azure FrontDoor to orchestrate canary traffic between `blue` / `green` slots  (xx min)
 
 ## Links

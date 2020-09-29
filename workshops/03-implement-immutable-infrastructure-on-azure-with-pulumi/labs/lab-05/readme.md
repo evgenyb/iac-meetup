@@ -1,6 +1,6 @@
 # lab-05 - working with configuration and secrets
 
-## Estimated completion time - ?? min
+## Estimated completion time - 15-20 min
 
 Quite often, when you work with multiple environments, they use a different set of configuration values. For instance, private virtual networks will use different address prefix, number of nodes and VM size at your AKS clusters most likely will be different.
 
@@ -65,7 +65,9 @@ class MyStack : Stack
     public MyStack()
     {
         // Create an Azure Resource Group
-        var resourceGroup = new ResourceGroup("iac-lab05-rg");
+        var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs {
+            Name = $"iac-lab05-{Deployment.Instance.StackName}-rg"
+        });
 
         var vnet = new VirtualNetwork("vnet", new VirtualNetworkArgs
         {
@@ -163,7 +165,9 @@ class MyStack : Stack
         var config = new Config();
 
         // Create an Azure Resource Group
-        var resourceGroup = new ResourceGroup("iac-lab05-rg");
+        var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs {
+            Name = $"iac-lab05-{Deployment.Instance.StackName}-rg"
+        });
 
         var vnet = new VirtualNetwork("vnet", new VirtualNetworkArgs
         {
@@ -267,9 +271,108 @@ Duration: 27s
 
 Some configuration data is sensitive. Passwords or service tokens are good examples of such a data. For such cases, `--secret` flag of the `config set` command will encrypt the data and instead of text it will store the resulting ciphertext into the state.
 
-Stack outputs respect secret annotations and will also be encrypted appropriately. If a stack contains any secret values, their plaintext values will not be shown by default. Instead, they will be displayed as [secret] in the CLI. Pass `--show-secrets` to pulumi stack output to see the plaintext value.
+Stack outputs respect secret annotations and will also be encrypted appropriately. If a stack contains any secret values, their plaintext values will not be shown by default. Instead, they will be displayed as [secret] in the CLI. Pass `--show-secrets` to Pulumi stack output to see the plaintext value.
 
-## Task #5 - cleanup
+Let's add new tag `foo` with value `bar` to the resource group and deploy change
+
+```c#
+var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs {
+    Name = $"iac-lab05-{Deployment.Instance.StackName}-rg",
+    Tags = {
+        { "foo", "bar"}
+    }
+});
+```
+
+```bash
+$ pulumi up --yes
+```
+
+check that tag was added
+
+```bash
+$ az group show -n iac-lab05-prod-rg
+{
+  ...
+  "tags": {
+    "foo": "bar"
+  },
+  ...
+}
+```
+
+Now, lets add new configuration secret `foo` with value `bar` 
+
+```bash
+$ pulumi config set foo bar --secret
+```
+
+check the `Pulumi.prod.yaml` file 
+
+```bash
+$ cat Pulumi.prod.yaml
+config:
+  azure:location: northeurope
+  lab-05:foo:
+    secure: v1:EitXVz5/Pr8MyJnq:xoi9/4ak83xEYU62oOkdAk5qFg==
+  lab-05:vnet.address: 10.1.0.0/16
+  lab-05:vnet.subnets.aks-net: 10.1.0.0/20
+  lab-05:vnet.subnets.apim-net: 10.1.16.0/27
+```
+
+as you can see, the `foo` was added as encrypted secret.
+
+Now, lets use if from the code. 
+
+```c#
+var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs {
+    Name = $"iac-lab05-{Deployment.Instance.StackName}-rg",
+    Tags = {
+        { "foo", config.Require("foo") }
+    }
+});
+```
+
+Now, instead of hard coding the `bar` value, we read it from the configuration. If you deploy now, there will be no changes, because the value has not changed.
+
+If we check the state, we can find that Tags are stored as a clear text in the state
+
+```bash
+$ pulumi state export
+
+...
+"tags": {
+    "__defaults": [],
+    "foo": "bar"
+}
+...
+```
+
+Now, change the code and use `config.RequreSecret` instead of `config.Requre` and deploy
+
+```c#
+var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs {
+    Name = $"iac-lab05-{Deployment.Instance.StackName}-rg",
+    Tags = {
+        { "foo", config.RequireSecret("foo") }
+    }
+});
+```
+
+There will be no changes to the resources, but if you check the state, the Tags section is now encrypted...
+
+```bash
+$ pulumi state export
+
+...
+"tags": {
+    "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+    "ciphertext": "v1:BCnLl13WqOKuzuJ3:bIu4z+piYB1UNR6AT6BJEomfm3BD3hlmhSrTsKvH2Xvbd7dhR3WfZIynI15T"
+}
+...
+```
+
+## Task #6 - cleanup
 
 Destroy resources and remove `prod` stack
 

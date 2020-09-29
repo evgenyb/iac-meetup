@@ -27,7 +27,7 @@ To adopt existing resources so that Pulumi is able to manage subsequent updates 
 First, let's manually create some resources that we will import into Pulumi. Create 2 resources:
 
 * Resource group called `iac-lab07-rg`
-* private virtual network (further VNet) called `iac-pulumi-import-vnet` with 3 subnets. 
+* private virtual network (further VNet) called `iac-lab07-vnet` with 3 subnets. 
 
 Subnet | Range
 ----|----
@@ -39,10 +39,10 @@ Use portal, `az cli` or Powershell to create resources. I will use `az cli`.
 
 ```bash
 $ az group create -n iac-lab07-rg -l norwayeast
-$ az network vnet create -n iac-pulumi-import-vnet -g iac-lab07-rg --address-prefixes 10.0.0.0/16
-$ az network vnet subnet create -n aks  --vnet-name iac-pulumi-import-vnet -g iac-lab07-rg --address-prefixes 10.0.0.0/24
-$ az network vnet subnet create -n agw  --vnet-name iac-pulumi-import-vnet -g iac-lab07-rg --address-prefixes 10.0.1.0/24
-$ az network vnet subnet create -n apim  --vnet-name iac-pulumi-import-vnet -g iac-lab07-rg --address-prefixes 10.0.2.0/24
+$ az network vnet create -n iac-lab07-vnet -g iac-lab07-rg --address-prefixes 10.0.0.0/16
+$ az network vnet subnet create -n aks  --vnet-name iac-lab07-vnet -g iac-lab07-rg --address-prefixes 10.0.0.0/24
+$ az network vnet subnet create -n agw  --vnet-name iac-lab07-vnet -g iac-lab07-rg --address-prefixes 10.0.1.0/24
+$ az network vnet subnet create -n apim  --vnet-name iac-lab07-vnet -g iac-lab07-rg --address-prefixes 10.0.2.0/24
 ```
 
 ## Task #2 - create new Pulumi project
@@ -63,13 +63,13 @@ Get resource group ID
 
 ```bash
 $ az group show --name iac-lab07-rg --query id
-"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab07-rg"
+"/subscriptions/.../resourceGroups/iac-lab07-rg"
 ```
 
 Get VNet and subnets IDs
 
 ```bash
-$ az network vnet show --vnet-name iac-pulumi-import-vnet -g iac-lab07-rg
+$ az network vnet show --vnet-name iac-lab07-vnet -g iac-lab07-rg
 ```
 
 ## Task #4 - import resource group
@@ -84,11 +84,11 @@ Note! You should use your own resource IDs.
 var resourceGroup = new ResourceGroup("rg", new ResourceGroupArgs
 {
     Name = "iac-lab07-rg",
-    Location = "norwayeast",
+    Location = "westeurope",
 
 }, new CustomResourceOptions
 {
-    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab07-rg"
+    ImportId = "/subscriptions/.../resourceGroups/iac-lab07-rg"
 });
 ```
 
@@ -124,7 +124,7 @@ Duration: 11s
 
 ## Task #5 - import Vnet
 
-Now, use the same technique and import the private vNet `iac-pulumi-import-vnet` with 3 subnets. Here is the code sample.
+Now, use the same technique and import the private vNet `iac-lab07-vnet` with 3 subnets. Here is the code sample.
 
 Note! You should use your own resource IDs.
 
@@ -134,14 +134,14 @@ var vnet = new VirtualNetwork("vnet", new VirtualNetworkArgs
 {
     ResourceGroupName = resourceGroup.Name,
     Location = resourceGroup.Location,
-    Name = "iac-pulumi-import-vnet",
+    Name = "iac-lab07-vnet",
     AddressSpaces = 
     {
-        { "10.0.0.0/16" }
+        "10.0.0.0/16"
     }
 }, new CustomResourceOptions
 {
-    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab07-rg/providers/Microsoft.Network/virtualNetworks/iac-pulumi-import-vnet"
+    ImportId = "/subscriptions/.../resourceGroups/iac-lab07-rg/providers/Microsoft.Network/virtualNetworks/iac-lab07-vnet"
 });
 
 var aksSubNet = new Subnet("aks", new SubnetArgs
@@ -152,7 +152,7 @@ var aksSubNet = new Subnet("aks", new SubnetArgs
     AddressPrefixes = "10.0.0.0/24"
 }, new CustomResourceOptions
 {
-    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab07-rg/providers/Microsoft.Network/virtualNetworks/iac-pulumi-import-vnet/subnets/aks"
+    ImportId = "/subscriptions/.../resourceGroups/iac-lab07-rg/providers/Microsoft.Network/virtualNetworks/iac-lab07-vnet/subnets/aks"
 });
 ...
 ```
@@ -197,6 +197,7 @@ Destroy resources
 
 ```bash
 $ pulumi destroy --yes
+$ pulumi stack rm dev --yes
 ```
 
 ## Next: working with inter-stack dependencies

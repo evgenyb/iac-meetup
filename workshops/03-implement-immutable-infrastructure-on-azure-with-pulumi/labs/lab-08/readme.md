@@ -9,6 +9,7 @@ When your resources are spread within several projects, you need a way to refere
 ## Goals
 
 * Learn how Inter-Stack Dependencies work and how to use it in your projects.
+* Use Pulumi to configure private VNet with 2 subnets and deploy it into two environments `dev` and `prod`.
 
 ## Useful links
 
