@@ -26,7 +26,7 @@ To adopt existing resources so that Pulumi is able to manage subsequent updates 
 
 First, let's manually create some resources that we will import into Pulumi. Create 2 resources:
 
-* Resource group called `iac-lab08-rg`
+* Resource group called `iac-lab07-rg`
 * private virtual network (further VNet) called `iac-pulumi-import-vnet` with 3 subnets. 
 
 Subnet | Range
@@ -38,11 +38,11 @@ apim|10.0.2.0/24
 Use portal, `az cli` or Powershell to create resources. I will use `az cli`.
 
 ```bash
-$ az group create -n iac-lab08-rg -l norwayeast
-$ az network vnet create -n iac-pulumi-import-vnet -g iac-lab08-rg --address-prefixes 10.0.0.0/16
-$ az network vnet subnet create -n aks  --vnet-name iac-pulumi-import-vnet -g iac-lab08-rg --address-prefixes 10.0.0.0/24
-$ az network vnet subnet create -n agw  --vnet-name iac-pulumi-import-vnet -g iac-lab08-rg --address-prefixes 10.0.1.0/24
-$ az network vnet subnet create -n apim  --vnet-name iac-pulumi-import-vnet -g iac-lab08-rg --address-prefixes 10.0.2.0/24
+$ az group create -n iac-lab07-rg -l norwayeast
+$ az network vnet create -n iac-pulumi-import-vnet -g iac-lab07-rg --address-prefixes 10.0.0.0/16
+$ az network vnet subnet create -n aks  --vnet-name iac-pulumi-import-vnet -g iac-lab07-rg --address-prefixes 10.0.0.0/24
+$ az network vnet subnet create -n agw  --vnet-name iac-pulumi-import-vnet -g iac-lab07-rg --address-prefixes 10.0.1.0/24
+$ az network vnet subnet create -n apim  --vnet-name iac-pulumi-import-vnet -g iac-lab07-rg --address-prefixes 10.0.2.0/24
 ```
 
 ## Task #2 - create new Pulumi project
@@ -62,14 +62,14 @@ First thing we need to do before we start importing existing resources into Pulu
 Get resource group ID
 
 ```bash
-$ az group show --name iac-lab08-rg --query id
-"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab08-rg"
+$ az group show --name iac-lab07-rg --query id
+"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab07-rg"
 ```
 
 Get VNet and subnets IDs
 
 ```bash
-$ az network vnet show --vnet-name iac-pulumi-import-vnet -g iac-lab08-rg
+$ az network vnet show --vnet-name iac-pulumi-import-vnet -g iac-lab07-rg
 ```
 
 ## Task #4 - import resource group
@@ -83,12 +83,12 @@ Note! You should use your own resource IDs.
 ```c#
 var resourceGroup = new ResourceGroup("rg", new ResourceGroupArgs
 {
-    Name = "iac-lab08-rg",
+    Name = "iac-lab07-rg",
     Location = "norwayeast",
 
 }, new CustomResourceOptions
 {
-    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab08-rg"
+    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab07-rg"
 });
 ```
 
@@ -141,7 +141,7 @@ var vnet = new VirtualNetwork("vnet", new VirtualNetworkArgs
     }
 }, new CustomResourceOptions
 {
-    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab08-rg/providers/Microsoft.Network/virtualNetworks/iac-pulumi-import-vnet"
+    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab07-rg/providers/Microsoft.Network/virtualNetworks/iac-pulumi-import-vnet"
 });
 
 var aksSubNet = new Subnet("aks", new SubnetArgs
@@ -152,7 +152,7 @@ var aksSubNet = new Subnet("aks", new SubnetArgs
     AddressPrefixes = "10.0.0.0/24"
 }, new CustomResourceOptions
 {
-    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab08-rg/providers/Microsoft.Network/virtualNetworks/iac-pulumi-import-vnet/subnets/aks"
+    ImportId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iac-lab07-rg/providers/Microsoft.Network/virtualNetworks/iac-pulumi-import-vnet/subnets/aks"
 });
 ...
 ```

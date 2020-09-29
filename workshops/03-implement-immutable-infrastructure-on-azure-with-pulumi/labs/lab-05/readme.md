@@ -2,14 +2,14 @@
 
 ## Estimated completion time - ?? min
 
-Quite often, when you work with multiple environments, they will need a different set of configuration values. For instance, private virtual networks will use different address prefix, number of nodes and VM size in your AKS cluster most likely will be different.
+Quite often, when you work with multiple environments, they use a different set of configuration values. For instance, private virtual networks will use different address prefix, number of nodes and VM size at your AKS clusters most likely will be different.
 
-Pulumi offers a configuration system for managing such differences. Instead of hard-coding the differences, you can store and retrieve configuration values using a combination of the CLI and the [programming model](https://www.pulumi.com/docs/intro/concepts/programming-model/).
+Pulumi offers a configuration system for managing such differences. Instead of hard-coding the values, you can store and retrieve configuration values using a combination of the CLI and the [programming model](https://www.pulumi.com/docs/intro/concepts/programming-model/).
 
 The key-value pairs for any given stack are stored in your project’s stack settings file called `Pulumi.<stack-name>.yaml`.
 
-* The CLI offers a config command with set and get subcommands for managing key-value pairs.
-* The programming model offers a `Config` object with various getters and setters for retrieving values.
+* The CLI offers a `config` command with `set` and `get` subcommands for managing key-value pairs.
+* The programming model offers a `Config` class with various getters and setters for retrieving values.
 
 ## Goals
 
@@ -24,7 +24,7 @@ The key-value pairs for any given stack are stored in your project’s stack set
 
 ## Task #1 - cerate new project for private virtual network
 
-Let's implement private VNet `iac-lab06-vnet` with 2 subnets:
+Let's implement private VNet `iac-lab05-vnet` with 2 subnets:
 
 Subnet | address range
 ----|----
@@ -65,11 +65,11 @@ class MyStack : Stack
     public MyStack()
     {
         // Create an Azure Resource Group
-        var resourceGroup = new ResourceGroup("iac-lab06-rg");
+        var resourceGroup = new ResourceGroup("iac-lab05-rg");
 
         var vnet = new VirtualNetwork("vnet", new VirtualNetworkArgs
         {
-            Name = "iac-lab06-vnet",
+            Name = "iac-lab05-vnet",
             ResourceGroupName = resourceGroup.Name,
             AddressSpaces = { "10.0.0.0/16" }
         });
@@ -98,7 +98,7 @@ $ pulumi up
 Previewing update (dev):
      Type                             Name          Plan
  +   pulumi:pulumi:Stack              lab-05-dev    create
- +   ├─ azure:core:ResourceGroup      iac-lab06-rg  create
+ +   ├─ azure:core:ResourceGroup      iac-lab05-rg  create
  +   ├─ azure:network:VirtualNetwork  vnet          create
  +   ├─ azure:network:Subnet          aks-net       create
  +   └─ azure:network:Subnet          apim-net      create
@@ -110,7 +110,7 @@ Do you want to perform this update? yes
 Updating (dev):
      Type                             Name          Status
  +   pulumi:pulumi:Stack              lab-05-dev    created
- +   ├─ azure:core:ResourceGroup      iac-lab06-rg  created
+ +   ├─ azure:core:ResourceGroup      iac-lab05-rg  created
  +   ├─ azure:network:VirtualNetwork  vnet          created
  +   ├─ azure:network:Subnet          aks-net       created
  +   └─ azure:network:Subnet          apim-net      created
@@ -163,11 +163,11 @@ class MyStack : Stack
         var config = new Config();
 
         // Create an Azure Resource Group
-        var resourceGroup = new ResourceGroup("iac-lab06-rg");
+        var resourceGroup = new ResourceGroup("iac-lab05-rg");
 
         var vnet = new VirtualNetwork("vnet", new VirtualNetworkArgs
         {
-            Name = "iac-lab06-vnet",
+            Name = "iac-lab05-vnet",
             ResourceGroupName = resourceGroup.Name,
             AddressSpaces = { config.Require("vnet.address") }
         });
@@ -240,7 +240,7 @@ $ pulumi up
 Previewing update (prod):
      Type                             Name          Plan
  +   pulumi:pulumi:Stack              lab-05-prod   create
- +   ├─ azure:core:ResourceGroup      iac-lab06-rg  create
+ +   ├─ azure:core:ResourceGroup      iac-lab05-rg  create
  +   ├─ azure:network:VirtualNetwork  vnet          create
  +   ├─ azure:network:Subnet          aks-net       create
  +   └─ azure:network:Subnet          apim-net      create
@@ -252,7 +252,7 @@ Do you want to perform this update? yes
 Updating (prod):
      Type                             Name          Status
  +   pulumi:pulumi:Stack              lab-05-prod   created
- +   ├─ azure:core:ResourceGroup      iac-lab06-rg  created
+ +   ├─ azure:core:ResourceGroup      iac-lab05-rg  created
  +   ├─ azure:network:VirtualNetwork  vnet          created
  +   ├─ azure:network:Subnet          apim-net      created
  +   └─ azure:network:Subnet          aks-net       created
@@ -265,11 +265,9 @@ Duration: 27s
 
 ## Task #4 - working with the secrets
 
-Some configuration data is sensitive. Passwords or service tokens are good examples of such a data. For such cases, use `--secret` flag of the config set command will encrypt the data and instead of text will store the resulting ciphertext into the state.
+Some configuration data is sensitive. Passwords or service tokens are good examples of such a data. For such cases, `--secret` flag of the `config set` command will encrypt the data and instead of text it will store the resulting ciphertext into the state.
 
-TODO - Output and secrets
-
-Stack outputs respect secret annotations and will also be encrypted appropriately. If a stack contains any secret values, their plaintext values will not be shown by default. Instead, they will be displayed as [secret] in the CLI. Pass --show-secrets to pulumi stack output to see the plaintext value.
+Stack outputs respect secret annotations and will also be encrypted appropriately. If a stack contains any secret values, their plaintext values will not be shown by default. Instead, they will be displayed as [secret] in the CLI. Pass `--show-secrets` to pulumi stack output to see the plaintext value.
 
 ## Task #5 - cleanup
 

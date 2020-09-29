@@ -30,9 +30,10 @@ In both cases, you can continue using secrets management as described above, but
 
 Note!
 
-Azure Key-Vault names **MUST** be globally unique. Do not use key-vault name used in the code below, create your own name and I suggest the following convention: 
+Azure Key-Vault names **MUST** be globally unique. Do not use key-vault name I used in the code below, create your own name. 
+I suggest the following convention: 
 
-iac-***usr***-pulumi-encryption-kv, where `usr` is short version of your username, in mya case I will use `iac-evg-pulumi-encryption-kv`
+iac-***usr***-pulumi-encryption-kv, where `usr` is short version of your username, in my case, I will use `iac-evg-pulumi-encryption-kv`
 
 ```bash
 $ az group create --name iac-pulumiinfra-rg --location westeurope
@@ -44,7 +45,7 @@ Retrieve your user' object ID and grant a Key Vault Access Policy to this user t
 
 ![objectid](images/pulumi-user-id.png)
 
-or user `az cli`
+or use `az cli`
 
 ```bash
 $ userId=`az ad user show --id evgeny.borzenin@gmail.com | jq -r .objectId`
