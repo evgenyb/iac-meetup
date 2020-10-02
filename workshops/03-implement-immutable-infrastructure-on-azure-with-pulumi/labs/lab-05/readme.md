@@ -22,7 +22,7 @@ The key-value pairs for any given stack are stored in your project’s stack set
 * [pulumi config](https://www.pulumi.com/docs/reference/cli/pulumi_config/)
 * [Pulumi: Config reference](https://www.pulumi.com/docs/intro/concepts/programming-model/#config)
 
-## Task #1 - cerate new project for private virtual network
+## Task #1 - create new project for private virtual network
 
 Let's implement private VNet `iac-lab05-vnet` with 2 subnets:
 
@@ -73,14 +73,17 @@ class MyStack : Stack
         {
             Name = "iac-lab05-vnet",
             ResourceGroupName = resourceGroup.Name,
-            AddressSpaces = { "10.0.0.0/16" }
-        });
-
-        var aksSubnet = new Subnet("aks-net", new SubnetArgs{
-            Name = "aks-net",
-            ResourceGroupName = resourceGroup.Name,
-            VirtualNetworkName = vnet.Name,
-            AddressPrefixes = {"10.0.0.0/20"}
+            AddressSpaces = { "10.0.0.0/16" },
+            Subnets =
+            {
+                new VirtualNetworkSubnetArgs
+                {
+                    Name = "aks-net",
+                    AddressPrefix = "10.0.0.0/20"
+                    // associating NSG to a Subnet is supported here. When creating standalone
+                    // subnet resource, association of NSG is not supported
+                    // SecurityGroup = nsg.Id //example
+                }
         });
 
         var apimSubnet = new Subnet("apim-net", new SubnetArgs{
@@ -348,7 +351,7 @@ $ pulumi state export
 ...
 ```
 
-Now, change the code and use `config.RequreSecret` instead of `config.Requre` and deploy
+Now, change the code and use `config.RequireSecret` instead of `config.Require` and deploy
 
 ```c#
 var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs {

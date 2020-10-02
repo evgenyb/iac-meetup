@@ -15,7 +15,7 @@ Every Pulumi program is deployed to a stack. A stack is an isolated, independent
 * [pulumi stack command](https://www.pulumi.com/docs/reference/cli/pulumi_stack/)
 * [Pulumi: Stack Outputs](https://www.pulumi.com/docs/intro/concepts/programming-model/#stack-outputs)
 
-## Task #1 - cerate new project
+## Task #1 - create new project
 
 To create new project
 
@@ -235,7 +235,7 @@ Diagnostics:
     error: azure:core/resourceGroup:ResourceGroup resource 'resourceGroup' has a problem: Missing required property 'location'. Either set it explicitly or configure it with 'pulumi config set azure:location <value>'.
 ```
 
-Most likely it will fail with `Missing required property 'location'` error message. When you cerate new project you are asked to specify Azure resources location. When you create new stack, Pulumi doesn't ask you, therefore you either need to explicitly set Location property of `ResourceGroupArgs` class, or configure it by running the following command
+Most likely it will fail with `Missing required property 'location'` error message. When you create new project you are asked to specify Azure resources location. When you create new stack, Pulumi doesn't ask you, therefore you either need to explicitly set Location property of `ResourceGroupArgs` class, or configure it by running the following command
 
 ```bash
 pulumi config set azure:location northeurope
