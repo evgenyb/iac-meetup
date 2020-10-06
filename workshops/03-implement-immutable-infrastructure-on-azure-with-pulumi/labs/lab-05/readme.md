@@ -341,7 +341,7 @@ Now, instead of hard coding the `bar` value, we read it from the configuration. 
 If we check the state, we can find that Tags are stored as a clear text in the state
 
 ```bash
-$ pulumi state export
+$ pulumi stack export
 
 ...
 "tags": {
