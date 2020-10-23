@@ -25,7 +25,7 @@ During the workshop, we will implement very simple system that consists of Azure
 * 17:10 - 17:15 - Microsoft Azure Heroes program
 * Use-case introduction
 * [lab-01](labs/lab-01/readme.md) - setting up the project and stacks structure (xx min)
-* lab-02 - add AppInsight into the base stack (xx min)
+* [lab-02](labs/lab-02/readme.md) - add AppInsight into the base stack (xx min)
 * lab-03 - implement simple Azure Function (xx min)
 * lab-04 - implement Azure Function infrastructure into the workload stack (xx min)
 * lab-05 - implement Azure Front Door infrastructure into the base stack (xx min)
