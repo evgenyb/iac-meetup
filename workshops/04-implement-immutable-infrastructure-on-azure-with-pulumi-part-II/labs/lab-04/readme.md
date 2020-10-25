@@ -154,7 +154,7 @@ var app = new FunctionApp("iacws4func", new FunctionAppArgs
 
 We will use Azure Front Door to orchestrate traffic and Azure Function will be configured as a FrontDoor endpoint. Since Front Door is part of the `base` Stack and in order to get access to the Azure Function hos name, we should expose this as a Stack output and use inter-stack dependencies.
 
-Let's add `Hostname` output parameter. 
+Let's add `Hostname` output parameter.
 
 ```c#
 [Output] public Output<string> Hostname { get; set; }

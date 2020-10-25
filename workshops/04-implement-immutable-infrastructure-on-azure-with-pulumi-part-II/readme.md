@@ -23,13 +23,14 @@ During the workshop, we will implement very simple system that consists of Azure
 
 * 17:05 - 17:10 - welcome + practical info
 * 17:10 - 17:15 - Microsoft Azure Heroes program
-* Use-case introduction
+* Use-case introduction (slides xx min)
 * [lab-01](labs/lab-01/readme.md) - setting up the project and stacks structure (xx min)
 * [lab-02](labs/lab-02/readme.md) - add AppInsight into the base stack (xx min)
 * [lab-03](labs/lab-03/readme.md) - implement simple Azure Function (xx min)
 * [lab-04](labs/lab-04/readme.md) - add Azure Function infrastructure into the workload stack (xx min)
-* lab-05 - implement Azure Front Door infrastructure into the base stack (xx min)
-* lab-06 - implement deployment orchestration script (xx min)
+* Azure Front Door intro (slides xx min)
+* [lab-05](labs/lab-05/readme.md) - add Azure Front Door infrastructure into the base stack (xx min)
+* lab-06 - implement master deployment orchestration script (xx min)
 
 CI/CD with Azure DevOps
 
