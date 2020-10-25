@@ -17,7 +17,7 @@ In this lab we will implement simple Azure Function API using HTTP trigger that 
 * [Work with Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?WT.mc_id=AZ-MVP-5003837?tabs=windows%2Ccsharp%2Cbash#v2)
 * [dotnet publish](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish?WT.mc_id=AZ-MVP-5003837)
 
-## Task 1 - installing Azure Func SDK
+## Task #1 - installing Azure Func SDK
 
 ### Windows
 
