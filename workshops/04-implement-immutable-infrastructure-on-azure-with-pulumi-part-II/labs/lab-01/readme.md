@@ -55,7 +55,7 @@ Installing dependencies...
 Your new project is ready to go!
 ```
 
-## Task 3 - cleanup default code
+## Task #3 - cleanup default code
 
 Rename `MyStack.cs` to `BaseStack.cs`.
 Rename `MyStack` class to `BaseStack`.
@@ -123,7 +123,7 @@ Installing dependencies...
 Your new project is ready to go!
 ```
 
-## Task 6 - cleanup default code
+## Task #6 - cleanup default code
 
 Rename `MyStack.cs` to `WorkloadStack.cs`.
 Rename `MyStack` class to `WorkloadStack`.
