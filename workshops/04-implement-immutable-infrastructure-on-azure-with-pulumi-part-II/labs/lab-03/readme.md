@@ -15,6 +15,7 @@ In this lab we will implement simple Azure Function API using HTTP trigger that 
 * [Azure Functions documentation](https://docs.microsoft.com/en-us/azure/azure-functions?WT.mc_id=AZ-MVP-5003837)
 * [Install the Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?WT.mc_id=AZ-MVP-5003837?tabs=linux%2Ccsharp%2Cbash#install-the-azure-functions-core-tools)
 * [Work with Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?WT.mc_id=AZ-MVP-5003837?tabs=windows%2Ccsharp%2Cbash#v2)
+* [dotnet publish](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish?WT.mc_id=AZ-MVP-5003837)
 
 ## Task 1 - installing Azure Func SDK
 
@@ -120,6 +121,21 @@ And you can test it with `curl`
 ```bash
 $ curl --get http://localhost:7071/api/health
 [lab]: OK
+```
+
+## Task #3 - publish Azure function to the `published` folder
+
+Let's publish our Azure function and its dependencies with `dotnet publish` command to `../published` folder. These artifacts will be used in the next lab.
+
+```bash
+$dotnet publish function.csproj --self-contained true -c Release  -o ../published
+Microsoft (R) Build Engine version 16.7.0+7fb82e5b2 for .NET
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  function -> C:\temp\ws4-dr1\function\bin\Release\netcoreapp3.1\bin\function.dll
+  function -> C:\temp\ws4-dr1\published\
 ```
 
 ## Next: add Azure Function infrastructure into the workload stack

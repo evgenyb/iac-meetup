@@ -12,6 +12,7 @@ Azure Function and supported resources such as Service Plan and Storage account 
 
 ## Goals
 
+* Setup the project structure
 * Create `base` Pulumi project with `lab` stack
 * Create `workload` Pulumi project with `lab-blue` and `lab-green` Stacks
 * Add `base` and `workload` projects into solution file
@@ -28,6 +29,7 @@ Azure Function and supported resources such as Service Plan and Storage account 
 ```bash
 $ mkdir ws-04
 $ cd ws-04
+$ mkdir published
 $ mkdir infra
 $ cd infra
 $ mkdir base
