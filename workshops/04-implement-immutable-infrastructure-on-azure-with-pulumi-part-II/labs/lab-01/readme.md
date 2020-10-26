@@ -6,9 +6,25 @@ I will use C# as a language and Rider as my IDE. If you use different language o
 
 ## Stacks structure
 
-Based on our architecture model, only one instance of Front Door and Application insight will be provisioned per environment, therefore we can place them together into one `base` Project. `base` will have only one Stack per environment (`lab`, `test`, `prod`)
+Based on our architecture model, there will be only one instance of Front Door and Application insight per environment, therefore we place them together into `base` Project. `base` will have one Stack per environment (for instance `lab`, `test`, `prod`).
 
-Azure Function and supported resources such as Service Plan and Storage account for published deployment artifacts, all have the same lifecycle and therefore can be placed to the same `workload` Project. `workload` will have 2 Stacks per environment one for `blue` and one for `green` deployment slots.
+Azure Function and supported resources (such as Service Plan and Storage account for published deployment artifacts), all have the same lifecycle and therefore should be placed under the same `workload` Project. `workload` will have 2 Stacks per environment one for `blue` and one for `green` deployment slots.
+
+## Folders structure
+
+```txt
+    function
+    infra
+        base
+        workload
+    published
+    scripts
+```
+
+* `function` - contains Azure function source code
+* `infra` - contains Pulumi `base` and `workload` Projects
+* `published` - contains Azure function deployment artifacts (binaries)
+* `scripts` - contains deployment scripts
 
 ## Goals
 
@@ -30,6 +46,7 @@ Azure Function and supported resources such as Service Plan and Storage account 
 $ mkdir ws-04
 $ cd ws-04
 $ mkdir published
+$ mkdir scripts
 $ mkdir infra
 $ cd infra
 $ mkdir base
@@ -128,7 +145,7 @@ Your new project is ready to go!
 Rename `MyStack.cs` to `WorkloadStack.cs`.
 Rename `MyStack` class to `WorkloadStack`.
 
-> Tip. Use refactoring shortcuts `F2` for VS Code  or `Ctrl+Shift+R` in Rider or VS with Resharper.
+> Tip. Use refactoring shortcuts `F2` for VS Code  or `Ctrl+R+R` in Rider or VS with Resharper.
 
 Remove all code except resource group initialization and set resource group name to `iac-ws4-stackName-rg`.
 
@@ -192,6 +209,20 @@ Check that resource group was created
 ```bash
 az group show -n iac-ws4-lab-blue-rg  --query id
 "/subscriptions/.../resourceGroups/iac-ws4-lab-blue-rg"
+```
+
+## Task #8 - add `lab-green` Stack
+
+Now, let's initialize second deployment slot - `lab-green`.
+
+```bash
+pulumi init -s lab-green
+```
+
+Set `azure:location` configuration to `westeurope`.
+
+```bash
+pulumi config set azure:location westeurope
 ```
 
 ## Next: add AppInsight into the base stack

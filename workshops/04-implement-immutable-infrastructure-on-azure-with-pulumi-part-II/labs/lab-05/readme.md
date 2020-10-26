@@ -96,7 +96,7 @@ class BaseStack : Stack
                     Name = "function-backend-pool",
                     Backends = GetBackends(environment),
                     HealthProbeName = "function-health-probe",
-                    LoadBalancingName = "default",
+                    LoadBalancingName = "default"
                 }
             },
             RoutingRules =
@@ -106,11 +106,11 @@ class BaseStack : Stack
                     Name = "function-rule",
                     FrontendEndpoints = { "default-frontend" },
                     PatternsToMatches = "/*",
-                    AcceptedProtocols = { "Http", "Https" },
+                    AcceptedProtocols = { "Https" },
                     ForwardingConfiguration = new FrontdoorRoutingRuleForwardingConfigurationArgs
                     {
                         BackendPoolName = "function-backend-pool",
-                        ForwardingProtocol = "MatchRequest",
+                        ForwardingProtocol = "MatchRequest"
                     }
                 }
             },
@@ -119,8 +119,10 @@ class BaseStack : Stack
                 new FrontdoorBackendPoolHealthProbeArgs
                 {
                     Name = "function-health-probe",
-                    Path = "/"
-
+                    Path = "/api/health",
+                    Protocol = "Https",
+                    IntervalInSeconds = 30,
+                    ProbeMethod = "GET"
                 }
             },
             BackendPoolLoadBalancings =
@@ -162,7 +164,8 @@ class BaseStack : Stack
             HostHeader = url,
             HttpsPort = 443,
             HttpPort = 80,
-            Weight = canaryPercentage
+            Weight = canaryPercentage,
+            Enabled = true
         };
     }
 
@@ -228,6 +231,6 @@ curl --get -s https://iac-ws4-<YOUR-ID>-fd.azurefd.net/api/health
 [lab-blue]: OK
 ```
 
-## Next: implement master deployment orchestration script
+## Next: implement master deployment script
 
 [Go to lab-06](../lab-06/readme.md)
