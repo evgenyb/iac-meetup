@@ -1,7 +1,7 @@
 # Implement immutable infrastructure with Pulumi: Part II
 
 Welcome to the forth workshop at the series of workshops dedicated to Infrastructure as Code tools and frameworks. 
-[Last time](https://github.com/evgenyb/iac-meetup/tree/master/workshops/03-implement-immutable-infrastructure-on-azure-with-pulumi) we worked with `Pulumi` basics and learned how to work with Stacks, Configuration and secrets, how to deploy and destroy stacks and how to use inter-stack dependencies. 
+[Last time](https://github.com/evgenyb/iac-meetup/tree/master/workshops/03-implement-immutable-infrastructure-on-azure-with-pulumi) we worked with `Pulumi` basics and learned how to work with Stacks, Configuration and secrets, how to deploy and destroy stacks and how to use inter-stack dependencies.
 This time, we will use this knowledge and implement simple immutable infrastructure with automated CI/CD pipelines.
 
 ## Prerequisites
@@ -23,14 +23,16 @@ During the workshop, we will implement very simple system that consists of Azure
 
 * 17:05 - 17:10 - welcome + practical info
 * 17:10 - 17:15 - Microsoft Azure Heroes program
-* Use-case introduction
-* lab-01 - setting up the project and stacks structure
-* lab-02 - implement AppInsight into the base stack
-* lab-03 - implement simple Azure Function
-* lab-04 - implement Azure Function infrastructure into the workload stack
-* lab-05 - implement Azure Front Door infrastructure into the base stack
-* lab-06 - implement deployment orchestration script
+* Use-case introduction (slides xx min)
+* [lab-01](labs/lab-01/readme.md) - setting up the Projects and Stacks structure (xx min)
+* [lab-02](labs/lab-02/readme.md) - add AppInsight into the base Project (xx min)
+* [lab-03](labs/lab-03/readme.md) - implement simple Azure Function (xx min)
+* [lab-04](labs/lab-04/readme.md) - add Azure Function infrastructure into the `workload` Project (xx min)
+* Azure Front Door intro (slides xx min)
+* [lab-05](labs/lab-05/readme.md) - add Azure Front Door infrastructure into the `base` Project (xx min)
+* [lab-06](labs/lab-06/readme.md) - implement master deployment script (xx min)
 
 CI/CD with Azure DevOps
-* lab-07 - configure build pipeline for Azure Function
-* lab-08 - configure release pipeline
+
+* [lab-07](labs/lab-07/readme.md) - create Azure DevOps release pipeline (xx min)
+* Well deserved beer :)
