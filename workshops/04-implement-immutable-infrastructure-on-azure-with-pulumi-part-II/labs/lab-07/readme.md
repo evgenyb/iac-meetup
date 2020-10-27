@@ -3,13 +3,37 @@
 ## Estimated completion time - xx min
 
 It's totally fine to deploy from local PC, but normally you want to have CI/CD pipelines that does the provisioning and deployment job.
-It's many ways one can implement CI/CD pipeline strategy. 
+
+## Pulumi authorization from the pipelines
+
+When we worked locally we used `pulumi login` and this command prompts you for an access token, including a way to launch your web browser to easily obtain one.
+
+From the pipeline you have to set `PULUMI_ACCESS_TOKEN` environment variable.
+
+## az cli Service Principal Authentication
+
+Pulumi requires the following environment variables:
+
+* `ARM_CLIENT_ID`
+* `ARM_CLIENT_SECRET`
+* `ARM_TENANT_ID`
+* `ARM_SUBSCRIPTION_ID`
+
+to be set in order for pulumi to use Azure service principle to authenticate against Azure API. We will use AZ CLI Azure DevOps task and it has a `Access service principal details in script` flag that adds service principal id, service principal key and tenant id of the Azure endpoint you chose to the script's execution environment. 
 
 ## Goals
+
+Create class release pipeline with:
+
+* artifact dependency to the repository
+* Az cli task to initialize environment and deployment using `publi.sh` scrip from [lab-06](../lab-06/readme.md)
+* Enable Continuous deployment trigger
 
 ## Useful links
 
 * [Pulumi: Azure DevOps](https://www.pulumi.com/docs/guides/continuous-delivery/azure-devops/)
+* [Pulimi: login](https://www.pulumi.com/docs/reference/cli/pulumi_login/)
+* [Pulumi: Azure setup](https://www.pulumi.com/docs/intro/cloud-providers/azure/setup/)
 
 ## Task #1 - create classic release pipeline
 
