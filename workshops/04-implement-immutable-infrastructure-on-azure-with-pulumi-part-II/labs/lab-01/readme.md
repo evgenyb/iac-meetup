@@ -102,7 +102,7 @@ Your new project is ready to go!
 Rename `MyStack.cs` to `BaseStack.cs`.
 Rename `MyStack` class to `BaseStack`.
 
-> Tip. Use refactoring shortcuts `F2` for VS Code  or `Ctrl+Shift+R` in Rider or VS with Resharper.
+> Tip. Use refactoring shortcuts `F2` for VS Code  or `Ctrl+R+R` in Rider or VS with Resharper.
 
 Remove all code except resource group initialization and set resource group name to `iac-ws4-stackName-rg`.
 

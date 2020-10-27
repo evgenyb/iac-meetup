@@ -35,7 +35,33 @@ Create class release pipeline with:
 * [Pulimi: login](https://www.pulumi.com/docs/reference/cli/pulumi_login/)
 * [Pulumi: Azure setup](https://www.pulumi.com/docs/intro/cloud-providers/azure/setup/)
 
-## Task #1 - create classic release pipeline
+## Task #1 - install Pulumi extension to your Azure DevOps organization
+
+First, go to your Azure DevOps Organization settings.
+
+![1](images/task-1.png)
+
+Go to extensions and navigate to Marketplace
+
+![1](images/task1-2.png)
+
+Search for Pulumi 
+
+![1](images/task1-3.png)
+
+Click Get it free
+
+![1](images/task1-4.png)
+
+Select organization you want it to be installed
+
+![1](images/task1-5.png)
+
+Done and navigate back to your organization
+
+![1](images/task1-6.png)
+
+## Task #2 - create classic release pipeline
 
 ### Create new class release pipeline
 
@@ -130,14 +156,14 @@ echo -e "Run deployment"
 
 ![10](images/10.png)
 
-## Task #2 - create new changes manually
+## Task #3 - create new changes manually
 
 ![12](images/12.png)
 ![14](images/14.png)
 
 Monitor the logs :)
 
-## Task #3 - trigger the release by committing change to Azure function
+## Task #4 - trigger the release by committing change to Azure function
 
 Change something in the Azure function, for example the way how `responseMessage` is formatted.
 
