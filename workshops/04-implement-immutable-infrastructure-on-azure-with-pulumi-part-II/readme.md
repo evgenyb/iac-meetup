@@ -34,4 +34,5 @@ During the workshop, we will implement very simple system that consists of Azure
 
 CI/CD with Azure DevOps
 
-* lab-07 - configure Azure DevOps release pipeline (xx min)
+* [lab-07](labs/lab-07/readme.md) - create Azure DevOps release pipeline (xx min)
+* Well deserved beer
