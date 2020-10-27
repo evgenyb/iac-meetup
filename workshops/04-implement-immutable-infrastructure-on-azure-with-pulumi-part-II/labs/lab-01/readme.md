@@ -64,6 +64,8 @@ If you decided to use SSH, you need to upload your SSH and here is good [documen
 git clone <url-to-your-repository>
 ```
 
+Add `published` to the `.gitignore` file at the root of your repository. My version of this file can be found [here](.gitignore).  
+
 ## Task #2 - create folders structure
 
 ```bash
