@@ -28,6 +28,7 @@ Azure Function and supported resources (such as Service Plan and Storage account
 
 ## Goals
 
+* Clone repository from Azure DevOps
 * Setup the project structure
 * Create `base` Pulumi project with `lab` stack
 * Create `workload` Pulumi project with `lab-blue` and `lab-green` Stacks
@@ -40,11 +41,33 @@ Azure Function and supported resources (such as Service Plan and Storage account
 * [Pulumi: programming model](https://www.pulumi.com/docs/intro/concepts/programming-model/)
 * [Pulumi: Organizing Projects and Stacks](https://www.pulumi.com/docs/intro/concepts/organizing-stacks-projects/)
 
-## Task #1 - create folders structure
+## Task #1 - clone your Azure DevOps repository
+
+If you haven't already done that:
+
+* follow this [how-to guide](https://docs.microsoft.com/en-us/azure/devops/organizations/projects/create-project?WT.mc_id=DOP-MVP-5003837) and create a new project called `iac-ws4` (or use an existing project, if you already have one).
+* create new git repository under your Azure DevOps project. Follow this [how-to guide](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?WT.mc_id=DOP-MVP-5003837) and create a new repository called `iac-ws4`.
+
+Clone your repository
+
+Here is how you can find your repository url:
+
+![01](images/01.png)
+
+You can choose either Https or SSH protocol
+
+![02](images/02.png)
+
+If you decided to use SSH, you need to upload your SSH and here is good [documentation](https://docs.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?WT.mc_id=DOP-MVP-5003837&view=azure-devops) how to do it.
 
 ```bash
-$ mkdir ws-04
-$ cd ws-04
+git clone <url-to-your-repository>
+```
+
+## Task #2 - create folders structure
+
+```bash
+$ cd <folder where you cloned your repository>
 $ mkdir published
 $ mkdir scripts
 $ mkdir infra
@@ -53,7 +76,7 @@ $ mkdir base
 $ mkdir workload
 ```
 
-## Task #2 - initialize `base` Pulumi project with `lab` Stack
+## Task #3 - initialize `base` Pulumi project with `lab` Stack
 
 Create new Pulumi project from `azure-csharp` template. Use `ws4-base` as Project name, `lab` as a Stack name and `westeurope` as an Azure resource location (but of course feel free to use the one that is close to you location).
 
@@ -72,7 +95,7 @@ Installing dependencies...
 Your new project is ready to go!
 ```
 
-## Task #3 - cleanup default code
+## Task #4 - cleanup default code
 
 Rename `MyStack.cs` to `BaseStack.cs`.
 Rename `MyStack` class to `BaseStack`.
@@ -98,7 +121,7 @@ class BaseStack : Stack
 }
 ```
 
-## Task #4 - deploy `base` to `lab`
+## Task #5 - deploy `base` to `lab`
 
 ```bash
 $ pulumi up --skip-preview
@@ -121,7 +144,7 @@ az group show -n iac-ws4-lab-rg  --query id
 "/subscriptions/.../resourceGroups/iac-ws4-lab-rg"
 ```
 
-## Task #5 - initialize `workload` Pulumi project with `lab-blue` Stack
+## Task #6 - initialize `workload` Pulumi project with `lab-blue` Stack
 
 Create new Pulumi project from `azure-csharp` template. Use `ws4-workload` as Project name,  `lab-blue` as a Stack name and `westeurope` as an Azure resource location (and again, feel free to use the one that is close to you location).
 
@@ -140,7 +163,7 @@ Installing dependencies...
 Your new project is ready to go!
 ```
 
-## Task #6 - cleanup default code
+## Task #7 - cleanup default code
 
 Rename `MyStack.cs` to `WorkloadStack.cs`.
 Rename `MyStack` class to `WorkloadStack`.
@@ -166,7 +189,7 @@ class WorkloadStack : Stack
 }
 ```
 
-## Task #7 - deploy `workload` to `lab-blue`
+## Task #8 - deploy `workload` to `lab-blue`
 
 Run `pulumi up`, check the plan and if you are happy, deploy it.
 
@@ -211,7 +234,7 @@ az group show -n iac-ws4-lab-blue-rg  --query id
 "/subscriptions/.../resourceGroups/iac-ws4-lab-blue-rg"
 ```
 
-## Task #8 - add `lab-green` Stack
+## Task #9 - add `lab-green` Stack
 
 Now, let's initialize second deployment slot - `lab-green`.
 

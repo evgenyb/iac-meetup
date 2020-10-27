@@ -86,6 +86,6 @@ Here is stripped version of my deployment. In my case it takes approx. 8 min. 5 
 
 ![logo](images/iac-ws4-deploy.gif)
 
-## Next: implement master deployment orchestration script
+## Next: configure Azure DevOps release pipeline
 
-[Go to lab-06](../lab-06/readme.md)
+[Go to lab-07](../lab-07/readme.md)
