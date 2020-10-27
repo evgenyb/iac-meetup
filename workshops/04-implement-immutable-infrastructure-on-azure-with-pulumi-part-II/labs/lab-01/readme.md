@@ -241,7 +241,7 @@ az group show -n iac-ws4-lab-blue-rg  --query id
 Now, let's initialize second deployment slot - `lab-green`.
 
 ```bash
-pulumi init -s lab-green
+pulumi stack init -s lab-green
 ```
 
 Set `azure:location` configuration to `westeurope`.
