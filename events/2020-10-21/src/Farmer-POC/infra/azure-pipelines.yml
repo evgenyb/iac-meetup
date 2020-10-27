@@ -1,0 +1,14 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: AzureCLI@2
+  displayName: 'Deploy ARM template'
+  inputs:
+    azureSubscription: 'farmer-poc'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'dotnet run'

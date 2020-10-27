@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>farmer_poc</RootNamespace>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Iac.Core\Iac.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.fs" />
+    <Content Include="Properties/launchSettings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Farmer" Version="1.1.1" />
+  </ItemGroup>
+</Project>
