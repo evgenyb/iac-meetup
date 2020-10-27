@@ -222,6 +222,12 @@ To check that integration with Application Insight works we can start hammering 
 watch -n 0.1 curl -s --get https://iacws4func<yourID>.azurewebsites.net/api/health
 ```
 
+if you using Powershell, you can use this command
+
+```Powershell
+while (1) {curl -s --get https://iacws4func<yourID>.azurewebsites.net/api/health; cls}
+```
+
 This commands will send request to Azure function every 100 ms (10 requests per sec).
 
 ![logo](images/ai-integration-demo.gif)

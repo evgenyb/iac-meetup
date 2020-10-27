@@ -1,7 +1,7 @@
 # Implement immutable infrastructure with Pulumi: Part II
 
 Welcome to the forth workshop at the series of workshops dedicated to Infrastructure as Code tools and frameworks. 
-[Last time](https://github.com/evgenyb/iac-meetup/tree/master/workshops/03-implement-immutable-infrastructure-on-azure-with-pulumi) we worked with `Pulumi` basics and learned how to work with Stacks, Configuration and secrets, how to deploy and destroy stacks and how to use inter-stack dependencies. 
+[Last time](https://github.com/evgenyb/iac-meetup/tree/master/workshops/03-implement-immutable-infrastructure-on-azure-with-pulumi) we worked with `Pulumi` basics and learned how to work with Stacks, Configuration and secrets, how to deploy and destroy stacks and how to use inter-stack dependencies.
 This time, we will use this knowledge and implement simple immutable infrastructure with automated CI/CD pipelines.
 
 ## Prerequisites
@@ -35,4 +35,4 @@ During the workshop, we will implement very simple system that consists of Azure
 CI/CD with Azure DevOps
 
 * [lab-07](labs/lab-07/readme.md) - create Azure DevOps release pipeline (xx min)
-* Well deserved beer
+* Well deserved beer :)

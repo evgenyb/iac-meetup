@@ -70,10 +70,7 @@ pulumi up --skip-preview -s ${environment} -C ../infra/base --yes
 timestamp=`date "+%Y%m%d-%H%M%S"`
 
 echo -e "Done at ${timestamp}"
-echo -e "Waiting 3 min for Front Door to deploy changes to Point Of Presence"
-sleep 3m
-timestamp=`date "+%Y%m%d-%H%M%S"`
-echo -e "Done at ${timestamp}"
+echo -e "Note! It will take more than 2 min for Front Door to deploy changes to Point Of Presence"
 ```
 
 ## Task #2 - deploy new version
